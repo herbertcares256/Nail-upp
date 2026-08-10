@@ -1,39 +1,108 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nail Upp</title>
-
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <header>
-    <h1>💅 Nail Upp</h1>
-    <p>Your beauty, your way.</p>
-  </header>
+<header>
+  <h1>💅 Nail Upp</h1>
+  <p>Your beauty, your way.</p>
+</header>
 
-  <main class="container">
+<main>
 
+  <section id="home">
     <h2>What would you like to do?</h2>
 
-    <button onclick="bookHomeService()">
-      🏠 Book Home Service
-    </button>
+    <button onclick="showHomeBooking()">🏠 Book Home Service</button>
+    <button onclick="showSalonBooking()">💅 Book a Nail Salon</button>
+    <button onclick="showTechnician()">👩‍🎨 Become a Nail Technician</button>
+  </section>
 
-    <button onclick="bookSalon()">
-      💅 Book a Nail Salon
-    </button>
+  <section id="homeBooking" class="page">
+    <h2>🏠 Home Service Booking</h2>
 
-    <button onclick="becomeTechnician()">
-      👩‍🎨 Become a Nail Technician
-    </button>
+    <input id="name" type="text" placeholder="Your full name">
 
-  </main>
+    <input id="phone" type="tel" placeholder="Phone number">
 
-  <script src="app.js"></script>
+    <input id="location" type="text" placeholder="Your location / address">
+
+    <select id="service">
+      <option value="">Select nail service</option>
+      <option>Manicure</option>
+      <option>Pedicure</option>
+      <option>Gel Nails</option>
+      <option>Acrylic Nails</option>
+      <option>Nail Extensions</option>
+      <option>Nail Art</option>
+    </select>
+
+    <input id="date" type="date">
+
+    <input id="time" type="time">
+
+    <textarea id="notes" placeholder="Extra instructions"></textarea>
+
+    <button onclick="submitHomeBooking()">📲 Request Booking</button>
+
+    <button class="back" onclick="goHome()">⬅️ Back</button>
+  </section>
+
+  <section id="salonBooking" class="page">
+    <h2>💅 Salon Booking</h2>
+
+    <input type="text" placeholder="Your full name">
+
+    <input type="tel" placeholder="Phone number">
+
+    <input type="text" placeholder="Preferred salon">
+
+    <select>
+      <option>Select nail service</option>
+      <option>Manicure</option>
+      <option>Pedicure</option>
+      <option>Gel Nails</option>
+      <option>Acrylic Nails</option>
+      <option>Nail Art</option>
+    </select>
+
+    <input type="date">
+
+    <input type="time">
+
+    <button onclick="submitSalonBooking()">📲 Book Salon</button>
+
+    <button class="back" onclick="goHome()">⬅️ Back</button>
+  </section>
+
+  <section id="technician" class="page">
+    <h2>👩‍🎨 Become a Nail Technician</h2>
+
+    <input type="text" placeholder="Full name">
+
+    <input type="tel" placeholder="Phone number">
+
+    <input type="text" placeholder="Location">
+
+    <input type="text" placeholder="Services you offer">
+
+    <textarea placeholder="Tell us about your experience"></textarea>
+
+    <button onclick="registerTechnician()">✅ Register</button>
+
+    <button class="back" onclick="goHome()">⬅️ Back</button>
+  </section>
+
+</main>
+
+<script src="app.js"></script>
 
 </body>
 </html>
