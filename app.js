@@ -1,191 +1,121 @@
-const services = [
-  { name: "Classic Manicure", price: 15000 },
-  { name: "Gel Manicure", price: 25000 },
-  { name: "Acrylic Nails", price: 35000 },
-  { name: "Gel Pedicure", price: 30000 },
-  { name: "Nail Art", price: 20000 }
-];
+function hideAll() {
+  document.getElementById("home").style.display = "none";
+  document.getElementById("homeBooking").style.display = "none";
+  document.getElementById("salonBooking").style.display = "none";
+  document.getElementById("technician").style.display = "none";
+}
 
-function showHomeService() {
-  document.querySelector(".container").innerHTML = `
-    <h2>🏠 Book Home Service</h2>
+function goHome() {
+  hideAll();
+  document.getElementById("home").style.display = "block";
+}
 
-    <label>📍 Your location</label>
-    <input id="location" type="text" placeholder="Enter your location">
-
-    <label>💅 Choose a service</label>
-    <select id="service">
-      <option value="">Select service</option>
-      ${services.map((s, i) =>
-        `<option value="${i}">${s.name} - UGX ${s.price.toLocaleString()}</option>`
-      ).join("")}
-    </select>
-
-    <label>📅 Choose date</label>
-    <input id="date" type="date">
-
-    <label>⏰ Choose time</label>
-    <input id="time" type="time">
-
-    <button onclick="confirmHomeBooking()">Continue Booking</button>
-
-    <button class="back" onclick="location.reload()">
-      ← Back
-    </button>
-  `;
+function showHomeBooking() {
+  hideAll();
+  document.getElementById("homeBooking").style.display = "block";
 }
 
 function showSalonBooking() {
-  document.querySelector(".container").innerHTML = `
-    <h2>💅 Book a Nail Salon</h2>
-
-    <label>📍 Choose your location</label>
-    <input id="location" type="text" placeholder="Enter your location">
-
-    <label>🏪 Choose salon</label>
-    <select id="salon">
-      <option value="">Select salon</option>
-      <option>Nail Upp Beauty Lounge</option>
-      <option>Glam Nails Salon</option>
-      <option>Perfect Nails Studio</option>
-    </select>
-
-    <label>💅 Choose service</label>
-    <select id="service">
-      <option value="">Select service</option>
-      ${services.map((s, i) =>
-        `<option value="${i}">${s.name} - UGX ${s.price.toLocaleString()}</option>`
-      ).join("")}
-    </select>
-
-    <label>📅 Choose date</label>
-    <input id="date" type="date">
-
-    <label>⏰ Choose time</label>
-    <input id="time" type="time">
-
-    <button onclick="confirmSalonBooking()">Continue Booking</button>
-
-    <button class="back" onclick="location.reload()">
-      ← Back
-    </button>
-  `;
+  hideAll();
+  document.getElementById("salonBooking").style.display = "block";
 }
 
-function confirmHomeBooking() {
+function showTechnician() {
+  hideAll();
+  document.getElementById("technician").style.display = "block";
+}
+
+function submitHomeBooking() {
+
+  const name = document.getElementById("name").value;
+  const phone = document.getElementById("phone").value;
   const location = document.getElementById("location").value;
-  const serviceIndex = document.getElementById("service").value;
+  const service = document.getElementById("service").value;
   const date = document.getElementById("date").value;
   const time = document.getElementById("time").value;
+  const notes = document.getElementById("notes").value;
 
-  if (!location || serviceIndex === "" || !date || !time) {
-    alert("Please complete all booking details.");
+  if (!name || !phone || !location || !service || !date || !time) {
+    alert("Please fill in all required booking details.");
     return;
   }
 
-  const service = services[serviceIndex];
+  const booking = {
+    type: "Home Service",
+    name: name,
+    phone: phone,
+    location: location,
+    service: service,
+    date: date,
+    time: time,
+    notes: notes
+  };
 
-  showConfirmation(
-    "Home Service",
-    service.name,
-    service.price,
-    location,
-    date,
-    time
-  );
+  localStorage.setItem("nailUppBooking", JSON.stringify(booking));
+
+  showConfirmation();
 }
 
-function confirmSalonBooking() {
-  const location = document.getElementById("location").value;
-  const salon = document.getElementById("salon").value;
-  const serviceIndex = document.getElementById("service").value;
-  const date = document.getElementById("date").value;
-  const time = document.getElementById("time").value;
-
-  if (!location || !salon || serviceIndex === "" || !date || !time) {
-    alert("Please complete all booking details.");
-    return;
-  }
-
-  const service = services[serviceIndex];
-
-  showConfirmation(
-    salon,
-    service.name,
-    service.price,
-    location,
-    date,
-    time
-  );
+function submitSalonBooking() {
+  alert("🎉 Salon booking received! We will connect you with an available salon.");
 }
 
-function showConfirmation(type, service, price, location, date, time) {
-  document.querySelector(".container").innerHTML = `
-    <h2>✅ Booking Details</h2>
-
-    <div class="booking-card">
-      <p><strong>Service:</strong> ${service}</p>
-      <p><strong>Type:</strong> ${type}</p>
-      <p><strong>Location:</strong> ${location}</p>
-      <p><strong>Date:</strong> ${date}</p>
-      <p><strong>Time:</strong> ${time}</p>
-      <p class="price">UGX ${price.toLocaleString()}</p>
-    </div>
-
-    <button onclick="placeBooking()">
-      📲 Confirm Booking
-    </button>
-
-    <button class="back" onclick="location.reload()">
-      ← Cancel
-    </button>
-  `;
+function registerTechnician() {
+  alert("✅ Thank you! Your nail technician registration has been received.");
 }
 
-function placeBooking() {
-  document.querySelector(".container").innerHTML = `
+function showConfirmation() {
+
+  hideAll();
+
+  const confirmation = document.createElement("section");
+
+  confirmation.id = "confirmation";
+
+  confirmation.innerHTML = `
     <h2>🎉 Booking Received!</h2>
 
     <p>Your Nail Upp booking request has been received.</p>
 
-    <p>We will connect you with an available nail technician or salon.</p>
+    <p>We will connect you with an available nail technician.</p>
 
-    <button onclick="location.reload()">
-      🏠 Return Home
-    </button>
+    <div class="booking-card">
+      <h3>📋 Booking Details</h3>
+
+      <p><strong>Name:</strong> ${escapeHTML(
+        JSON.parse(localStorage.getItem("nailUppBooking")).name
+      )}</p>
+
+      <p><strong>Service:</strong> ${escapeHTML(
+        JSON.parse(localStorage.getItem("nailUppBooking")).service
+      )}</p>
+
+      <p><strong>Location:</strong> ${escapeHTML(
+        JSON.parse(localStorage.getItem("nailUppBooking")).location
+      )}</p>
+
+      <p><strong>Date:</strong> ${
+        JSON.parse(localStorage.getItem("nailUppBooking")).date
+      }</p>
+
+      <p><strong>Time:</strong> ${
+        JSON.parse(localStorage.getItem("nailUppBooking")).time
+      }</p>
+    </div>
+
+    <button onclick="goHome()">🏠 Return Home</button>
 
     <h3>📞 Customer Care</h3>
     <p>Customer care contacts will be added here.</p>
   `;
+
+  document.querySelector("main").appendChild(confirmation);
 }
 
-function becomeTechnician() {
-  document.querySelector(".container").innerHTML = `
-    <h2>👩‍🎨 Become a Nail Technician</h2>
-
-    <input type="text" placeholder="Full name">
-
-    <input type="tel" placeholder="Phone number">
-
-    <input type="text" placeholder="Location">
-
-    <input type="text" placeholder="Services you offer">
-
-    <button onclick="alert('Technician registration received!')">
-      Submit Registration
-    </button>
-
-    <button class="back" onclick="location.reload()">
-      ← Back
-    </button>
-  `;
+function escapeHTML(text) {
+  const div = document.createElement("div");
+  div.textContent = text;
+  return div.innerHTML;
 }
 
-// Connect the buttons on the home page
-function bookHomeService() {
-  showHomeService();
-}
-
-function bookSalon() {
-  showSalonBooking();
-}
+goHome();
