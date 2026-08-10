@@ -1,108 +1,383 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nail Upp</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Nail Upp</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #fff5fa;
+            color: #333;
+        }
+
+        header {
+            background: linear-gradient(135deg, #df42a5, #c73591);
+            color: white;
+            text-align: center;
+            padding: 45px 15px;
+        }
+
+        header h1 {
+            font-size: 48px;
+            margin: 0;
+        }
+
+        header p {
+            font-size: 24px;
+            margin: 10px 0 0;
+        }
+
+        .container {
+            padding: 25px;
+        }
+
+        h2 {
+            font-size: 34px;
+            text-align: center;
+        }
+
+        .main-button,
+        .submit-button,
+        .back-button {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            border: none;
+            border-radius: 22px;
+            padding: 22px 15px;
+            margin: 18px 0;
+            font-size: 23px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .main-button,
+        .submit-button {
+            background: #d63ca0;
+            color: white;
+        }
+
+        .back-button {
+            background: #777;
+            color: white;
+        }
+
+        .form-section {
+            margin-top: 35px;
+        }
+
+        input,
+        select,
+        textarea {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 20px;
+            margin: 10px 0;
+            border: 3px solid #dfa1c8;
+            border-radius: 20px;
+            background: white;
+            font-size: 20px;
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .customer-care {
+            text-align: center;
+            margin: 40px 0;
+            color: #c63895;
+        }
+    </style>
 </head>
 
 <body>
 
 <header>
-  <h1>💅 Nail Upp</h1>
-  <p>Your beauty, your way.</p>
+    <h1>💅 Nail Upp</h1>
+    <p>Your beauty, your way.</p>
 </header>
 
-<main>
+<div class="container">
 
-  <section id="home">
     <h2>What would you like to do?</h2>
 
-    <button onclick="showHomeBooking()">🏠 Book Home Service</button>
-    <button onclick="showSalonBooking()">💅 Book a Nail Salon</button>
-    <button onclick="showTechnician()">👩‍🎨 Become a Nail Technician</button>
-  </section>
+    <!-- MAIN MENU -->
 
-  <section id="homeBooking" class="page">
-    <h2>🏠 Home Service Booking</h2>
+    <button class="main-button"
+            onclick="showSection('homeBooking')">
+        🏠 Book Home Service
+    </button>
 
-    <input id="name" type="text" placeholder="Your full name">
+    <button class="main-button"
+            onclick="showSection('salonBooking')">
+        💅 Book a Nail Salon
+    </button>
 
-    <input id="phone" type="tel" placeholder="Phone number">
+    <button class="main-button"
+            onclick="showSection('technicianRegistration')">
+        👩‍🎨 Become a Nail Technician
+    </button>
 
-    <input id="location" type="text" placeholder="Your location / address">
+    <button class="main-button"
+            onclick="window.location.href='technician.html'">
+        👩‍💼 Technician Dashboard
+    </button>
 
-    <select id="service">
-      <option value="">Select nail service</option>
-      <option>Manicure</option>
-      <option>Pedicure</option>
-      <option>Gel Nails</option>
-      <option>Acrylic Nails</option>
-      <option>Nail Extensions</option>
-      <option>Nail Art</option>
-    </select>
 
-    <input id="date" type="date">
+    <!-- HOME SERVICE BOOKING -->
 
-    <input id="time" type="time">
+    <section id="homeBooking" class="form-section hidden">
 
-    <textarea id="notes" placeholder="Extra instructions"></textarea>
+        <h2>🏠 Home Service Booking</h2>
 
-    <button onclick="submitHomeBooking()">📲 Request Booking</button>
+        <input
+            id="homeName"
+            type="text"
+            placeholder="Your full name">
 
-    <button class="back" onclick="goHome()">⬅️ Back</button>
-  </section>
+        <input
+            id="homePhone"
+            type="tel"
+            placeholder="Phone number">
 
-  <section id="salonBooking" class="page">
-    <h2>💅 Salon Booking</h2>
+        <input
+            id="homeLocation"
+            type="text"
+            placeholder="Your location / address">
 
-    <input type="text" placeholder="Your full name">
+        <select id="homeService">
 
-    <input type="tel" placeholder="Phone number">
+            <option value="">
+                Select nail service
+            </option>
 
-    <input type="text" placeholder="Preferred salon">
+            <option value="Acrylic Nails">
+                Acrylic Nails
+            </option>
 
-    <select>
-      <option>Select nail service</option>
-      <option>Manicure</option>
-      <option>Pedicure</option>
-      <option>Gel Nails</option>
-      <option>Acrylic Nails</option>
-      <option>Nail Art</option>
-    </select>
+            <option value="Gel Nails">
+                Gel Nails
+            </option>
 
-    <input type="date">
+            <option value="Manicure">
+                Manicure
+            </option>
 
-    <input type="time">
+            <option value="Pedicure">
+                Pedicure
+            </option>
 
-    <button onclick="submitSalonBooking()">📲 Book Salon</button>
+            <option value="Nail Art">
+                Nail Art
+            </option>
 
-    <button class="back" onclick="goHome()">⬅️ Back</button>
-  </section>
+            <option value="Nail Extensions">
+                Nail Extensions
+            </option>
 
-  <section id="technician" class="page">
-    <h2>👩‍🎨 Become a Nail Technician</h2>
+        </select>
 
-    <input type="text" placeholder="Full name">
+        <input
+            id="homeDate"
+            type="date">
 
-    <input type="tel" placeholder="Phone number">
+        <input
+            id="homeTime"
+            type="time">
 
-    <input type="text" placeholder="Location">
+        <textarea
+            id="homeInstructions"
+            placeholder="Extra instructions"></textarea>
 
-    <input type="text" placeholder="Services you offer">
+        <button
+            class="submit-button"
+            onclick="requestBooking()">
+            📲 Request Booking
+        </button>
 
-    <textarea placeholder="Tell us about your experience"></textarea>
+        <button
+            class="back-button"
+            onclick="hideSections()">
+            ⬅️ Back
+        </button>
 
-    <button onclick="registerTechnician()">✅ Register</button>
+    </section>
 
-    <button class="back" onclick="goHome()">⬅️ Back</button>
-  </section>
 
-</main>
+    <!-- SALON BOOKING -->
+
+    <section id="salonBooking" class="form-section hidden">
+
+        <h2>💅 Salon Booking</h2>
+
+        <input
+            type="text"
+            placeholder="Your full name">
+
+        <input
+            type="tel"
+            placeholder="Phone number">
+
+        <input
+            type="text"
+            placeholder="Preferred salon">
+
+        <select>
+
+            <option value="">
+                Select nail service
+            </option>
+
+            <option>Acrylic Nails</option>
+            <option>Gel Nails</option>
+            <option>Manicure</option>
+            <option>Pedicure</option>
+            <option>Nail Art</option>
+            <option>Nail Extensions</option>
+
+        </select>
+
+        <input type="date">
+
+        <input type="time">
+
+        <button
+            class="submit-button"
+            onclick="bookSalon()">
+            📲 Book Salon
+        </button>
+
+        <button
+            class="back-button"
+            onclick="hideSections()">
+            ⬅️ Back
+        </button>
+
+    </section>
+
+
+    <!-- TECHNICIAN REGISTRATION -->
+
+    <section id="technicianRegistration"
+             class="form-section hidden">
+
+        <h2>👩‍🎨 Become a Nail Technician</h2>
+
+        <input
+            id="techName"
+            type="text"
+            placeholder="Full name">
+
+        <input
+            id="techPhone"
+            type="tel"
+            placeholder="Phone number">
+
+        <input
+            id="techLocation"
+            type="text"
+            placeholder="Location">
+
+        <input
+            id="techServices"
+            type="text"
+            placeholder="Services you offer">
+
+        <textarea
+            id="techExperience"
+            placeholder="Tell us about your experience"></textarea>
+
+        <button
+            class="submit-button"
+            onclick="registerTechnician()">
+            ✅ Register
+        </button>
+
+        <button
+            class="back-button"
+            onclick="hideSections()">
+            ⬅️ Back
+        </button>
+
+    </section>
+
+
+    <!-- CUSTOMER CARE -->
+
+    <div class="customer-care">
+
+        <h2>📞 Customer Care</h2>
+
+        <p>
+            Customer care contacts will be added here.
+        </p>
+
+    </div>
+
+</div>
+
 
 <script src="app.js"></script>
+
+<script>
+
+function showSection(sectionId) {
+
+    hideSections();
+
+    document
+        .getElementById(sectionId)
+        .classList.remove("hidden");
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+
+function hideSections() {
+
+    document
+        .querySelectorAll(".form-section")
+        .forEach(function(section) {
+
+            section.classList.add("hidden");
+
+        });
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+
+function bookSalon() {
+
+    alert(
+        "Salon booking received! We will connect you with a salon."
+    );
+
+}
+
+</script>
 
 </body>
 </html>
