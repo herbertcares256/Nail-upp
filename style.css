@@ -1,117 +1,106 @@
 * {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
 }
 
 body {
+  margin: 0;
   font-family: Arial, sans-serif;
   background: #fff7fb;
   color: #333;
 }
 
 header {
-  background: linear-gradient(135deg, #d946a6, #b83286);
+  background: linear-gradient(135deg, #d936a0, #c52d88);
   color: white;
   text-align: center;
-  padding: 35px 15px;
+  padding: 45px 20px;
 }
 
 header h1 {
-  font-size: 38px;
-  margin-bottom: 8px;
+  font-size: 48px;
+  margin: 0;
 }
 
 header p {
-  font-size: 20px;
+  font-size: 24px;
+  margin: 10px 0 0;
 }
 
-.container {
-  padding: 30px 20px;
-  max-width: 600px;
+main {
+  padding: 35px 20px;
+  max-width: 750px;
   margin: auto;
 }
 
-.container h2 {
+h2 {
   text-align: center;
-  margin-bottom: 25px;
-  font-size: 28px;
+  font-size: 38px;
+  margin-bottom: 30px;
 }
 
-label {
-  display: block;
-  margin: 18px 0 7px;
-  font-weight: bold;
-  font-size: 16px;
-}
-
-input,
-select {
-  width: 100%;
-  padding: 15px;
-  border: 2px solid #e3a0c8;
-  border-radius: 12px;
-  background: white;
-  font-size: 16px;
-  outline: none;
-}
-
-input:focus,
-select:focus {
-  border-color: #d946a6;
+h3 {
+  text-align: center;
+  font-size: 25px;
+  color: #d13b9b;
 }
 
 button {
   display: block;
   width: 100%;
-  padding: 16px;
+  padding: 22px;
   margin: 18px 0;
   border: none;
-  border-radius: 14px;
-  background: #d946a6;
+  border-radius: 22px;
+  background: #d43ca2;
   color: white;
-  font-size: 17px;
+  font-size: 24px;
   font-weight: bold;
   cursor: pointer;
 }
 
 button:hover {
-  background: #b83286;
+  background: #b82d87;
 }
 
 .back {
   background: #777;
 }
 
+input,
+select,
+textarea {
+  display: block;
+  width: 100%;
+  padding: 20px;
+  margin: 8px 0;
+  border: 3px solid #e2a6cd;
+  border-radius: 18px;
+  background: white;
+  font-size: 20px;
+}
+
+textarea {
+  min-height: 110px;
+}
+
+.page {
+  display: none;
+}
+
+#confirmation {
+  display: block;
+}
+
 .booking-card {
   background: white;
-  padding: 22px;
-  border-radius: 18px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-  margin-bottom: 20px;
+  border: 2px solid #e2a6cd;
+  border-radius: 20px;
+  padding: 20px;
+  margin: 25px 0;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
 .booking-card p {
-  margin: 12px 0;
-  font-size: 16px;
-}
-
-.booking-card .price {
-  color: #d946a6;
-  font-size: 24px;
-  font-weight: bold;
-  text-align: center;
-  margin-top: 20px;
-}
-
-.container > p {
-  text-align: center;
+  font-size: 18px;
   line-height: 1.6;
-  margin: 15px 0;
-}
-
-.container h3 {
-  text-align: center;
-  color: #d946a6;
-  margin-top: 30px;
 }
