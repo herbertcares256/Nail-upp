@@ -79,10 +79,18 @@
     }
 
     .status {
-      color: #d81b60;
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 10px;
+      text-align: center;
       font-weight: bold;
-      margin-top: 12px;
-      font-size: 16px;
+      background: #fff0f6;
+      color: #d81b60;
+    }
+
+    .accepted {
+      background: #e8f5e9;
+      color: #2e7d32;
     }
 
     .buttons {
@@ -203,7 +211,8 @@ function loadJob() {
   const saved =
     localStorage.getItem("nailUppServiceRequest");
 
-  const job = document.getElementById("job");
+  const job =
+    document.getElementById("job");
 
   if (!saved) {
     job.innerHTML =
@@ -213,13 +222,19 @@ function loadJob() {
 
   const request = JSON.parse(saved);
 
-  if (request.status === "Declined" ||
-      request.status === "Completed") {
-
+  if (
+    request.status === "Declined" ||
+    request.status === "Completed"
+  ) {
     job.innerHTML =
       '<p class="empty">No active job.</p>';
-
     return;
+  }
+
+  let statusClass = "status";
+
+  if (request.status === "Accepted by technician") {
+    statusClass = "status accepted";
   }
 
   let buttons = "";
@@ -285,8 +300,9 @@ function loadJob() {
     '<p><strong>Instructions:</strong> ' +
     (request.instructions || "None") + '</p>' +
 
-    '<p class="status">Status: ' +
-    request.status + '</p>' +
+    '<div class="' + statusClass + '">' +
+    'STATUS: ' + request.status +
+    '</div>' +
 
     buttons +
 
