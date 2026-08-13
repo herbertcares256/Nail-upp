@@ -15,11 +15,10 @@
     body {
       font-family: Arial, sans-serif;
       background: #fff7fb;
-      min-height: 100vh;
       color: #333;
     }
 
-    .header {
+    header {
       background: #d81b60;
       color: white;
       text-align: center;
@@ -27,18 +26,12 @@
       border-radius: 0 0 30px 30px;
     }
 
-    .logo {
-      font-size: 45px;
-      margin-bottom: 8px;
-    }
-
-    .header h1 {
+    header h1 {
       font-size: 32px;
-      margin-bottom: 8px;
     }
 
-    .header p {
-      font-size: 15px;
+    header p {
+      margin-top: 8px;
     }
 
     .container {
@@ -57,10 +50,6 @@
       margin-bottom: 8px;
     }
 
-    .welcome p {
-      color: #666;
-    }
-
     .option {
       background: white;
       margin-bottom: 15px;
@@ -71,11 +60,6 @@
       align-items: center;
       gap: 15px;
       cursor: pointer;
-      border: 2px solid transparent;
-    }
-
-    .option:hover {
-      border-color: #d81b60;
     }
 
     .icon {
@@ -91,7 +75,6 @@
     }
 
     .option h3 {
-      color: #333;
       margin-bottom: 5px;
     }
 
@@ -104,13 +87,6 @@
       margin-left: auto;
       color: #d81b60;
       font-size: 25px;
-    }
-
-    .footer {
-      text-align: center;
-      color: #888;
-      font-size: 13px;
-      padding: 20px;
     }
 
     #registration {
@@ -142,26 +118,23 @@
       font-size: 15px;
     }
 
-    .register-button {
+    button {
       width: 100%;
-      margin-top: 20px;
-      padding: 14px;
-      background: #d81b60;
-      color: white;
       border: none;
       border-radius: 25px;
+      padding: 14px;
       font-size: 16px;
+      margin-top: 15px;
     }
 
-    .back-button {
-      width: 100%;
-      margin-top: 10px;
-      padding: 12px;
+    .register {
+      background: #d81b60;
+      color: white;
+    }
+
+    .back {
       background: #eee;
       color: #333;
-      border: none;
-      border-radius: 25px;
-      font-size: 15px;
     }
 
     #businessField {
@@ -172,169 +145,162 @@
 
 <body>
 
-  <div class="header">
-    <div class="logo">💅</div>
-    <h1>Nail Upp</h1>
-    <p>Your nail services, wherever you are.</p>
-  </div>
+<header>
+  <h1>💅 Nail Upp</h1>
+  <p>Your nail services, wherever you are.</p>
+</header>
 
-  <div class="container">
+<div class="container">
 
-    <div id="welcomeScreen">
+  <div id="welcomeScreen">
 
-      <div class="welcome">
-        <h2>Welcome to Nail Upp</h2>
-        <p>How would you like to use Nail Upp?</p>
-      </div>
-
-      <div class="option" onclick="openRegistration('Client')">
-        <div class="icon">👤</div>
-        <div>
-          <h3>Register as a Client</h3>
-          <p>Book nail services and order products.</p>
-        </div>
-        <div class="arrow">›</div>
-      </div>
-
-      <div class="option" onclick="openRegistration('Nail Technician')">
-        <div class="icon">💅</div>
-        <div>
-          <h3>Register as a Nail Technician</h3>
-          <p>Receive home-service bookings from clients.</p>
-        </div>
-        <div class="arrow">›</div>
-      </div>
-
-      <div class="option" onclick="openRegistration('Nail Parlor')">
-        <div class="icon">🏪</div>
-        <div>
-          <h3>Register as a Nail Parlor</h3>
-          <p>List your parlor and receive appointments.</p>
-        </div>
-        <div class="arrow">›</div>
-      </div>
-
-      <div class="option" onclick="openRegistration('Nail Shop')">
-        <div class="icon">🛍️</div>
-        <div>
-          <h3>Register as a Nail Shop</h3>
-          <p>Sell nail products to Nail Upp customers.</p>
-        </div>
-        <div class="arrow">›</div>
-      </div>
-
+    <div class="welcome">
+      <h2>Welcome to Nail Upp</h2>
+      <p>Choose how you want to use Nail Upp</p>
     </div>
 
-    <div id="registration">
-
-      <h2 id="registrationTitle">Register</h2>
-
-      <label>Full Name</label>
-      <input type="text" id="name" placeholder="Enter your full name">
-
-      <label>Phone Number</label>
-      <input type="tel" id="phone" placeholder="Enter phone number">
-
-      <label>Email</label>
-      <input type="email" id="email" placeholder="Enter email">
-
-      <label>Password</label>
-      <input type="password" id="password" placeholder="Create password">
-
-      <div id="businessField">
-        <label>Business Name</label>
-        <input type="text" id="businessName" placeholder="Enter business name">
+    <div class="option" onclick="openRegistration('Client')">
+      <div class="icon">👤</div>
+      <div>
+        <h3>Register as a Client</h3>
+        <p>Book nail services and shop products.</p>
       </div>
+      <div class="arrow">›</div>
+    </div>
 
-      <button class="register-button" onclick="registerUser()">
-        Create Account
-      </button>
+    <div class="option" onclick="openRegistration('Nail Technician')">
+      <div class="icon">💅</div>
+      <div>
+        <h3>Register as a Nail Technician</h3>
+        <p>Receive home-service requests.</p>
+      </div>
+      <div class="arrow">›</div>
+    </div>
 
-      <button class="back-button" onclick="goBack()">
-        ← Back
-      </button>
+    <div class="option" onclick="openRegistration('Nail Parlor')">
+      <div class="icon">🏪</div>
+      <div>
+        <h3>Register as a Nail Parlor</h3>
+        <p>Receive customer appointments.</p>
+      </div>
+      <div class="arrow">›</div>
+    </div>
 
+    <div class="option" onclick="openRegistration('Nail Shop')">
+      <div class="icon">🛍️</div>
+      <div>
+        <h3>Register as a Nail Shop</h3>
+        <p>Sell nail products.</p>
+      </div>
+      <div class="arrow">›</div>
     </div>
 
   </div>
 
-  <div class="footer">
-    © 2026 Nail Upp
+  <div id="registration">
+
+    <h2 id="registrationTitle">Register</h2>
+
+    <label>Full Name</label>
+    <input id="name" type="text" placeholder="Enter full name">
+
+    <label>Phone Number</label>
+    <input id="phone" type="tel" placeholder="Enter phone number">
+
+    <label>Email</label>
+    <input id="email" type="email" placeholder="Enter email">
+
+    <label>Password</label>
+    <input id="password" type="password" placeholder="Create password">
+
+    <div id="businessField">
+
+      <label>Business Name</label>
+      <input id="businessName" type="text" placeholder="Business name">
+
+    </div>
+
+    <button class="register" onclick="registerUser()">
+      Create Account
+    </button>
+
+    <button class="back" onclick="goBack()">
+      ← Back
+    </button>
+
   </div>
 
-  <script>
+</div>
 
-    let selectedRole = "";
+<script>
 
-    function openRegistration(role) {
+let selectedRole = "";
 
-      selectedRole = role;
+function openRegistration(role) {
 
-      document.getElementById("welcomeScreen").style.display = "none";
-      document.getElementById("registration").style.display = "block";
+  selectedRole = role;
 
-      document.getElementById("registrationTitle").textContent =
-        "Register as " + role;
+  document.getElementById("welcomeScreen").style.display = "none";
 
-      if (role === "Nail Parlor" || role === "Nail Shop") {
-        document.getElementById("businessField").style.display = "block";
-      } else {
-        document.getElementById("businessField").style.display = "none";
-      }
-    }
+  document.getElementById("registration").style.display = "block";
 
-    function goBack() {
+  document.getElementById("registrationTitle").textContent =
+    "Register as " + role;
 
-      document.getElementById("registration").style.display = "none";
-      document.getElementById("welcomeScreen").style.display = "block";
+  if (role === "Nail Parlor" || role === "Nail Shop") {
+    document.getElementById("businessField").style.display = "block";
+  } else {
+    document.getElementById("businessField").style.display = "none";
+  }
+}
 
-    }
+function goBack() {
 
-    function registerUser() {
+  document.getElementById("registration").style.display = "none";
 
-      const name = document.getElementById("name").value.trim();
-      const phone = document.getElementById("phone").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value.trim();
+  document.getElementById("welcomeScreen").style.display = "block";
+}
 
-      if (!name || !phone || !email || !password) {
-        alert("Please fill in all required fields.");
-        return;
-      }
+function registerUser() {
 
-      /*
-        Save basic account information on this device.
-        This is temporary local storage.
-      */
+  const name = document.getElementById("name").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
 
-      localStorage.setItem("nailUppName", name);
-      localStorage.setItem("nailUppPhone", phone);
-      localStorage.setItem("nailUppEmail", email);
-      localStorage.setItem("nailUppRole", selectedRole);
+  if (!name || !phone || !email || !password) {
 
-      /*
-        Send clients to the Client Dashboard.
-      */
+    alert("Please fill in all fields.");
 
-      if (selectedRole === "Client") {
+    return;
+  }
 
-        window.location.href = "client.html";
+  localStorage.setItem("nailUppName", name);
+  localStorage.setItem("nailUppPhone", phone);
+  localStorage.setItem("nailUppEmail", email);
+  localStorage.setItem("nailUppRole", selectedRole);
 
-        return;
-      }
+  if (selectedRole === "Client") {
 
-      /*
-        Other account types will be connected
-        to their dashboards next.
-      */
+    window.location.href = "client.html";
 
-      alert(
-        "Account created successfully!\n\n" +
-        "Account type: " + selectedRole
-      );
-    }
+  } else if (selectedRole === "Nail Technician") {
 
-  </script>
+    window.location.href = "technician.html";
+
+  } else if (selectedRole === "Nail Parlor") {
+
+    alert("Nail Parlor dashboard will be connected next.");
+
+  } else if (selectedRole === "Nail Shop") {
+
+    window.location.href = "shop.html";
+
+  }
+
+}
+
+</script>
 
 </body>
 </html>
