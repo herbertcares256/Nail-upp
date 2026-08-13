@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nail Upp - Home Service</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff7fb;
+      color: #333;
+    }
+
+    header {
+      background: #d81b60;
+      color: white;
+      padding: 22px 18px;
+      text-align: center;
+      border-radius: 0 0 25px 25px;
+    }
+
+    header h1 {
+      font-size: 27px;
+    }
+
+    header p {
+      margin-top: 6px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      padding: 20px 15px 40px;
+    }
+
+    .back {
+      display: inline-block;
+      margin-bottom: 18px;
+      color: #d81b60;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .card {
+      background: white;
+      padding: 22px;
+      border-radius: 18px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    h2 {
+      color: #d81b60;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      font-size: 15px;
+      background: white;
+    }
+
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    .submit {
+      width: 100%;
+      margin-top: 22px;
+      padding: 15px;
+      background: #d81b60;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .notice {
+      background: #fff0f6;
+      padding: 13px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    #success {
+      display: none;
+      text-align: center;
+      background: white;
+      padding: 30px 20px;
+      border-radius: 18px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    #success .check {
+      font-size: 55px;
+      margin-bottom: 10px;
+    }
+
+    #success h2 {
+      margin-bottom: 10px;
+    }
+
+    .dashboard {
+      display: inline-block;
+      margin-top: 20px;
+      background: #d81b60;
+      color: white;
+      padding: 13px 22px;
+      border-radius: 25px;
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>💅 Nail Upp</h1>
+    <p>Home Nail Service</p>
+  </header>
+
+  <div class="container">
+
+    <a href="client.html" class="back">← Back to Dashboard</a>
+
+    <div id="requestForm" class="card">
+
+      <h2>Request a Nail Technician</h2>
+
+      <div class="notice">
+        Tell us what service you need and where you want the technician
+        to come. Nail Upp will use this request to find an available
+        technician.
+      </div>
+
+      <label for="service">Nail Service</label>
+
+      <select id="service">
+        <option value="">Select a service</option>
+        <option>Manicure</option>
+        <option>Pedicure</option>
+        <option>Gel Nails</option>
+        <option>Acrylic Nails</option>
+        <option>Nail Extensions</option>
+        <option>Nail Art</option>
+        <option>Manicure + Pedicure</option>
+        <option>Other</option>
+      </select>
+
+      <label for="date">Preferred Date</label>
+      <input type="date" id="date">
+
+      <label for="time">Preferred Time</label>
+      <input type="time" id="time">
+
+      <label for="location">Service Location</label>
+      <input
+        type="text"
+        id="location"
+        placeholder="Enter your location or address"
+      >
+
+      <label for="instructions">Additional Instructions</label>
+
+      <textarea
+        id="instructions"
+        placeholder="Tell the technician anything important about your service..."
+      ></textarea>
+
+      <button class="submit" onclick="submitRequest()">
+        Request Technician
+      </button>
+
+    </div>
+
+    <div id="success">
+
+      <div class="check">✅</div>
+
+      <h2>Request Submitted!</h2>
+
+      <p>
+        Your home-service request has been saved.
+        We will use it to match you with an available nail technician.
+      </p>
+
+      <a href="client.html" class="dashboard">
+        Go to Dashboard
+      </a>
+
+    </div>
+
+  </div>
+
+  <script>
+
+    function submitRequest() {
+
+      const service = document.getElementById("service").value;
+      const date = document.getElementById("date").value;
+      const time = document.getElementById("time").value;
+      const location = document.getElementById("location").value.trim();
+      const instructions =
+        document.getElementById("instructions").value.trim();
+
+      if (!service || !date || !time || !location) {
+        alert(
+          "Please select a service, date, time and enter your location."
+        );
+        return;
+      }
+
+      const request = {
+        id: "NU-" + Date.now(),
+        clientName:
+          localStorage.getItem("nailUppName") || "Client",
+        phone:
+          localStorage.getItem("nailUppPhone") || "",
+        service: service,
+        date: date,
+        time: time,
+        location: location,
+        instructions: instructions,
+        status: "Waiting for technician",
+        createdAt: new Date().toISOString()
+      };
+
+      localStorage.setItem(
+        "nailUppServiceRequest",
+        JSON.stringify(request)
+      );
+
+      document.getElementById("requestForm").style.display = "none";
+      document.getElementById("success").style.display = "block";
+    }
+
+  </script>
+
+</body>
+</html>
