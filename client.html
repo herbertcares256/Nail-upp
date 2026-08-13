@@ -37,7 +37,7 @@
     .container {
       max-width: 700px;
       margin: auto;
-      padding: 20px 15px;
+      padding: 20px 15px 40px;
     }
 
     .welcome {
@@ -97,6 +97,32 @@
       margin-bottom: 15px;
     }
 
+    .booking {
+      border: 1px solid #eee;
+      padding: 15px;
+      border-radius: 14px;
+    }
+
+    .booking p {
+      margin: 8px 0;
+      font-size: 14px;
+    }
+
+    .status {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 10px;
+      text-align: center;
+      background: #fff0f6;
+      color: #d81b60;
+      font-weight: bold;
+    }
+
+    .accepted {
+      background: #e8f5e9;
+      color: #2e7d32;
+    }
+
     .account {
       background: white;
       margin-top: 20px;
@@ -125,20 +151,10 @@
       font-size: 15px;
     }
 
-    .booking {
-      padding: 12px 0;
-      border-bottom: 1px solid #eee;
-    }
-
-    .status {
-      color: #d81b60;
-      font-size: 13px;
-    }
-
-    @media (max-width: 500px) {
-      .services {
-        grid-template-columns: 1fr 1fr;
-      }
+    .empty {
+      color: #777;
+      text-align: center;
+      padding: 10px;
     }
   </style>
 </head>
@@ -186,25 +202,31 @@
   </div>
 
   <div class="section">
-    <h2>📋 My Bookings</h2>
-    <div id="bookings">
-      <p>No bookings yet.</p>
+
+    <h2>📋 My Booking</h2>
+
+    <div id="booking">
+      <p class="empty">No booking yet.</p>
     </div>
+
   </div>
 
   <div class="account">
 
     <h2>👤 My Account</h2>
 
-    <p><strong>Name:</strong>
+    <p>
+      <strong>Name:</strong>
       <span id="clientName">Client</span>
     </p>
 
-    <p><strong>Phone:</strong>
+    <p>
+      <strong>Phone:</strong>
       <span id="clientPhone">Not added</span>
     </p>
 
-    <p><strong>Email:</strong>
+    <p>
+      <strong>Email:</strong>
       <span id="clientEmail">Not added</span>
     </p>
 
@@ -218,57 +240,93 @@
 
 <script>
 
-  // Home service
-  function orderTechnician() {
-    window.location.href = "home-service.html";
-  }
+document.getElementById("clientName").textContent =
+  localStorage.getItem("nailUppName") || "Client";
 
-  // Nail parlor
-  function bookParlor() {
-    alert("Nail Parlor booking will be added next.");
-  }
+document.getElementById("clientPhone").textContent =
+  localStorage.getItem("nailUppPhone") || "Not added";
 
-  // Nail shop
-  function openShop() {
-    window.location.href = "shop.html";
-  }
+document.getElementById("clientEmail").textContent =
+  localStorage.getItem("nailUppEmail") || "Not added";
 
-  // Nearby services
-  function findNearby() {
-    alert("Nearby nail services will be added next.");
-  }
 
-  // Show client information
-  document.getElementById("clientName").textContent =
-    localStorage.getItem("nailUppName") || "Client";
+function orderTechnician() {
+  window.location.href = "home-service.html";
+}
 
-  document.getElementById("clientPhone").textContent =
-    localStorage.getItem("nailUppPhone") || "Not added";
 
-  document.getElementById("clientEmail").textContent =
-    localStorage.getItem("nailUppEmail") || "Not added";
+function bookParlor() {
+  alert("Nail Parlor booking will be added next.");
+}
 
-  // Show latest service request
-  const savedRequest =
+
+function openShop() {
+  window.location.href = "shop.html";
+}
+
+
+function findNearby() {
+  alert("Nearby nail services will be added next.");
+}
+
+
+function loadBooking() {
+
+  const saved =
     localStorage.getItem("nailUppServiceRequest");
 
-  if (savedRequest) {
+  const booking =
+    document.getElementById("booking");
 
-    const request = JSON.parse(savedRequest);
+  if (!saved) {
 
-    document.getElementById("bookings").innerHTML =
-      '<div class="booking">' +
-      '<strong>' + request.service + '</strong>' +
-      '<p>' + request.date + ' at ' + request.time + '</p>' +
-      '<p class="status">' + request.status + '</p>' +
-      '</div>';
+    booking.innerHTML =
+      '<p class="empty">No booking yet.</p>';
+
+    return;
   }
 
-  // Logout
-  function logout() {
-    localStorage.clear();
-    window.location.href = "index.html";
+  const request = JSON.parse(saved);
+
+  let statusClass = "status";
+
+  if (request.status === "Accepted by technician") {
+    statusClass = "status accepted";
   }
+
+  booking.innerHTML =
+
+    '<div class="booking">' +
+
+    '<p><strong>Service:</strong> ' +
+    request.service + '</p>' +
+
+    '<p><strong>Date:</strong> ' +
+    request.date + '</p>' +
+
+    '<p><strong>Time:</strong> ' +
+    request.time + '</p>' +
+
+    '<p><strong>Location:</strong> ' +
+    request.location + '</p>' +
+
+    '<div class="' + statusClass + '">' +
+    'STATUS: ' + request.status +
+    '</div>' +
+
+    '</div>';
+}
+
+
+function logout() {
+
+  localStorage.clear();
+
+  window.location.href = "index.html";
+}
+
+
+loadBooking();
 
 </script>
 
