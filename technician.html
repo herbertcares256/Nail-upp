@@ -67,22 +67,22 @@
       border: 1px solid #eee;
       border-radius: 14px;
       padding: 15px;
-      margin-bottom: 12px;
     }
 
     .request h3 {
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
     .request p {
-      margin: 6px 0;
+      margin: 7px 0;
       font-size: 14px;
     }
 
     .status {
       color: #d81b60;
       font-weight: bold;
-      margin-top: 10px;
+      margin-top: 12px;
+      font-size: 16px;
     }
 
     .buttons {
@@ -91,29 +91,41 @@
       margin-top: 15px;
     }
 
-    .accept,
-    .decline {
-      flex: 1;
-      padding: 12px;
+    button {
       border: none;
       border-radius: 22px;
-      color: white;
+      padding: 12px;
       font-size: 14px;
       font-weight: bold;
     }
 
     .accept {
+      flex: 1;
       background: #2e7d32;
+      color: white;
     }
 
     .decline {
+      flex: 1;
       background: #c62828;
+      color: white;
+    }
+
+    .statusButton {
+      width: 100%;
+      margin-top: 10px;
+      background: #d81b60;
+      color: white;
     }
 
     .empty {
       color: #777;
       text-align: center;
       padding: 15px;
+    }
+
+    .profile p {
+      margin: 8px 0;
     }
 
     .logout {
@@ -124,10 +136,6 @@
       background: #d81b60;
       color: white;
       font-size: 15px;
-    }
-
-    .profile p {
-      margin: 8px 0;
     }
   </style>
 </head>
@@ -142,15 +150,16 @@
 <div class="container">
 
   <div class="welcome">
-    <h2>Welcome, Technician!</h2>
-    <p>Manage your Nail Upp service requests.</p>
+    <h2>Welcome, <span id="technicianName">Technician</span>!</h2>
+    <p>Manage your service requests.</p>
   </div>
 
   <div class="card">
-    <h2>📋 New Service Requests</h2>
 
-    <div id="requests">
-      <p class="empty">No service requests yet.</p>
+    <h2>📋 Current Job</h2>
+
+    <div id="job">
+      <p class="empty">No active job.</p>
     </div>
 
   </div>
@@ -161,12 +170,12 @@
 
     <p>
       <strong>Name:</strong>
-      <span id="technicianName">Technician</span>
+      <span id="profileName">Technician</span>
     </p>
 
     <p>
       <strong>Phone:</strong>
-      <span id="technicianPhone">Not added</span>
+      <span id="profilePhone">Not added</span>
     </p>
 
   </div>
@@ -179,140 +188,181 @@
 
 <script>
 
-  // Show technician information
-  document.getElementById("technicianName").textContent =
-    localStorage.getItem("nailUppName") || "Technician";
+document.getElementById("technicianName").textContent =
+  localStorage.getItem("nailUppName") || "Technician";
 
-  document.getElementById("technicianPhone").textContent =
-    localStorage.getItem("nailUppPhone") || "Not added";
+document.getElementById("profileName").textContent =
+  localStorage.getItem("nailUppName") || "Technician";
+
+document.getElementById("profilePhone").textContent =
+  localStorage.getItem("nailUppPhone") || "Not added";
 
 
-  // Load client service request
-  function loadRequest() {
+function loadJob() {
 
-    const savedRequest =
-      localStorage.getItem("nailUppServiceRequest");
+  const saved =
+    localStorage.getItem("nailUppServiceRequest");
 
-    const requests =
-      document.getElementById("requests");
+  const job = document.getElementById("job");
 
-    if (!savedRequest) {
-      requests.innerHTML =
-        '<p class="empty">No service requests yet.</p>';
-      return;
-    }
+  if (!saved) {
+    job.innerHTML =
+      '<p class="empty">No active job.</p>';
+    return;
+  }
 
-    const request = JSON.parse(savedRequest);
+  const request = JSON.parse(saved);
 
-    if (request.status === "Declined") {
-      requests.innerHTML =
-        '<p class="empty">No active service requests.</p>';
-      return;
-    }
+  if (request.status === "Declined" ||
+      request.status === "Completed") {
 
-    requests.innerHTML =
+    job.innerHTML =
+      '<p class="empty">No active job.</p>';
 
-      '<div class="request">' +
+    return;
+  }
 
-      '<h3>💅 ' + request.service + '</h3>' +
+  let buttons = "";
 
-      '<p><strong>Client:</strong> ' +
-      request.clientName + '</p>' +
+  if (request.status === "Waiting for technician") {
 
-      '<p><strong>Phone:</strong> ' +
-      request.phone + '</p>' +
-
-      '<p><strong>Date:</strong> ' +
-      request.date + '</p>' +
-
-      '<p><strong>Time:</strong> ' +
-      request.time + '</p>' +
-
-      '<p><strong>Location:</strong> ' +
-      request.location + '</p>' +
-
-      '<p><strong>Instructions:</strong> ' +
-      (request.instructions || "None") + '</p>' +
-
-      '<p class="status">Status: ' +
-      request.status + '</p>' +
-
+    buttons =
       '<div class="buttons">' +
-
-      '<button class="accept" onclick="acceptRequest()">' +
-      'Accept' +
-      '</button>' +
-
-      '<button class="decline" onclick="declineRequest()">' +
-      'Decline' +
-      '</button>' +
-
-      '</div>' +
-
+      '<button class="accept" onclick="acceptJob()">Accept</button>' +
+      '<button class="decline" onclick="declineJob()">Decline</button>' +
       '</div>';
+
+  } else if (request.status === "Accepted by technician") {
+
+    buttons =
+      '<button class="statusButton" onclick="updateStatus(\'On the Way\')">' +
+      '🚗 I\'m On the Way' +
+      '</button>';
+
+  } else if (request.status === "On the Way") {
+
+    buttons =
+      '<button class="statusButton" onclick="updateStatus(\'Arrived\')">' +
+      '📍 I Have Arrived' +
+      '</button>';
+
+  } else if (request.status === "Arrived") {
+
+    buttons =
+      '<button class="statusButton" onclick="updateStatus(\'Service Started\')">' +
+      '💅 Start Service' +
+      '</button>';
+
+  } else if (request.status === "Service Started") {
+
+    buttons =
+      '<button class="statusButton" onclick="updateStatus(\'Completed\')">' +
+      '✅ Complete Service' +
+      '</button>';
   }
 
+  job.innerHTML =
 
-  // Accept request
-  function acceptRequest() {
+    '<div class="request">' +
 
-    const savedRequest =
-      localStorage.getItem("nailUppServiceRequest");
+    '<h3>💅 ' + request.service + '</h3>' +
 
-    if (!savedRequest) return;
+    '<p><strong>Client:</strong> ' +
+    request.clientName + '</p>' +
 
-    const request = JSON.parse(savedRequest);
+    '<p><strong>Phone:</strong> ' +
+    request.phone + '</p>' +
 
-    request.status = "Accepted by technician";
+    '<p><strong>Date:</strong> ' +
+    request.date + '</p>' +
 
-    localStorage.setItem(
-      "nailUppServiceRequest",
-      JSON.stringify(request)
-    );
+    '<p><strong>Time:</strong> ' +
+    request.time + '</p>' +
 
-    alert("Service request accepted!");
+    '<p><strong>Location:</strong> ' +
+    request.location + '</p>' +
 
-    loadRequest();
-  }
+    '<p><strong>Instructions:</strong> ' +
+    (request.instructions || "None") + '</p>' +
 
+    '<p class="status">Status: ' +
+    request.status + '</p>' +
 
-  // Decline request
-  function declineRequest() {
+    buttons +
 
-    const savedRequest =
-      localStorage.getItem("nailUppServiceRequest");
-
-    if (!savedRequest) return;
-
-    const request = JSON.parse(savedRequest);
-
-    request.status = "Declined";
-
-    localStorage.setItem(
-      "nailUppServiceRequest",
-      JSON.stringify(request)
-    );
-
-    alert("Service request declined.");
-
-    loadRequest();
-  }
+    '</div>';
+}
 
 
-  // Logout
-  function logout() {
+function acceptJob() {
 
-    localStorage.removeItem("nailUppName");
-    localStorage.removeItem("nailUppPhone");
-    localStorage.removeItem("nailUppEmail");
-    localStorage.removeItem("nailUppRole");
+  const saved =
+    localStorage.getItem("nailUppServiceRequest");
 
-    window.location.href = "index.html";
-  }
+  if (!saved) return;
+
+  const request = JSON.parse(saved);
+
+  request.status = "Accepted by technician";
+
+  localStorage.setItem(
+    "nailUppServiceRequest",
+    JSON.stringify(request)
+  );
+
+  loadJob();
+}
 
 
-  // Load requests when page opens
-  loadRequest();
+function declineJob() {
+
+  const saved =
+    localStorage.getItem("nailUppServiceRequest");
+
+  if (!saved) return;
+
+  const request = JSON.parse(saved);
+
+  request.status = "Declined";
+
+  localStorage.setItem(
+    "nailUppServiceRequest",
+    JSON.stringify(request)
+  );
+
+  loadJob();
+}
+
+
+function updateStatus(newStatus) {
+
+  const saved =
+    localStorage.getItem("nailUppServiceRequest");
+
+  if (!saved) return;
+
+  const request = JSON.parse(saved);
+
+  request.status = newStatus;
+
+  localStorage.setItem(
+    "nailUppServiceRequest",
+    JSON.stringify(request)
+  );
+
+  loadJob();
+}
+
+
+function logout() {
+
+  localStorage.clear();
+
+  window.location.href = "index.html";
+}
+
+
+loadJob();
 
 </script>
 
