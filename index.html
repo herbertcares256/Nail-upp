@@ -87,6 +87,7 @@
       align-items: center;
       justify-content: center;
       font-size: 28px;
+      flex-shrink: 0;
     }
 
     .option h3 {
@@ -112,8 +113,6 @@
       padding: 20px;
     }
 
-    /* Registration form */
-
     #registration {
       display: none;
       background: white;
@@ -135,8 +134,7 @@
       font-weight: bold;
     }
 
-    input,
-    select {
+    input {
       width: 100%;
       padding: 13px;
       border: 1px solid #ddd;
@@ -153,7 +151,6 @@
       border: none;
       border-radius: 25px;
       font-size: 16px;
-      cursor: pointer;
     }
 
     .back-button {
@@ -165,6 +162,10 @@
       border: none;
       border-radius: 25px;
       font-size: 15px;
+    }
+
+    #businessField {
+      display: none;
     }
   </style>
 </head>
@@ -240,7 +241,7 @@
       <label>Password</label>
       <input type="password" id="password" placeholder="Create password">
 
-      <div id="businessField" style="display:none;">
+      <div id="businessField">
         <label>Business Name</label>
         <input type="text" id="businessName" placeholder="Enter business name">
       </div>
@@ -262,9 +263,11 @@
   </div>
 
   <script>
+
     let selectedRole = "";
 
     function openRegistration(role) {
+
       selectedRole = role;
 
       document.getElementById("welcomeScreen").style.display = "none";
@@ -281,26 +284,56 @@
     }
 
     function goBack() {
+
       document.getElementById("registration").style.display = "none";
       document.getElementById("welcomeScreen").style.display = "block";
+
     }
 
     function registerUser() {
-      const name = document.getElementById("name").value;
-      const phone = document.getElementById("phone").value;
-      const password = document.getElementById("password").value;
 
-      if (!name || !phone || !password) {
-        alert("Please fill in your name, phone number and password.");
+      const name = document.getElementById("name").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      if (!name || !phone || !email || !password) {
+        alert("Please fill in all required fields.");
         return;
       }
 
+      /*
+        Save basic account information on this device.
+        This is temporary local storage.
+      */
+
+      localStorage.setItem("nailUppName", name);
+      localStorage.setItem("nailUppPhone", phone);
+      localStorage.setItem("nailUppEmail", email);
+      localStorage.setItem("nailUppRole", selectedRole);
+
+      /*
+        Send clients to the Client Dashboard.
+      */
+
+      if (selectedRole === "Client") {
+
+        window.location.href = "client.html";
+
+        return;
+      }
+
+      /*
+        Other account types will be connected
+        to their dashboards next.
+      */
+
       alert(
-        "Registration successful!\n\n" +
-        "Account type: " + selectedRole +
-        "\nName: " + name
+        "Account created successfully!\n\n" +
+        "Account type: " + selectedRole
       );
     }
+
   </script>
 
 </body>
