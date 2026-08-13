@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nail Upp - Nail Parlor</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff7fb;
+      color: #333;
+    }
+
+    header {
+      background: #d81b60;
+      color: white;
+      text-align: center;
+      padding: 25px 15px;
+      border-radius: 0 0 25px 25px;
+    }
+
+    header h1 {
+      font-size: 28px;
+    }
+
+    header p {
+      margin-top: 6px;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: auto;
+      padding: 20px 15px 40px;
+    }
+
+    .welcome {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .welcome h2 {
+      color: #d81b60;
+      margin-bottom: 8px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      margin-bottom: 18px;
+      border-radius: 18px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    .card h2 {
+      color: #d81b60;
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-top: 12px;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      font-size: 15px;
+    }
+
+    textarea {
+      min-height: 80px;
+    }
+
+    .save {
+      width: 100%;
+      margin-top: 20px;
+      padding: 14px;
+      border: none;
+      border-radius: 25px;
+      background: #d81b60;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .profile {
+      display: none;
+    }
+
+    .profile p {
+      margin: 8px 0;
+    }
+
+    .service {
+      border: 1px solid #eee;
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 10px;
+    }
+
+    .booking {
+      border: 1px solid #eee;
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 10px;
+    }
+
+    .booking p {
+      margin: 6px 0;
+    }
+
+    .status {
+      margin-top: 10px;
+      padding: 9px;
+      border-radius: 8px;
+      background: #fff0f6;
+      color: #d81b60;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .logout {
+      width: 100%;
+      padding: 13px;
+      border: none;
+      border-radius: 25px;
+      background: #333;
+      color: white;
+      font-size: 15px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>💅 Nail Upp</h1>
+  <p>Nail Parlor Dashboard</p>
+</header>
+
+<div class="container">
+
+  <div class="welcome">
+    <h2>Welcome, Parlor Owner!</h2>
+    <p>Set up your nail parlor and manage bookings.</p>
+  </div>
+
+  <div class="card" id="setup">
+
+    <h2>🏪 Set Up Your Parlor</h2>
+
+    <label>Parlor Name</label>
+    <input id="parlorName" type="text" placeholder="Enter parlor name">
+
+    <label>Location</label>
+    <input id="parlorLocation" type="text" placeholder="Enter parlor location">
+
+    <label>Phone Number</label>
+    <input id="parlorPhone" type="tel" placeholder="Enter phone number">
+
+    <label>About Your Parlor</label>
+    <textarea id="parlorAbout" placeholder="Describe your nail parlor"></textarea>
+
+    <label>Main Service</label>
+    <select id="mainService">
+      <option value="">Select service</option>
+      <option>Manicure</option>
+      <option>Pedicure</option>
+      <option>Gel Nails</option>
+      <option>Acrylic Nails</option>
+      <option>Nail Extensions</option>
+      <option>Nail Art</option>
+      <option>Other</option>
+    </select>
+
+    <label>Starting Price (UGX)</label>
+    <input id="price" type="number" placeholder="Example: 20000">
+
+    <button class="save" onclick="saveParlor()">
+      Save Parlor
+    </button>
+
+  </div>
+
+  <div class="profile" id="dashboard">
+
+    <div class="card">
+
+      <h2>🏪 My Parlor</h2>
+
+      <p>
+        <strong>Name:</strong>
+        <span id="showName"></span>
+      </p>
+
+      <p>
+        <strong>Location:</strong>
+        <span id="showLocation"></span>
+      </p>
+
+      <p>
+        <strong>Phone:</strong>
+        <span id="showPhone"></span>
+      </p>
+
+      <p>
+        <strong>About:</strong>
+        <span id="showAbout"></span>
+      </p>
+
+    </div>
+
+    <div class="card">
+
+      <h2>💅 Services</h2>
+
+      <div class="service">
+        <strong id="showService"></strong>
+        <p>Starting from UGX <span id="showPrice"></span></p>
+      </div>
+
+    </div>
+
+    <div class="card">
+
+      <h2>📅 Customer Bookings</h2>
+
+      <div id="bookings">
+        <p>No bookings yet.</p>
+      </div>
+
+    </div>
+
+  </div>
+
+  <button class="logout" onclick="logout()">
+    Log Out
+  </button>
+
+</div>
+
+<script>
+
+function saveParlor() {
+
+  const name =
+    document.getElementById("parlorName").value.trim();
+
+  const location =
+    document.getElementById("parlorLocation").value.trim();
+
+  const phone =
+    document.getElementById("parlorPhone").value.trim();
+
+  const about =
+    document.getElementById("parlorAbout").value.trim();
+
+  const service =
+    document.getElementById("mainService").value;
+
+  const price =
+    document.getElementById("price").value;
+
+  if (!name || !location || !phone || !service || !price) {
+
+    alert("Please fill in the required fields.");
+
+    return;
+  }
+
+  const parlor = {
+    name: name,
+    location: location,
+    phone: phone,
+    about: about,
+    service: service,
+    price: price
+  };
+
+  localStorage.setItem(
+    "nailUppParlor",
+    JSON.stringify(parlor)
+  );
+
+  showDashboard();
+}
+
+
+function showDashboard() {
+
+  const saved =
+    localStorage.getItem("nailUppParlor");
+
+  if (!saved) return;
+
+  const parlor = JSON.parse(saved);
+
+  document.getElementById("setup").style.display = "none";
+
+  document.getElementById("dashboard").style.display = "block";
+
+  document.getElementById("showName").textContent =
+    parlor.name;
+
+  document.getElementById("showLocation").textContent =
+    parlor.location;
+
+  document.getElementById("showPhone").textContent =
+    parlor.phone;
+
+  document.getElementById("showAbout").textContent =
+    parlor.about || "No description added.";
+
+  document.getElementById("showService").textContent =
+    parlor.service;
+
+  document.getElementById("showPrice").textContent =
+    Number(parlor.price).toLocaleString();
+
+  loadBookings();
+}
+
+
+function loadBookings() {
+
+  const saved =
+    localStorage.getItem("nailUppParlorBooking");
+
+  const bookings =
+    document.getElementById("bookings");
+
+  if (!saved) {
+
+    bookings.innerHTML =
+      "<p>No bookings yet.</p>";
+
+    return;
+  }
+
+  const booking = JSON.parse(saved);
+
+  bookings.innerHTML =
+
+    '<div class="booking">' +
+
+    '<p><strong>Client:</strong> ' +
+    booking.clientName + '</p>' +
+
+    '<p><strong>Service:</strong> ' +
+    booking.service + '</p>' +
+
+    '<p><strong>Date:</strong> ' +
+    booking.date + '</p>' +
+
+    '<p><strong>Time:</strong> ' +
+    booking.time + '</p>' +
+
+    '<div class="status">' +
+    booking.status +
+    '</div>' +
+
+    '</div>';
+}
+
+
+function logout() {
+
+  localStorage.removeItem("nailUppParlor");
+
+  window.location.href = "index.html";
+}
+
+
+showDashboard();
+
+</script>
+
+</body>
+</html>
