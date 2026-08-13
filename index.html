@@ -1,383 +1,307 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nail Upp</title>
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-    <title>Nail Upp</title>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff7fb;
+      min-height: 100vh;
+      color: #333;
+    }
 
-    <link rel="stylesheet" href="style.css">
+    .header {
+      background: #d81b60;
+      color: white;
+      text-align: center;
+      padding: 35px 20px;
+      border-radius: 0 0 30px 30px;
+    }
 
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #fff5fa;
-            color: #333;
-        }
+    .logo {
+      font-size: 45px;
+      margin-bottom: 8px;
+    }
 
-        header {
-            background: linear-gradient(135deg, #df42a5, #c73591);
-            color: white;
-            text-align: center;
-            padding: 45px 15px;
-        }
+    .header h1 {
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
 
-        header h1 {
-            font-size: 48px;
-            margin: 0;
-        }
+    .header p {
+      font-size: 15px;
+    }
 
-        header p {
-            font-size: 24px;
-            margin: 10px 0 0;
-        }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      padding: 30px 18px;
+    }
 
-        .container {
-            padding: 25px;
-        }
+    .welcome {
+      text-align: center;
+      margin-bottom: 25px;
+    }
 
-        h2 {
-            font-size: 34px;
-            text-align: center;
-        }
+    .welcome h2 {
+      color: #d81b60;
+      margin-bottom: 8px;
+    }
 
-        .main-button,
-        .submit-button,
-        .back-button {
-            display: block;
-            width: 100%;
-            box-sizing: border-box;
-            border: none;
-            border-radius: 22px;
-            padding: 22px 15px;
-            margin: 18px 0;
-            font-size: 23px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+    .welcome p {
+      color: #666;
+    }
 
-        .main-button,
-        .submit-button {
-            background: #d63ca0;
-            color: white;
-        }
+    .option {
+      background: white;
+      margin-bottom: 15px;
+      padding: 20px;
+      border-radius: 18px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      cursor: pointer;
+      border: 2px solid transparent;
+    }
 
-        .back-button {
-            background: #777;
-            color: white;
-        }
+    .option:hover {
+      border-color: #d81b60;
+    }
 
-        .form-section {
-            margin-top: 35px;
-        }
+    .icon {
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      background: #fff0f6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+    }
 
-        input,
-        select,
-        textarea {
-            display: block;
-            width: 100%;
-            box-sizing: border-box;
-            padding: 20px;
-            margin: 10px 0;
-            border: 3px solid #dfa1c8;
-            border-radius: 20px;
-            background: white;
-            font-size: 20px;
-        }
+    .option h3 {
+      color: #333;
+      margin-bottom: 5px;
+    }
 
-        textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
+    .option p {
+      color: #777;
+      font-size: 13px;
+    }
 
-        .hidden {
-            display: none;
-        }
+    .arrow {
+      margin-left: auto;
+      color: #d81b60;
+      font-size: 25px;
+    }
 
-        .customer-care {
-            text-align: center;
-            margin: 40px 0;
-            color: #c63895;
-        }
-    </style>
+    .footer {
+      text-align: center;
+      color: #888;
+      font-size: 13px;
+      padding: 20px;
+    }
+
+    /* Registration form */
+
+    #registration {
+      display: none;
+      background: white;
+      padding: 25px;
+      border-radius: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    #registration h2 {
+      color: #d81b60;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-top: 12px;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      font-size: 15px;
+    }
+
+    .register-button {
+      width: 100%;
+      margin-top: 20px;
+      padding: 14px;
+      background: #d81b60;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .back-button {
+      width: 100%;
+      margin-top: 10px;
+      padding: 12px;
+      background: #eee;
+      color: #333;
+      border: none;
+      border-radius: 25px;
+      font-size: 15px;
+    }
+  </style>
 </head>
 
 <body>
 
-<header>
-    <h1>💅 Nail Upp</h1>
-    <p>Your beauty, your way.</p>
-</header>
+  <div class="header">
+    <div class="logo">💅</div>
+    <h1>Nail Upp</h1>
+    <p>Your nail services, wherever you are.</p>
+  </div>
 
-<div class="container">
+  <div class="container">
 
-    <h2>What would you like to do?</h2>
+    <div id="welcomeScreen">
 
-    <!-- MAIN MENU -->
+      <div class="welcome">
+        <h2>Welcome to Nail Upp</h2>
+        <p>How would you like to use Nail Upp?</p>
+      </div>
 
-    <button class="main-button"
-            onclick="showSection('homeBooking')">
-        🏠 Book Home Service
-    </button>
+      <div class="option" onclick="openRegistration('Client')">
+        <div class="icon">👤</div>
+        <div>
+          <h3>Register as a Client</h3>
+          <p>Book nail services and order products.</p>
+        </div>
+        <div class="arrow">›</div>
+      </div>
 
-    <button class="main-button"
-            onclick="showSection('salonBooking')">
-        💅 Book a Nail Salon
-    </button>
+      <div class="option" onclick="openRegistration('Nail Technician')">
+        <div class="icon">💅</div>
+        <div>
+          <h3>Register as a Nail Technician</h3>
+          <p>Receive home-service bookings from clients.</p>
+        </div>
+        <div class="arrow">›</div>
+      </div>
 
-    <button class="main-button"
-            onclick="showSection('technicianRegistration')">
-        👩‍🎨 Become a Nail Technician
-    </button>
+      <div class="option" onclick="openRegistration('Nail Parlor')">
+        <div class="icon">🏪</div>
+        <div>
+          <h3>Register as a Nail Parlor</h3>
+          <p>List your parlor and receive appointments.</p>
+        </div>
+        <div class="arrow">›</div>
+      </div>
 
-    <button class="main-button"
-            onclick="window.location.href='technician.html'">
-        👩‍💼 Technician Dashboard
-    </button>
-
-
-    <!-- HOME SERVICE BOOKING -->
-
-    <section id="homeBooking" class="form-section hidden">
-
-        <h2>🏠 Home Service Booking</h2>
-
-        <input
-            id="homeName"
-            type="text"
-            placeholder="Your full name">
-
-        <input
-            id="homePhone"
-            type="tel"
-            placeholder="Phone number">
-
-        <input
-            id="homeLocation"
-            type="text"
-            placeholder="Your location / address">
-
-        <select id="homeService">
-
-            <option value="">
-                Select nail service
-            </option>
-
-            <option value="Acrylic Nails">
-                Acrylic Nails
-            </option>
-
-            <option value="Gel Nails">
-                Gel Nails
-            </option>
-
-            <option value="Manicure">
-                Manicure
-            </option>
-
-            <option value="Pedicure">
-                Pedicure
-            </option>
-
-            <option value="Nail Art">
-                Nail Art
-            </option>
-
-            <option value="Nail Extensions">
-                Nail Extensions
-            </option>
-
-        </select>
-
-        <input
-            id="homeDate"
-            type="date">
-
-        <input
-            id="homeTime"
-            type="time">
-
-        <textarea
-            id="homeInstructions"
-            placeholder="Extra instructions"></textarea>
-
-        <button
-            class="submit-button"
-            onclick="requestBooking()">
-            📲 Request Booking
-        </button>
-
-        <button
-            class="back-button"
-            onclick="hideSections()">
-            ⬅️ Back
-        </button>
-
-    </section>
-
-
-    <!-- SALON BOOKING -->
-
-    <section id="salonBooking" class="form-section hidden">
-
-        <h2>💅 Salon Booking</h2>
-
-        <input
-            type="text"
-            placeholder="Your full name">
-
-        <input
-            type="tel"
-            placeholder="Phone number">
-
-        <input
-            type="text"
-            placeholder="Preferred salon">
-
-        <select>
-
-            <option value="">
-                Select nail service
-            </option>
-
-            <option>Acrylic Nails</option>
-            <option>Gel Nails</option>
-            <option>Manicure</option>
-            <option>Pedicure</option>
-            <option>Nail Art</option>
-            <option>Nail Extensions</option>
-
-        </select>
-
-        <input type="date">
-
-        <input type="time">
-
-        <button
-            class="submit-button"
-            onclick="bookSalon()">
-            📲 Book Salon
-        </button>
-
-        <button
-            class="back-button"
-            onclick="hideSections()">
-            ⬅️ Back
-        </button>
-
-    </section>
-
-
-    <!-- TECHNICIAN REGISTRATION -->
-
-    <section id="technicianRegistration"
-             class="form-section hidden">
-
-        <h2>👩‍🎨 Become a Nail Technician</h2>
-
-        <input
-            id="techName"
-            type="text"
-            placeholder="Full name">
-
-        <input
-            id="techPhone"
-            type="tel"
-            placeholder="Phone number">
-
-        <input
-            id="techLocation"
-            type="text"
-            placeholder="Location">
-
-        <input
-            id="techServices"
-            type="text"
-            placeholder="Services you offer">
-
-        <textarea
-            id="techExperience"
-            placeholder="Tell us about your experience"></textarea>
-
-        <button
-            class="submit-button"
-            onclick="registerTechnician()">
-            ✅ Register
-        </button>
-
-        <button
-            class="back-button"
-            onclick="hideSections()">
-            ⬅️ Back
-        </button>
-
-    </section>
-
-
-    <!-- CUSTOMER CARE -->
-
-    <div class="customer-care">
-
-        <h2>📞 Customer Care</h2>
-
-        <p>
-            Customer care contacts will be added here.
-        </p>
+      <div class="option" onclick="openRegistration('Nail Shop')">
+        <div class="icon">🛍️</div>
+        <div>
+          <h3>Register as a Nail Shop</h3>
+          <p>Sell nail products to Nail Upp customers.</p>
+        </div>
+        <div class="arrow">›</div>
+      </div>
 
     </div>
 
-</div>
+    <div id="registration">
 
+      <h2 id="registrationTitle">Register</h2>
 
-<script src="app.js"></script>
+      <label>Full Name</label>
+      <input type="text" id="name" placeholder="Enter your full name">
 
-<script>
+      <label>Phone Number</label>
+      <input type="tel" id="phone" placeholder="Enter phone number">
 
-function showSection(sectionId) {
+      <label>Email</label>
+      <input type="email" id="email" placeholder="Enter email">
 
-    hideSections();
+      <label>Password</label>
+      <input type="password" id="password" placeholder="Create password">
 
-    document
-        .getElementById(sectionId)
-        .classList.remove("hidden");
+      <div id="businessField" style="display:none;">
+        <label>Business Name</label>
+        <input type="text" id="businessName" placeholder="Enter business name">
+      </div>
 
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-}
+      <button class="register-button" onclick="registerUser()">
+        Create Account
+      </button>
 
+      <button class="back-button" onclick="goBack()">
+        ← Back
+      </button>
 
-function hideSections() {
+    </div>
 
-    document
-        .querySelectorAll(".form-section")
-        .forEach(function(section) {
+  </div>
 
-            section.classList.add("hidden");
+  <div class="footer">
+    © 2026 Nail Upp
+  </div>
 
-        });
+  <script>
+    let selectedRole = "";
 
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-}
+    function openRegistration(role) {
+      selectedRole = role;
 
+      document.getElementById("welcomeScreen").style.display = "none";
+      document.getElementById("registration").style.display = "block";
 
-function bookSalon() {
+      document.getElementById("registrationTitle").textContent =
+        "Register as " + role;
 
-    alert(
-        "Salon booking received! We will connect you with a salon."
-    );
+      if (role === "Nail Parlor" || role === "Nail Shop") {
+        document.getElementById("businessField").style.display = "block";
+      } else {
+        document.getElementById("businessField").style.display = "none";
+      }
+    }
 
-}
+    function goBack() {
+      document.getElementById("registration").style.display = "none";
+      document.getElementById("welcomeScreen").style.display = "block";
+    }
 
-</script>
+    function registerUser() {
+      const name = document.getElementById("name").value;
+      const phone = document.getElementById("phone").value;
+      const password = document.getElementById("password").value;
+
+      if (!name || !phone || !password) {
+        alert("Please fill in your name, phone number and password.");
+        return;
+      }
+
+      alert(
+        "Registration successful!\n\n" +
+        "Account type: " + selectedRole +
+        "\nName: " + name
+      );
+    }
+  </script>
 
 </body>
 </html>
