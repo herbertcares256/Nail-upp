@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nail Upp Shop</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <header>
+    <h1>💅 Nail Upp Shop</h1>
+    <p>Shop professional nail products</p>
+  </header>
+
+  <main>
+
+    <section class="shop">
+      <h2>Nail Products</h2>
+
+      <div class="products">
+
+        <div class="product">
+          <div class="product-image">💅</div>
+          <h3>Gel Nail Polish</h3>
+          <p>UGX 15,000</p>
+          <button onclick="addToCart('Gel Nail Polish', 15000)">
+            Add to Cart
+          </button>
+        </div>
+
+        <div class="product">
+          <div class="product-image">💎</div>
+          <h3>Nail Tips</h3>
+          <p>UGX 10,000</p>
+          <button onclick="addToCart('Nail Tips', 10000)">
+            Add to Cart
+          </button>
+        </div>
+
+        <div class="product">
+          <div class="product-image">✨</div>
+          <h3>Nail Glitter</h3>
+          <p>UGX 8,000</p>
+          <button onclick="addToCart('Nail Glitter', 8000)">
+            Add to Cart
+          </button>
+        </div>
+
+        <div class="product">
+          <div class="product-image">🖌️</div>
+          <h3>Nail Brush Set</h3>
+          <p>UGX 20,000</p>
+          <button onclick="addToCart('Nail Brush Set', 20000)">
+            Add to Cart
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="cart">
+      <h2>🛒 Your Cart</h2>
+
+      <div id="cartItems">
+        <p>Your cart is empty.</p>
+      </div>
+
+      <h3>Total: UGX <span id="cartTotal">0</span></h3>
+
+      <button onclick="checkout()">Checkout</button>
+    </section>
+
+  </main>
+
+  <script>
+    let cart = [];
+    let total = 0;
+
+    function addToCart(name, price) {
+      cart.push({ name: name, price: price });
+      total += price;
+
+      displayCart();
+
+      alert(name + " added to cart!");
+    }
+
+    function displayCart() {
+      const cartItems = document.getElementById("cartItems");
+
+      cartItems.innerHTML = "";
+
+      cart.forEach(function(item, index) {
+        const itemElement = document.createElement("p");
+
+        itemElement.innerHTML =
+          item.name + " - UGX " + item.price.toLocaleString() +
+          ' <button onclick="removeItem(' + index + ')">Remove</button>';
+
+        cartItems.appendChild(itemElement);
+      });
+
+      document.getElementById("cartTotal").textContent =
+        total.toLocaleString();
+
+      if (cart.length === 0) {
+        cartItems.innerHTML = "<p>Your cart is empty.</p>";
+      }
+    }
+
+    function removeItem(index) {
+      total -= cart[index].price;
+      cart.splice(index, 1);
+      displayCart();
+    }
+
+    function checkout() {
+      if (cart.length === 0) {
+        alert("Your cart is empty.");
+        return;
+      }
+
+      alert(
+        "Order received! Total: UGX " +
+        total.toLocaleString() +
+        ". We will continue with checkout."
+      );
+    }
+  </script>
+
+</body>
+</html>
