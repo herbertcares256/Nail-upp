@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nail Upp - Client</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff7fb;
+      color: #333;
+    }
+
+    header {
+      background: #d81b60;
+      color: white;
+      padding: 22px 18px;
+      text-align: center;
+      border-radius: 0 0 25px 25px;
+    }
+
+    header h1 {
+      font-size: 28px;
+    }
+
+    header p {
+      margin-top: 5px;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: auto;
+      padding: 20px 15px 40px;
+    }
+
+    .welcome {
+      text-align: center;
+      margin: 10px 0 25px;
+    }
+
+    .welcome h2 {
+      color: #d81b60;
+      margin-bottom: 8px;
+    }
+
+    .welcome p {
+      color: #777;
+    }
+
+    .services {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .service {
+      background: white;
+      padding: 20px 12px;
+      border-radius: 18px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      cursor: pointer;
+      border: 2px solid transparent;
+    }
+
+    .service:hover {
+      border-color: #d81b60;
+    }
+
+    .icon {
+      font-size: 38px;
+      margin-bottom: 10px;
+    }
+
+    .service h3 {
+      font-size: 17px;
+      margin-bottom: 6px;
+    }
+
+    .service p {
+      font-size: 12px;
+      color: #777;
+      line-height: 1.4;
+    }
+
+    .section {
+      background: white;
+      margin-top: 20px;
+      padding: 20px;
+      border-radius: 18px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+    }
+
+    .section h2 {
+      color: #d81b60;
+      margin-bottom: 15px;
+      font-size: 20px;
+    }
+
+    .booking {
+      padding: 13px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .booking:last-child {
+      border-bottom: none;
+    }
+
+    .booking strong {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .status {
+      color: #d81b60;
+      font-size: 13px;
+    }
+
+    .account {
+      margin-top: 20px;
+      background: white;
+      padding: 20px;
+      border-radius: 18px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+    }
+
+    .account h2 {
+      color: #d81b60;
+      margin-bottom: 15px;
+    }
+
+    .account p {
+      margin: 8px 0;
+    }
+
+    .logout {
+      width: 100%;
+      margin-top: 15px;
+      padding: 13px;
+      border: none;
+      border-radius: 25px;
+      background: #d81b60;
+      color: white;
+      font-size: 15px;
+    }
+
+    @media (max-width: 500px) {
+      .services {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .service {
+        padding: 16px 8px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>💅 Nail Upp</h1>
+    <p>Client Dashboard</p>
+  </header>
+
+  <div class="container">
+
+    <div class="welcome">
+      <h2>Welcome to Nail Upp!</h2>
+      <p>What would you like to do today?</p>
+    </div>
+
+    <div class="services">
+
+      <div class="service" onclick="orderTechnician()">
+        <div class="icon">💅</div>
+        <h3>Home Service</h3>
+        <p>Request a nail technician to come to you.</p>
+      </div>
+
+      <div class="service" onclick="bookParlor()">
+        <div class="icon">🏪</div>
+        <h3>Book a Parlor</h3>
+        <p>Find and book a nearby nail parlor.</p>
+      </div>
+
+      <div class="service" onclick="openShop()">
+        <div class="icon">🛍️</div>
+        <h3>Shop Products</h3>
+        <p>Buy nail products and supplies.</p>
+      </div>
+
+      <div class="service" onclick="findNearby()">
+        <div class="icon">📍</div>
+        <h3>Nearby</h3>
+        <p>Find nail technicians and parlors near you.</p>
+      </div>
+
+    </div>
+
+    <div class="section">
+      <h2>📋 My Bookings</h2>
+
+      <div id="bookings">
+        <p>No bookings yet.</p>
+      </div>
+    </div>
+
+    <div class="account">
+
+      <h2>👤 My Account</h2>
+
+      <p><strong>Name:</strong> Client</p>
+      <p><strong>Phone:</strong> Not added</p>
+      <p><strong>Email:</strong> Not added</p>
+
+      <button class="logout" onclick="logout()">
+        Log Out
+      </button>
+
+    </div>
+
+  </div>
+
+  <script>
+
+    function orderTechnician() {
+      alert(
+        "Home Service\n\n" +
+        "Next we will allow you to choose:\n" +
+        "• Nail service\n" +
+        "• Technician\n" +
+        "• Location\n" +
+        "• Date and time\n" +
+        "• Payment"
+      );
+    }
+
+    function bookParlor() {
+      alert(
+        "Book a Nail Parlor\n\n" +
+        "Next we will show nearby parlors, " +
+        "their services, prices, ratings and available appointments."
+      );
+    }
+
+    function openShop() {
+      window.location.href = "shop.html";
+    }
+
+    function findNearby() {
+      alert(
+        "Nearby Nail Services\n\n" +
+        "Location services will be connected here."
+      );
+    }
+
+    function logout() {
+      window.location.href = "index.html";
+    }
+
+  </script>
+
+</body>
+</html>
