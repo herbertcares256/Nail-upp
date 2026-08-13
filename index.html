@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -263,14 +263,35 @@ function goBack() {
 
 function registerUser() {
 
-  const name = document.getElementById("name").value.trim();
-  const phone = document.getElementById("phone").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value.trim();
+  const name =
+    document.getElementById("name").value.trim();
+
+  const phone =
+    document.getElementById("phone").value.trim();
+
+  const email =
+    document.getElementById("email").value.trim();
+
+  const password =
+    document.getElementById("password").value.trim();
+
+  const businessName =
+    document.getElementById("businessName").value.trim();
 
   if (!name || !phone || !email || !password) {
 
-    alert("Please fill in all fields.");
+    alert("Please fill in all required fields.");
+
+    return;
+  }
+
+  if (
+    (selectedRole === "Nail Parlor" ||
+     selectedRole === "Nail Shop") &&
+    !businessName
+  ) {
+
+    alert("Please enter your business name.");
 
     return;
   }
@@ -280,7 +301,16 @@ function registerUser() {
   localStorage.setItem("nailUppEmail", email);
   localStorage.setItem("nailUppRole", selectedRole);
 
-  if (selectedRole === "Client") {
+  if (selectedRole === "Nail Parlor") {
+
+    localStorage.setItem(
+      "nailUppBusinessName",
+      businessName
+    );
+
+    window.location.href = "parlor.html";
+
+  } else if (selectedRole === "Client") {
 
     window.location.href = "client.html";
 
@@ -288,16 +318,10 @@ function registerUser() {
 
     window.location.href = "technician.html";
 
-  } else if (selectedRole === "Nail Parlor") {
-
-    alert("Nail Parlor dashboard will be connected next.");
-
   } else if (selectedRole === "Nail Shop") {
 
     window.location.href = "shop.html";
-
   }
-
 }
 
 </script>
