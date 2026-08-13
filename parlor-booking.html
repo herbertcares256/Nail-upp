@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nail Upp - Book a Parlor</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff7fb;
+      color: #333;
+    }
+
+    header {
+      background: #d81b60;
+      color: white;
+      text-align: center;
+      padding: 25px 15px;
+      border-radius: 0 0 25px 25px;
+    }
+
+    header h1 {
+      font-size: 28px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      padding: 20px 15px 40px;
+    }
+
+    .back {
+      display: inline-block;
+      margin-bottom: 18px;
+      color: #d81b60;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .card {
+      background: white;
+      padding: 22px;
+      border-radius: 18px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    h2 {
+      color: #d81b60;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      font-size: 15px;
+      background: white;
+    }
+
+    textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    .submit {
+      width: 100%;
+      margin-top: 22px;
+      padding: 15px;
+      background: #d81b60;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .success {
+      display: none;
+      text-align: center;
+    }
+
+    .check {
+      font-size: 55px;
+      margin-bottom: 10px;
+    }
+
+    .success h2 {
+      margin-bottom: 10px;
+    }
+
+    .dashboard {
+      display: inline-block;
+      margin-top: 20px;
+      background: #d81b60;
+      color: white;
+      padding: 13px 22px;
+      border-radius: 25px;
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>💅 Nail Upp</h1>
+  <p>Book a Nail Parlor</p>
+</header>
+
+<div class="container">
+
+  <a href="client.html" class="back">← Back to Dashboard</a>
+
+  <div id="bookingForm" class="card">
+
+    <h2>🏪 Book a Nail Parlor</h2>
+
+    <label>Parlor Name</label>
+    <input
+      id="parlorName"
+      type="text"
+      placeholder="Enter parlor name"
+    >
+
+    <label>Nail Service</label>
+
+    <select id="service">
+      <option value="">Select a service</option>
+      <option>Manicure</option>
+      <option>Pedicure</option>
+      <option>Gel Nails</option>
+      <option>Acrylic Nails</option>
+      <option>Nail Extensions</option>
+      <option>Nail Art</option>
+      <option>Manicure + Pedicure</option>
+      <option>Other</option>
+    </select>
+
+    <label>Preferred Date</label>
+    <input id="date" type="date">
+
+    <label>Preferred Time</label>
+    <input id="time" type="time">
+
+    <label>Additional Instructions</label>
+
+    <textarea
+      id="instructions"
+      placeholder="Anything you want the parlor to know?"
+    ></textarea>
+
+    <button class="submit" onclick="submitBooking()">
+      Book Parlor
+    </button>
+
+  </div>
+
+  <div id="success" class="card success">
+
+    <div class="check">✅</div>
+
+    <h2>Booking Submitted!</h2>
+
+    <p>
+      Your booking request has been sent to the nail parlor.
+    </p>
+
+    <a href="client.html" class="dashboard">
+      Back to Client Dashboard
+    </a>
+
+  </div>
+
+</div>
+
+<script>
+
+function submitBooking() {
+
+  const parlorName =
+    document.getElementById("parlorName").value.trim();
+
+  const service =
+    document.getElementById("service").value;
+
+  const date =
+    document.getElementById("date").value;
+
+  const time =
+    document.getElementById("time").value;
+
+  const instructions =
+    document.getElementById("instructions").value.trim();
+
+  const clientName =
+    localStorage.getItem("nailUppName") || "Client";
+
+  const clientPhone =
+    localStorage.getItem("nailUppPhone") || "";
+
+  if (!parlorName || !service || !date || !time) {
+
+    alert(
+      "Please enter the parlor, service, date and time."
+    );
+
+    return;
+  }
+
+  const booking = {
+
+    id: "PB-" + Date.now(),
+
+    clientName: clientName,
+
+    clientPhone: clientPhone,
+
+    parlorName: parlorName,
+
+    service: service,
+
+    date: date,
+
+    time: time,
+
+    instructions: instructions,
+
+    status: "Waiting for parlor"
+
+  };
+
+  localStorage.setItem(
+    "nailUppParlorBooking",
+    JSON.stringify(booking)
+  );
+
+  document.getElementById("bookingForm").style.display = "none";
+
+  document.getElementById("success").style.display = "block";
+}
+
+</script>
+
+</body>
+</html>
