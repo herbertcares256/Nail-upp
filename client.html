@@ -101,6 +101,7 @@
       border: 1px solid #eee;
       padding: 15px;
       border-radius: 14px;
+      margin-bottom: 12px;
     }
 
     .booking p {
@@ -203,10 +204,10 @@
 
   <div class="section">
 
-    <h2>📋 My Booking</h2>
+    <h2>📋 My Bookings</h2>
 
-    <div id="booking">
-      <p class="empty">No booking yet.</p>
+    <div id="bookings">
+      <p class="empty">No bookings yet.</p>
     </div>
 
   </div>
@@ -256,7 +257,7 @@ function orderTechnician() {
 
 
 function bookParlor() {
-  alert("Nail Parlor booking will be added next.");
+  window.location.href = "parlor-booking.html";
 }
 
 
@@ -270,51 +271,83 @@ function findNearby() {
 }
 
 
-function loadBooking() {
+function loadBookings() {
 
-  const saved =
+  let html = "";
+
+  const homeRequest =
     localStorage.getItem("nailUppServiceRequest");
 
-  const booking =
-    document.getElementById("booking");
+  const parlorBooking =
+    localStorage.getItem("nailUppParlorBooking");
 
-  if (!saved) {
 
-    booking.innerHTML =
-      '<p class="empty">No booking yet.</p>';
+  if (homeRequest) {
 
-    return;
+    const request = JSON.parse(homeRequest);
+
+    let statusClass = "status";
+
+    if (request.status === "Accepted by technician") {
+      statusClass = "status accepted";
+    }
+
+    html +=
+      '<div class="booking">' +
+      '<p><strong>💅 Home Service</strong></p>' +
+      '<p><strong>Service:</strong> ' +
+      request.service + '</p>' +
+      '<p><strong>Date:</strong> ' +
+      request.date + '</p>' +
+      '<p><strong>Time:</strong> ' +
+      request.time + '</p>' +
+      '<p><strong>Location:</strong> ' +
+      request.location + '</p>' +
+      '<div class="' + statusClass + '">' +
+      'STATUS: ' + request.status +
+      '</div>' +
+      '</div>';
   }
 
-  const request = JSON.parse(saved);
 
-  let statusClass = "status";
+  if (parlorBooking) {
 
-  if (request.status === "Accepted by technician") {
-    statusClass = "status accepted";
+    const booking = JSON.parse(parlorBooking);
+
+    let statusClass = "status";
+
+    if (booking.status === "Accepted by parlor") {
+      statusClass = "status accepted";
+    }
+
+    html +=
+      '<div class="booking">' +
+      '<p><strong>🏪 Nail Parlor</strong></p>' +
+      '<p><strong>Parlor:</strong> ' +
+      booking.parlorName + '</p>' +
+      '<p><strong>Service:</strong> ' +
+      booking.service + '</p>' +
+      '<p><strong>Date:</strong> ' +
+      booking.date + '</p>' +
+      '<p><strong>Time:</strong> ' +
+      booking.time + '</p>' +
+      '<div class="' + statusClass + '">' +
+      'STATUS: ' + booking.status +
+      '</div>' +
+      '</div>';
   }
 
-  booking.innerHTML =
 
-    '<div class="booking">' +
+  if (html === "") {
 
-    '<p><strong>Service:</strong> ' +
-    request.service + '</p>' +
+    document.getElementById("bookings").innerHTML =
+      '<p class="empty">No bookings yet.</p>';
 
-    '<p><strong>Date:</strong> ' +
-    request.date + '</p>' +
+  } else {
 
-    '<p><strong>Time:</strong> ' +
-    request.time + '</p>' +
-
-    '<p><strong>Location:</strong> ' +
-    request.location + '</p>' +
-
-    '<div class="' + statusClass + '">' +
-    'STATUS: ' + request.status +
-    '</div>' +
-
-    '</div>';
+    document.getElementById("bookings").innerHTML =
+      html;
+  }
 }
 
 
@@ -326,7 +359,7 @@ function logout() {
 }
 
 
-loadBooking();
+loadBookings();
 
 </script>
 
