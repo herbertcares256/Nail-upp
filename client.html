@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -84,7 +84,8 @@
       color: #777;
     }
 
-    .section {
+    .section,
+    .account {
       background: white;
       margin-top: 20px;
       padding: 20px;
@@ -92,19 +93,22 @@
       box-shadow: 0 4px 15px rgba(0,0,0,0.07);
     }
 
-    .section h2 {
+    .section h2,
+    .account h2 {
       color: #d81b60;
       margin-bottom: 15px;
     }
 
-    .booking {
+    .booking,
+    .order {
       border: 1px solid #eee;
       padding: 15px;
       border-radius: 14px;
       margin-bottom: 12px;
     }
 
-    .booking p {
+    .booking p,
+    .order p {
       margin: 8px 0;
       font-size: 14px;
     }
@@ -124,17 +128,27 @@
       color: #2e7d32;
     }
 
-    .account {
-      background: white;
-      margin-top: 20px;
-      padding: 20px;
-      border-radius: 18px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+    .declined {
+      background: #ffebee;
+      color: #c62828;
     }
 
-    .account h2 {
-      color: #d81b60;
-      margin-bottom: 15px;
+    .waiting {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .order-item {
+      background: #fff7fb;
+      padding: 10px;
+      border-radius: 10px;
+      margin-top: 8px;
+    }
+
+    .total {
+      font-size: 17px;
+      font-weight: bold;
+      margin-top: 12px;
     }
 
     .account p {
@@ -174,6 +188,9 @@
     <p>What would you like to do today?</p>
   </div>
 
+
+  <!-- MAIN SERVICES -->
+
   <div class="services">
 
     <div class="service" onclick="orderTechnician()">
@@ -182,17 +199,20 @@
       <p>Request a technician to come to you.</p>
     </div>
 
+
     <div class="service" onclick="bookParlor()">
       <div class="icon">🏪</div>
       <h3>Book a Parlor</h3>
       <p>Book a nearby nail parlor.</p>
     </div>
 
+
     <div class="service" onclick="openShop()">
       <div class="icon">🛍️</div>
       <h3>Shop Products</h3>
       <p>Buy nail products and supplies.</p>
     </div>
+
 
     <div class="service" onclick="findNearby()">
       <div class="icon">📍</div>
@@ -202,15 +222,42 @@
 
   </div>
 
+
+  <!-- MY ORDERS -->
+
+  <div class="section">
+
+    <h2>🛒 My Orders</h2>
+
+    <div id="myOrders">
+
+      <p class="empty">
+        No orders yet.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- MY BOOKINGS -->
+
   <div class="section">
 
     <h2>📋 My Bookings</h2>
 
     <div id="bookings">
-      <p class="empty">No bookings yet.</p>
+
+      <p class="empty">
+        No bookings yet.
+      </p>
+
     </div>
 
   </div>
+
+
+  <!-- ACCOUNT -->
 
   <div class="account">
 
@@ -239,7 +286,10 @@
 
 </div>
 
+
 <script>
+
+/* CLIENT INFORMATION */
 
 document.getElementById("clientName").textContent =
   localStorage.getItem("nailUppName") || "Client";
@@ -251,89 +301,195 @@ document.getElementById("clientEmail").textContent =
   localStorage.getItem("nailUppEmail") || "Not added";
 
 
+/* NAVIGATION */
+
 function orderTechnician() {
-  window.location.href = "home-service.html";
+
+  window.location.href =
+    "home-service.html";
+
 }
 
 
 function bookParlor() {
-  window.location.href = "parlor-booking.html";
+
+  window.location.href =
+    "parlor-booking.html";
+
 }
 
 
 function openShop() {
-  window.location.href = "shop-products.html";
+
+  window.location.href =
+    "shop-products.html";
+
 }
 
 
 function findNearby() {
-  alert("Nearby nail services will be added next.");
+
+  alert(
+    "Nearby nail services will be added next."
+  );
+
 }
 
+
+/* MY BOOKINGS */
 
 function loadBookings() {
 
   let html = "";
 
+
   const homeRequest =
-    localStorage.getItem("nailUppServiceRequest");
+    localStorage.getItem(
+      "nailUppServiceRequest"
+    );
+
 
   const parlorBooking =
-    localStorage.getItem("nailUppParlorBooking");
+    localStorage.getItem(
+      "nailUppParlorBooking"
+    );
+
 
   if (homeRequest) {
 
-    const request = JSON.parse(homeRequest);
+    const request =
+      JSON.parse(homeRequest);
 
-    let statusClass = "status";
 
-    if (request.status === "Accepted by technician") {
-      statusClass = "status accepted";
+    let statusClass =
+      "status";
+
+
+    if (
+      request.status ===
+      "Accepted by technician"
+    ) {
+
+      statusClass =
+        "status accepted";
+
     }
 
+
+    if (
+      request.status ===
+      "Declined by technician"
+    ) {
+
+      statusClass =
+        "status declined";
+
+    }
+
+
     html +=
+
       '<div class="booking">' +
+
       '<p><strong>💅 Home Service</strong></p>' +
+
       '<p><strong>Service:</strong> ' +
-      request.service + '</p>' +
+      request.service +
+      '</p>' +
+
       '<p><strong>Date:</strong> ' +
-      request.date + '</p>' +
+      request.date +
+      '</p>' +
+
       '<p><strong>Time:</strong> ' +
-      request.time + '</p>' +
+      request.time +
+      '</p>' +
+
       '<p><strong>Location:</strong> ' +
-      request.location + '</p>' +
-      '<div class="' + statusClass + '">' +
-      'STATUS: ' + request.status +
+      request.location +
+      '</p>' +
+
+      '<div class="' +
+      statusClass +
+      '">' +
+
+      'STATUS: ' +
+      request.status +
+
       '</div>' +
+
       '</div>';
+
   }
+
 
   if (parlorBooking) {
 
-    const booking = JSON.parse(parlorBooking);
+    const booking =
+      JSON.parse(parlorBooking);
 
-    let statusClass = "status";
 
-    if (booking.status === "Accepted by parlor") {
-      statusClass = "status accepted";
+    let statusClass =
+      "status";
+
+
+    if (
+      booking.status ===
+      "Accepted by parlor"
+    ) {
+
+      statusClass =
+        "status accepted";
+
     }
 
+
+    if (
+      booking.status ===
+      "Declined by parlor"
+    ) {
+
+      statusClass =
+        "status declined";
+
+    }
+
+
     html +=
+
       '<div class="booking">' +
+
       '<p><strong>🏪 Nail Parlor</strong></p>' +
+
       '<p><strong>Parlor:</strong> ' +
-      booking.parlorName + '</p>' +
+      booking.parlorName +
+      '</p>' +
+
       '<p><strong>Service:</strong> ' +
-      booking.service + '</p>' +
+      booking.service +
+      '</p>' +
+
       '<p><strong>Date:</strong> ' +
-      booking.date + '</p>' +
+      booking.date +
+      '</p>' +
+
       '<p><strong>Time:</strong> ' +
-      booking.time + '</p>' +
-      '<div class="' + statusClass + '">' +
-      'STATUS: ' + booking.status +
+      booking.time +
+      '</p>' +
+
+      '<div class="' +
+      statusClass +
+      '">' +
+
+      'STATUS: ' +
+      booking.status +
+
       '</div>' +
+
       '</div>';
+
   }
+
 
   if (html === "") {
 
@@ -344,19 +500,171 @@ function loadBookings() {
 
     document.getElementById("bookings").innerHTML =
       html;
+
   }
+
 }
 
+
+/* MY ORDERS */
+
+function loadMyOrders() {
+
+  const saved =
+    localStorage.getItem(
+      "nailUppProductOrder"
+    );
+
+
+  const container =
+    document.getElementById("myOrders");
+
+
+  if (!saved) {
+
+    container.innerHTML =
+      '<p class="empty">No orders yet.</p>';
+
+    return;
+
+  }
+
+
+  const order =
+    JSON.parse(saved);
+
+
+  let statusClass =
+    "status";
+
+
+  if (
+    order.status ===
+    "Accepted by shop"
+  ) {
+
+    statusClass =
+      "status accepted";
+
+  }
+
+
+  if (
+    order.status ===
+    "Declined by shop"
+  ) {
+
+    statusClass =
+      "status declined";
+
+  }
+
+
+  if (
+    order.status ===
+    "Waiting for shop"
+  ) {
+
+    statusClass =
+      "status waiting";
+
+  }
+
+
+  let html =
+
+    '<div class="order">' +
+
+    '<p><strong>Order:</strong> ' +
+    order.id +
+    '</p>' +
+
+    '<p><strong>Shop:</strong> ' +
+    (order.shopName || "Nail Shop") +
+    '</p>';
+
+
+  order.items.forEach(
+    function(item) {
+
+      html +=
+
+        '<div class="order-item">' +
+
+        '<strong>' +
+        item.name +
+        '</strong>' +
+
+        '<p>Quantity: ' +
+        item.quantity +
+        '</p>' +
+
+        '<p>Price: UGX ' +
+        Number(
+          item.price
+        ).toLocaleString() +
+        '</p>' +
+
+        '<p>Subtotal: UGX ' +
+        Number(
+          item.price *
+          item.quantity
+        ).toLocaleString() +
+        '</p>' +
+
+        '</div>';
+
+    }
+  );
+
+
+  html +=
+
+    '<p class="total">' +
+
+    'TOTAL: UGX ' +
+
+    Number(
+      order.total
+    ).toLocaleString() +
+
+    '</p>' +
+
+    '<div class="' +
+    statusClass +
+    '">' +
+
+    'STATUS: ' +
+    order.status +
+
+    '</div>' +
+
+    '</div>';
+
+
+  container.innerHTML =
+    html;
+
+}
+
+
+/* LOGOUT */
 
 function logout() {
 
   localStorage.clear();
 
-  window.location.href = "index.html";
+  window.location.href =
+    "index.html";
+
 }
 
 
+/* START */
+
 loadBookings();
+
+loadMyOrders();
 
 </script>
 
