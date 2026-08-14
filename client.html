@@ -262,7 +262,7 @@ function bookParlor() {
 
 
 function openShop() {
-  window.location.href = "shop.html";
+  window.location.href = "shop-products.html";
 }
 
 
@@ -280,7 +280,6 @@ function loadBookings() {
 
   const parlorBooking =
     localStorage.getItem("nailUppParlorBooking");
-
 
   if (homeRequest) {
 
@@ -309,7 +308,6 @@ function loadBookings() {
       '</div>';
   }
 
-
   if (parlorBooking) {
 
     const booking = JSON.parse(parlorBooking);
@@ -336,7 +334,6 @@ function loadBookings() {
       '</div>' +
       '</div>';
   }
-
 
   if (html === "") {
 
