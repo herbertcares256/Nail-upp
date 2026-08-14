@@ -1,171 +1,197 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nail Upp - Shop Products</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nail Upp - Shop Products</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #fff7fb;
-      color: #333;
-    }
+body {
+  font-family: Arial, sans-serif;
+  background: #fff7fb;
+  color: #333;
+}
 
-    header {
-      background: #d81b60;
-      color: white;
-      text-align: center;
-      padding: 25px 15px;
-      border-radius: 0 0 25px 25px;
-    }
+header {
+  background: #d81b60;
+  color: white;
+  text-align: center;
+  padding: 25px 15px;
+  border-radius: 0 0 25px 25px;
+}
 
-    header h1 {
-      font-size: 28px;
-    }
+header h1 {
+  font-size: 28px;
+}
 
-    .container {
-      max-width: 700px;
-      margin: auto;
-      padding: 20px 15px 40px;
-    }
+.container {
+  max-width: 700px;
+  margin: auto;
+  padding: 20px 15px 40px;
+}
 
-    .back {
-      display: inline-block;
-      margin-bottom: 18px;
-      color: #d81b60;
-      font-weight: bold;
-      text-decoration: none;
-    }
+.back {
+  display: inline-block;
+  margin-bottom: 18px;
+  color: #d81b60;
+  font-weight: bold;
+  text-decoration: none;
+}
 
-    .shop-info,
-    .cart,
-    .product {
-      background: white;
-      padding: 18px;
-      border-radius: 18px;
-      margin-bottom: 18px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-    }
+.shop-info,
+.cart,
+.delivery,
+.product {
+  background: white;
+  padding: 18px;
+  border-radius: 18px;
+  margin-bottom: 18px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
 
-    .shop-info h2,
-    .cart h2 {
-      color: #d81b60;
-      margin-bottom: 10px;
-    }
+.shop-info h2,
+.cart h2,
+.delivery h2 {
+  color: #d81b60;
+  margin-bottom: 12px;
+}
 
-    .shop-info p {
-      margin: 7px 0;
-    }
+.shop-info p {
+  margin: 7px 0;
+}
 
-    .products {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 15px;
-    }
+.products {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
 
-    .product {
-      margin-bottom: 0;
-      padding: 12px;
-    }
+.product {
+  margin-bottom: 0;
+  padding: 12px;
+}
 
-    .product img {
-      width: 100%;
-      height: 160px;
-      object-fit: cover;
-      border-radius: 12px;
-      margin-bottom: 10px;
-    }
+.product img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
 
-    .product h3 {
-      color: #d81b60;
-      font-size: 17px;
-      margin-bottom: 7px;
-    }
+.product h3 {
+  color: #d81b60;
+  font-size: 17px;
+  margin-bottom: 7px;
+}
 
-    .product p {
-      margin: 6px 0;
-      font-size: 14px;
-    }
+.product p {
+  margin: 6px 0;
+  font-size: 14px;
+}
 
-    .price {
-      font-weight: bold;
-      font-size: 16px !important;
-    }
+.price {
+  font-weight: bold;
+  font-size: 16px !important;
+}
 
-    button {
-      width: 100%;
-      border: none;
-      border-radius: 25px;
-      padding: 12px;
-      margin-top: 10px;
-      background: #d81b60;
-      color: white;
-      font-weight: bold;
-      font-size: 14px;
-    }
+label {
+  display: block;
+  font-weight: bold;
+  margin-top: 12px;
+  margin-bottom: 6px;
+}
 
-    .quantity {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 10px;
-    }
+input,
+textarea {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 15px;
+}
 
-    .quantity button {
-      width: 40px;
-      margin: 0;
-      padding: 8px;
-    }
+textarea {
+  min-height: 80px;
+}
 
-    .quantity span {
-      min-width: 25px;
-      text-align: center;
-      font-weight: bold;
-    }
+button {
+  width: 100%;
+  border: none;
+  border-radius: 25px;
+  padding: 12px;
+  margin-top: 10px;
+  background: #d81b60;
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+}
 
-    .cart-item {
-      border-bottom: 1px solid #eee;
-      padding: 10px 0;
-    }
+.quantity {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
 
-    .cart-item:last-child {
-      border-bottom: none;
-    }
+.quantity button {
+  width: 40px;
+  margin: 0;
+  padding: 8px;
+}
 
-    .cart-item p {
-      margin: 5px 0;
-    }
+.quantity span {
+  min-width: 25px;
+  text-align: center;
+  font-weight: bold;
+}
 
-    .total {
-      font-size: 18px;
-      font-weight: bold;
-      margin-top: 15px;
-    }
+.cart-item {
+  border-bottom: 1px solid #eee;
+  padding: 10px 0;
+}
 
-    .empty {
-      text-align: center;
-      color: #777;
-      padding: 20px;
-    }
+.cart-item:last-child {
+  border-bottom: none;
+}
 
-    .order-button {
-      margin-top: 15px;
-      font-size: 16px;
-    }
+.cart-item p {
+  margin: 5px 0;
+}
 
-    @media (max-width: 500px) {
-      .products {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+.total {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 15px;
+}
+
+.order-button {
+  margin-top: 15px;
+  font-size: 16px;
+}
+
+.empty {
+  text-align: center;
+  color: #777;
+  padding: 20px;
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 500px) {
+  .products {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
 </head>
 
 <body>
@@ -177,53 +203,102 @@
 
 <div class="container">
 
-  <a href="shops.html" class="back">
-    ← Choose Another Shop
-  </a>
+<a href="shops.html" class="back">
+← Choose Another Shop
+</a>
 
-  <!-- SHOP INFORMATION -->
+<!-- SHOP -->
 
-  <div class="shop-info">
+<div class="shop-info">
 
-    <h2>🏪 <span id="shopName">Nail Shop</span></h2>
+  <h2>🏪 <span id="shopName">Nail Shop</span></h2>
 
-    <p>
-      📍 <strong>Location:</strong>
-      <span id="shopLocation">Not provided</span>
+  <p>
+    📍 <strong>Location:</strong>
+    <span id="shopLocation">Not provided</span>
+  </p>
+
+  <p>
+    📞 <strong>Phone:</strong>
+    <span id="shopPhone">Not provided</span>
+  </p>
+
+  <p id="shopAbout"></p>
+
+</div>
+
+
+<!-- PRODUCTS -->
+
+<h2 style="color:#d81b60; margin-bottom:15px;">
+🛍️ Products
+</h2>
+
+<div id="products" class="products">
+  <p class="empty">Loading products...</p>
+</div>
+
+
+<!-- CART -->
+
+<div class="cart">
+
+  <h2>🛒 My Cart</h2>
+
+  <div id="cart">
+    <p class="empty">
+      Your cart is empty.
     </p>
-
-    <p>
-      📞 <strong>Phone:</strong>
-      <span id="shopPhone">Not provided</span>
-    </p>
-
-    <p id="shopAbout"></p>
-
   </div>
 
-
-  <!-- PRODUCTS -->
-
-  <h2 style="color:#d81b60; margin-bottom:15px;">
-    🛍️ Products
-  </h2>
-
-  <div id="products" class="products">
-    <p class="empty">Loading products...</p>
-  </div>
+</div>
 
 
-  <!-- CART -->
+<!-- DELIVERY -->
 
-  <div class="cart">
+<div id="deliverySection"
+     class="delivery hidden">
 
-    <h2>🛒 My Cart</h2>
+  <h2>📍 Delivery Details</h2>
 
-    <div id="cart">
-      <p class="empty">Your cart is empty.</p>
-    </div>
+  <label>Full Name</label>
 
-  </div>
+  <input
+    id="customerName"
+    type="text"
+    placeholder="Enter your full name"
+  >
+
+  <label>Phone Number</label>
+
+  <input
+    id="customerPhone"
+    type="tel"
+    placeholder="Enter your phone number"
+  >
+
+  <label>Delivery Location</label>
+
+  <input
+    id="deliveryLocation"
+    type="text"
+    placeholder="Example: Kireka, Kampala"
+  >
+
+  <label>Delivery Instructions</label>
+
+  <textarea
+    id="deliveryInstructions"
+    placeholder="Example: Call me when you arrive"
+  ></textarea>
+
+  <button
+    class="order-button"
+    onclick="placeOrder()">
+    ✅ Confirm Order
+  </button>
+
+</div>
 
 </div>
 
@@ -231,13 +306,11 @@
 <script>
 
 let shop = null;
-
 let products = [];
-
 let cart = [];
 
 
-/* LOAD SELECTED SHOP */
+/* LOAD SHOP */
 
 function loadShop() {
 
@@ -245,7 +318,6 @@ function loadShop() {
     localStorage.getItem(
       "selectedNailUppShop"
     );
-
 
   if (!saved) {
 
@@ -259,41 +331,33 @@ function loadShop() {
     return;
   }
 
-
-  shop =
-    JSON.parse(saved);
-
+  shop = JSON.parse(saved);
 
   document.getElementById(
     "shopName"
   ).textContent =
     shop.name || "Nail Shop";
 
-
   document.getElementById(
     "shopLocation"
   ).textContent =
     shop.location || "Not provided";
-
 
   document.getElementById(
     "shopPhone"
   ).textContent =
     shop.phone || "Not provided";
 
-
   document.getElementById(
     "shopAbout"
   ).textContent =
     shop.about || "";
 
-
   loadProducts();
-
 }
 
 
-/* LOAD PRODUCTS FROM SELECTED SHOP */
+/* LOAD PRODUCTS */
 
 function loadProducts() {
 
@@ -302,13 +366,10 @@ function loadProducts() {
       "nailUppProducts_" + shop.id
     );
 
-
   products =
     saved ? JSON.parse(saved) : [];
 
-
   displayProducts();
-
 }
 
 
@@ -317,10 +378,7 @@ function loadProducts() {
 function displayProducts() {
 
   const container =
-    document.getElementById(
-      "products"
-    );
-
+    document.getElementById("products");
 
   if (products.length === 0) {
 
@@ -332,9 +390,7 @@ function displayProducts() {
     return;
   }
 
-
   let html = "";
-
 
   products.forEach(function(product) {
 
@@ -354,9 +410,8 @@ function displayProducts() {
 
       '<p class="price">' +
       'UGX ' +
-      Number(
-        product.price
-      ).toLocaleString() +
+      Number(product.price)
+        .toLocaleString() +
       '</p>' +
 
       '<p>' +
@@ -375,14 +430,11 @@ function displayProducts() {
 
   });
 
-
-  container.innerHTML =
-    html;
-
+  container.innerHTML = html;
 }
 
 
-/* ADD PRODUCT TO CART */
+/* ADD TO CART */
 
 function addToCart(productId) {
 
@@ -393,9 +445,7 @@ function addToCart(productId) {
 
     });
 
-
   if (!product) return;
-
 
   const existing =
     cart.find(function(item) {
@@ -403,7 +453,6 @@ function addToCart(productId) {
       return item.id === productId;
 
     });
-
 
   if (existing) {
 
@@ -427,9 +476,7 @@ function addToCart(productId) {
 
   }
 
-
   displayCart();
-
 }
 
 
@@ -447,12 +494,9 @@ function changeQuantity(
 
     });
 
-
   if (!item) return;
 
-
   item.quantity += amount;
-
 
   if (item.quantity <= 0) {
 
@@ -465,9 +509,7 @@ function changeQuantity(
 
   }
 
-
   displayCart();
-
 }
 
 
@@ -476,10 +518,7 @@ function changeQuantity(
 function displayCart() {
 
   const container =
-    document.getElementById(
-      "cart"
-    );
-
+    document.getElementById("cart");
 
   if (cart.length === 0) {
 
@@ -488,24 +527,22 @@ function displayCart() {
       'Your cart is empty.' +
       '</p>';
 
+    document.getElementById(
+      "deliverySection"
+    ).classList.add("hidden");
+
     return;
   }
 
-
   let total = 0;
-
   let html = "";
-
 
   cart.forEach(function(item) {
 
     const subtotal =
-      item.price *
-      item.quantity;
-
+      item.price * item.quantity;
 
     total += subtotal;
-
 
     html +=
 
@@ -516,9 +553,8 @@ function displayCart() {
       '</strong>' +
 
       '<p>UGX ' +
-      Number(
-        item.price
-      ).toLocaleString() +
+      Number(item.price)
+        .toLocaleString() +
       ' each</p>' +
 
       '<div class="quantity">' +
@@ -539,39 +575,27 @@ function displayCart() {
 
       '<p>' +
       '<strong>Subtotal:</strong> UGX ' +
-      Number(
-        subtotal
-      ).toLocaleString() +
+      Number(subtotal)
+        .toLocaleString() +
       '</p>' +
 
       '</div>';
 
   });
 
-
   html +=
 
     '<p class="total">' +
-
     'TOTAL: UGX ' +
+    Number(total)
+      .toLocaleString() +
+    '</p>';
 
-    Number(
-      total
-    ).toLocaleString() +
+  container.innerHTML = html;
 
-    '</p>' +
-
-    '<button class="order-button" ' +
-    'onclick="placeOrder()">' +
-
-    '✅ Place Order' +
-
-    '</button>';
-
-
-  container.innerHTML =
-    html;
-
+  document.getElementById(
+    "deliverySection"
+  ).classList.remove("hidden");
 }
 
 
@@ -581,8 +605,40 @@ function placeOrder() {
 
   if (cart.length === 0) {
 
+    alert("Your cart is empty.");
+
+    return;
+  }
+
+  const customerName =
+    document.getElementById(
+      "customerName"
+    ).value.trim();
+
+  const customerPhone =
+    document.getElementById(
+      "customerPhone"
+    ).value.trim();
+
+  const deliveryLocation =
+    document.getElementById(
+      "deliveryLocation"
+    ).value.trim();
+
+  const deliveryInstructions =
+    document.getElementById(
+      "deliveryInstructions"
+    ).value.trim();
+
+
+  if (
+    !customerName ||
+    !customerPhone ||
+    !deliveryLocation
+  ) {
+
     alert(
-      "Your cart is empty."
+      "Please enter your name, phone number and delivery location."
     );
 
     return;
@@ -590,7 +646,6 @@ function placeOrder() {
 
 
   let total = 0;
-
 
   cart.forEach(function(item) {
 
@@ -604,8 +659,7 @@ function placeOrder() {
   const order = {
 
     id:
-      "NU-" +
-      Date.now(),
+      "NU-" + Date.now(),
 
     shopId:
       shop.id,
@@ -619,6 +673,18 @@ function placeOrder() {
     total:
       total,
 
+    customerName:
+      customerName,
+
+    customerPhone:
+      customerPhone,
+
+    deliveryLocation:
+      deliveryLocation,
+
+    deliveryInstructions:
+      deliveryInstructions,
+
     status:
       "Waiting for shop",
 
@@ -628,7 +694,7 @@ function placeOrder() {
   };
 
 
-  /* Save order for client */
+  /* Save latest client order */
 
   localStorage.setItem(
     "nailUppProductOrder",
@@ -636,28 +702,21 @@ function placeOrder() {
   );
 
 
-  /*
-    Also save the order for the shop.
-    This will allow us to build the
-    shop's order page next.
-  */
+  /* Save order for shop */
 
   const shopOrdersKey =
     "nailUppOrders_" +
     shop.id;
-
 
   const savedOrders =
     localStorage.getItem(
       shopOrdersKey
     );
 
-
   const orders =
     savedOrders
       ? JSON.parse(savedOrders)
       : [];
-
 
   orders.push(order);
 
@@ -669,13 +728,30 @@ function placeOrder() {
 
 
   alert(
-    "Order placed successfully!"
+    "Order placed successfully! The shop has received your delivery details."
   );
 
 
   cart = [];
 
   displayCart();
+
+
+  document.getElementById(
+    "customerName"
+  ).value = "";
+
+  document.getElementById(
+    "customerPhone"
+  ).value = "";
+
+  document.getElementById(
+    "deliveryLocation"
+  ).value = "";
+
+  document.getElementById(
+    "deliveryInstructions"
+  ).value = "";
 
 }
 
