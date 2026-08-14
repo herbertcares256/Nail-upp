@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nail Upp - Shop</title>
+  <title>Nail Upp - Shop Products</title>
 
   <style>
     * {
@@ -38,10 +38,10 @@
 
     .back {
       display: inline-block;
-      margin-bottom: 15px;
+      margin-bottom: 18px;
       color: #d81b60;
-      text-decoration: none;
       font-weight: bold;
+      text-decoration: none;
     }
 
     .search {
@@ -50,88 +50,71 @@
       border: 1px solid #ddd;
       border-radius: 25px;
       font-size: 15px;
-      margin-bottom: 18px;
-    }
-
-    .categories {
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      margin-bottom: 18px;
-    }
-
-    .category {
-      white-space: nowrap;
-      border: none;
-      background: white;
-      padding: 10px 15px;
-      border-radius: 20px;
-      color: #d81b60;
-      font-weight: bold;
-    }
-
-    .products {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
+      margin-bottom: 20px;
     }
 
     .product {
       background: white;
-      border-radius: 16px;
-      overflow: hidden;
+      border-radius: 18px;
+      padding: 15px;
+      margin-bottom: 18px;
       box-shadow: 0 4px 15px rgba(0,0,0,0.08);
     }
 
-    .product img {
+    .product-image {
       width: 100%;
-      height: 150px;
+      height: 220px;
       object-fit: cover;
-      background: #eee;
+      border-radius: 14px;
+      margin-bottom: 12px;
     }
 
-    .info {
-      padding: 12px;
-    }
-
-    .info h3 {
+    .product h3 {
       color: #d81b60;
-      font-size: 16px;
-      margin-bottom: 6px;
+      margin-bottom: 7px;
     }
 
-    .info p {
-      font-size: 12px;
-      margin: 5px 0;
+    .product p {
+      margin: 6px 0;
+      font-size: 14px;
     }
 
     .price {
+      font-size: 18px;
       font-weight: bold;
-      font-size: 16px !important;
     }
 
-    .cart-btn {
+    .quantity {
       width: 100%;
+      padding: 11px;
+      margin-top: 10px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+    }
+
+    .cart-button {
+      width: 100%;
+      padding: 13px;
+      margin-top: 10px;
       border: none;
+      border-radius: 25px;
       background: #d81b60;
       color: white;
-      padding: 10px;
-      border-radius: 20px;
-      margin-top: 8px;
+      font-size: 15px;
       font-weight: bold;
     }
 
     .cart {
       background: white;
-      margin-top: 22px;
-      padding: 18px;
+      padding: 20px;
       border-radius: 18px;
+      margin-top: 20px;
       box-shadow: 0 4px 15px rgba(0,0,0,0.08);
     }
 
     .cart h2 {
       color: #d81b60;
-      margin-bottom: 12px;
+      margin-bottom: 15px;
     }
 
     .cart-item {
@@ -139,42 +122,22 @@
       padding: 10px 0;
     }
 
-    .cart-item:last-child {
-      border-bottom: none;
-    }
-
-    .cart-item p {
-      margin: 5px 0;
-      font-size: 14px;
-    }
-
-    .quantity {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-top: 8px;
-    }
-
-    .quantity button {
-      border: none;
-      background: #fff0f6;
-      color: #d81b60;
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
+    .total {
+      font-size: 19px;
       font-weight: bold;
+      margin-top: 15px;
     }
 
-    .checkout {
+    .order-button {
       width: 100%;
-      border: none;
-      background: #d81b60;
-      color: white;
       padding: 14px;
+      border: none;
       border-radius: 25px;
-      margin-top: 15px;
+      background: #2e7d32;
+      color: white;
       font-size: 16px;
       font-weight: bold;
+      margin-top: 15px;
     }
 
     .empty {
@@ -194,47 +157,19 @@
 
 <div class="container">
 
-  <a href="client.html" class="back">
-    ← Back to Client Dashboard
-  </a>
+  <a href="client.html" class="back">← Back to Client Dashboard</a>
 
   <input
     id="search"
     class="search"
     type="text"
-    placeholder="🔎 Search nail products..."
-    oninput="showProducts()"
+    placeholder="🔍 Search nail products..."
+    oninput="displayProducts()"
   >
 
-  <div class="categories">
-
-    <button class="category" onclick="filterCategory('All')">
-      All
-    </button>
-
-    <button class="category" onclick="filterCategory('Nail Polish')">
-      Polish
-    </button>
-
-    <button class="category" onclick="filterCategory('Gel')">
-      Gel
-    </button>
-
-    <button class="category" onclick="filterCategory('Acrylic')">
-      Acrylic
-    </button>
-
-    <button class="category" onclick="filterCategory('Nail Tips')">
-      Tips
-    </button>
-
-    <button class="category" onclick="filterCategory('Nail Tools')">
-      Tools
-    </button>
-
+  <div id="products">
+    <p class="empty">Loading products...</p>
   </div>
-
-  <div id="products" class="products"></div>
 
   <div class="cart">
 
@@ -244,12 +179,15 @@
       <p class="empty">Your cart is empty.</p>
     </div>
 
-    <h3 id="total">
+    <div id="total" class="total">
       Total: UGX 0
-    </h3>
+    </div>
 
-    <button class="checkout" onclick="checkout()">
-      Checkout
+    <button
+      class="order-button"
+      onclick="placeOrder()"
+    >
+      🛍️ Place Order
     </button>
 
   </div>
@@ -258,55 +196,47 @@
 
 <script>
 
-let currentCategory = "All";
+let products = [];
+let cart = [];
 
 
-function getProducts() {
+function loadProducts() {
 
   const saved =
     localStorage.getItem("nailUppProducts");
 
   if (!saved) {
-    return [];
+
+    products = [];
+
+  } else {
+
+    products = JSON.parse(saved);
+
   }
 
-  return JSON.parse(saved);
+  displayProducts();
 }
 
 
-function filterCategory(category) {
-
-  currentCategory = category;
-
-  showProducts();
-}
-
-
-function showProducts() {
-
-  const products =
-    getProducts();
-
-  const search =
-    document.getElementById("search").value
-    .toLowerCase()
-    .trim();
+function displayProducts() {
 
   const container =
     document.getElementById("products");
+
+  const search =
+    document.getElementById("search").value
+      .toLowerCase()
+      .trim();
 
 
   const filtered =
     products.filter(function(product) {
 
-      const matchesSearch =
-        product.name.toLowerCase().includes(search);
-
-      const matchesCategory =
-        currentCategory === "All" ||
-        product.category === currentCategory;
-
-      return matchesSearch && matchesCategory;
+      return (
+        product.name.toLowerCase().includes(search) ||
+        product.category.toLowerCase().includes(search)
+      );
 
     });
 
@@ -329,39 +259,42 @@ function showProducts() {
 
       '<div class="product">' +
 
-      '<img src="' +
+      '<img class="product-image" src="' +
       product.image +
       '" alt="' +
       product.name +
       '">' +
 
-      '<div class="info">' +
-
       '<h3>' +
       product.name +
       '</h3>' +
 
-      '<p>' +
+      '<p><strong>Category:</strong> ' +
       product.category +
+      '</p>' +
+
+      '<p>' +
+      (product.description || "No description") +
       '</p>' +
 
       '<p class="price">UGX ' +
       Number(product.price).toLocaleString() +
       '</p>' +
 
-      '<p>' +
-      (product.description || "") +
-      '</p>' +
+      '<input ' +
+      'id="quantity-' + product.id + '" ' +
+      'class="quantity" ' +
+      'type="number" ' +
+      'min="1" ' +
+      'value="1">' +
 
-      '<button class="cart-btn" onclick="addToCart(' +
+      '<button ' +
+      'class="cart-button" ' +
+      'onclick="addToCart(' +
       product.id +
       ')">' +
-
       '🛒 Add to Cart' +
-
       '</button>' +
-
-      '</div>' +
 
       '</div>';
 
@@ -369,56 +302,51 @@ function showProducts() {
 
 
   container.innerHTML = html;
-
 }
 
 
-function getCart() {
-
-  const saved =
-    localStorage.getItem("nailUppCart");
-
-  if (!saved) {
-    return [];
-  }
-
-  return JSON.parse(saved);
-}
-
-
-function addToCart(id) {
-
-  const products =
-    getProducts();
+function addToCart(productId) {
 
   const product =
     products.find(function(item) {
 
-      return item.id === id;
+      return item.id === productId;
 
     });
 
 
-  if (!product) {
+  if (!product) return;
+
+
+  const quantityInput =
+    document.getElementById(
+      "quantity-" + productId
+    );
+
+
+  const quantity =
+    Number(quantityInput.value);
+
+
+  if (quantity < 1) {
+
+    alert("Quantity must be at least 1.");
+
     return;
   }
-
-
-  const cart =
-    getCart();
 
 
   const existing =
     cart.find(function(item) {
 
-      return item.id === id;
+      return item.id === productId;
 
     });
 
 
   if (existing) {
 
-    existing.quantity++;
+    existing.quantity += quantity;
 
   } else {
 
@@ -430,82 +358,27 @@ function addToCart(id) {
 
       price: Number(product.price),
 
-      image: product.image,
-
-      quantity: 1
+      quantity: quantity
 
     });
 
   }
 
 
-  localStorage.setItem(
-    "nailUppCart",
-    JSON.stringify(cart)
-  );
+  displayCart();
 
-
-  showCart();
+  alert(product.name + " added to cart.");
 
 }
 
 
-function changeQuantity(id, amount) {
-
-  const cart =
-    getCart();
-
-
-  const item =
-    cart.find(function(product) {
-
-      return product.id === id;
-
-    });
-
-
-  if (!item) {
-    return;
-  }
-
-
-  item.quantity += amount;
-
-
-  if (item.quantity <= 0) {
-
-    const index =
-      cart.findIndex(function(product) {
-
-        return product.id === id;
-
-      });
-
-    cart.splice(index, 1);
-
-  }
-
-
-  localStorage.setItem(
-    "nailUppCart",
-    JSON.stringify(cart)
-  );
-
-
-  showCart();
-
-}
-
-
-function showCart() {
-
-  const cart =
-    getCart();
+function displayCart() {
 
   const container =
     document.getElementById("cartItems");
 
-  let total = 0;
+  const totalElement =
+    document.getElementById("total");
 
 
   if (cart.length === 0) {
@@ -513,15 +386,16 @@ function showCart() {
     container.innerHTML =
       '<p class="empty">Your cart is empty.</p>';
 
-    document.getElementById("total").textContent =
+    totalElement.textContent =
       "Total: UGX 0";
 
     return;
-
   }
 
 
   let html = "";
+
+  let total = 0;
 
 
   cart.forEach(function(item) {
@@ -536,33 +410,17 @@ function showCart() {
 
       '<div class="cart-item">' +
 
-      '<p><strong>' +
-      item.name +
-      '</strong></p>' +
-
-      '<p>UGX ' +
-      item.price.toLocaleString() +
-      ' each</p>' +
-
-      '<div class="quantity">' +
-
-      '<button onclick="changeQuantity(' +
-      item.id +
-      ',-1)">−</button>' +
-
       '<strong>' +
-      item.quantity +
+      item.name +
       '</strong>' +
 
-      '<button onclick="changeQuantity(' +
-      item.id +
-      ',1)">+</button>' +
+      '<p>Quantity: ' +
+      item.quantity +
+      '</p>' +
 
-      '</div>' +
-
-      '<p><strong>Subtotal: UGX ' +
+      '<p>UGX ' +
       itemTotal.toLocaleString() +
-      '</strong></p>' +
+      '</p>' +
 
       '</div>';
 
@@ -572,43 +430,75 @@ function showCart() {
   container.innerHTML = html;
 
 
-  document.getElementById("total").textContent =
-    "Total: UGX " + total.toLocaleString();
+  totalElement.textContent =
+    "Total: UGX " +
+    total.toLocaleString();
 
 }
 
 
-function checkout() {
-
-  const cart =
-    getCart();
-
+function placeOrder() {
 
   if (cart.length === 0) {
 
-    alert("Your cart is empty.");
+    alert("Please add a product to your cart first.");
 
     return;
-
   }
 
 
+  const clientName =
+    localStorage.getItem("nailUppName") ||
+    "Client";
+
+
+  const total =
+    cart.reduce(function(sum, item) {
+
+      return sum +
+        (item.price * item.quantity);
+
+    }, 0);
+
+
+  const order = {
+
+    id: "ORDER-" + Date.now(),
+
+    clientName: clientName,
+
+    items: cart,
+
+    total: total,
+
+    status: "Waiting for shop"
+
+  };
+
+
   localStorage.setItem(
-    "nailUppCheckout",
-    JSON.stringify(cart)
+    "nailUppProductOrder",
+    JSON.stringify(order)
   );
 
 
-  window.location.href =
-    "shop-checkout.html";
+  alert(
+    "Order submitted successfully!"
+  );
+
+
+  cart = [];
+
+  displayCart();
 
 }
 
 
-showProducts();
-showCart();
+loadProducts();
+
+displayCart();
 
 </script>
 
 </body>
-  </html>
+</html>
