@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nail Upp - Nail Shops</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #fff7fb;
+  color: #333;
+}
+
+header {
+  background: #d81b60;
+  color: white;
+  text-align: center;
+  padding: 25px 15px;
+  border-radius: 0 0 25px 25px;
+}
+
+header h1 {
+  font-size: 28px;
+}
+
+.container {
+  max-width: 700px;
+  margin: auto;
+  padding: 20px 15px 40px;
+}
+
+.back {
+  display: inline-block;
+  margin-bottom: 18px;
+  color: #d81b60;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.search {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #ddd;
+  border-radius: 25px;
+  font-size: 15px;
+  margin-bottom: 20px;
+}
+
+.shop {
+  background: white;
+  padding: 20px;
+  margin-bottom: 18px;
+  border-radius: 18px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+.shop h2 {
+  color: #d81b60;
+  margin-bottom: 10px;
+}
+
+.shop p {
+  margin: 8px 0;
+  font-size: 14px;
+}
+
+.view-button {
+  width: 100%;
+  margin-top: 12px;
+  padding: 13px;
+  border: none;
+  border-radius: 25px;
+  background: #d81b60;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.empty {
+  text-align: center;
+  color: #777;
+  padding: 25px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>💅 Nail Upp</h1>
+  <p>Choose a Nail Shop</p>
+</header>
+
+<div class="container">
+
+<a href="client.html" class="back">
+← Back to Client Dashboard
+</a>
+
+<input
+  id="search"
+  class="search"
+  type="text"
+  placeholder="🔍 Search shops or locations..."
+  oninput="displayShops()"
+>
+
+<div id="shops">
+  <p class="empty">Loading shops...</p>
+</div>
+
+</div>
+
+<script>
+
+let shops = [];
+
+
+function loadShops() {
+
+  const saved =
+    localStorage.getItem("nailUppShops");
+
+  if (saved) {
+
+    shops = JSON.parse(saved);
+
+  } else {
+
+    const singleShop =
+      localStorage.getItem("nailUppShop");
+
+    if (singleShop) {
+
+      shops = [
+        JSON.parse(singleShop)
+      ];
+
+    } else {
+
+      shops = [];
+
+    }
+  }
+
+  displayShops();
+}
+
+
+function displayShops() {
+
+  const container =
+    document.getElementById("shops");
+
+  const search =
+    document.getElementById("search")
+    .value
+    .toLowerCase()
+    .trim();
+
+
+  const filtered =
+    shops.filter(function(shop) {
+
+      return (
+        (shop.name || "")
+        .toLowerCase()
+        .includes(search) ||
+
+        (shop.location || "")
+        .toLowerCase()
+        .includes(search)
+      );
+
+    });
+
+
+  if (filtered.length === 0) {
+
+    container.innerHTML =
+      '<p class="empty">' +
+      'No nail shops available yet.' +
+      '</p>';
+
+    return;
+  }
+
+
+  let html = "";
+
+
+  filtered.forEach(function(shop, index) {
+
+    html +=
+
+      '<div class="shop">' +
+
+      '<h2>🏪 ' +
+      (shop.name || "Nail Shop") +
+      '</h2>' +
+
+      '<p>📍 <strong>Location:</strong> ' +
+      (shop.location || "Not provided") +
+      '</p>' +
+
+      '<p>📞 <strong>Phone:</strong> ' +
+      (shop.phone || "Not provided") +
+      '</p>' +
+
+      '<p>ℹ️ ' +
+      (shop.about ||
+      "Nail products and supplies.") +
+      '</p>' +
+
+      '<button class="view-button" ' +
+      'onclick="viewShop(' +
+      index +
+      ')">' +
+
+      '🛍️ View Products' +
+
+      '</button>' +
+
+      '</div>';
+
+  });
+
+
+  container.innerHTML = html;
+}
+
+
+function viewShop(index) {
+
+  const search =
+    document.getElementById("search")
+    .value
+    .toLowerCase()
+    .trim();
+
+
+  const filtered =
+    shops.filter(function(shop) {
+
+      return (
+        (shop.name || "")
+        .toLowerCase()
+        .includes(search) ||
+
+        (shop.location || "")
+        .toLowerCase()
+        .includes(search)
+      );
+
+    });
+
+
+  const shop =
+    filtered[index];
+
+
+  if (!shop) return;
+
+
+  localStorage.setItem(
+    "selectedNailUppShop",
+    JSON.stringify(shop)
+  );
+
+
+  window.location.href =
+    "shop-products.html";
+}
+
+
+loadShops();
+
+</script>
+
+</body>
+</html>
