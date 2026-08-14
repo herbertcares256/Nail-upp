@@ -30,6 +30,10 @@
       font-size: 28px;
     }
 
+    header p {
+      margin-top: 6px;
+    }
+
     .container {
       max-width: 700px;
       margin: auto;
@@ -42,6 +46,24 @@
       color: #d81b60;
       font-weight: bold;
       text-decoration: none;
+    }
+
+    .shop-card {
+      background: white;
+      padding: 20px;
+      border-radius: 18px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    .shop-card h2 {
+      color: #d81b60;
+      margin-bottom: 10px;
+    }
+
+    .shop-card p {
+      margin: 7px 0;
+      font-size: 14px;
     }
 
     .search {
@@ -92,16 +114,24 @@
       border-radius: 10px;
     }
 
-    .cart-button {
+    .cart-button,
+    .order-button {
       width: 100%;
       padding: 13px;
       margin-top: 10px;
       border: none;
       border-radius: 25px;
-      background: #d81b60;
       color: white;
       font-size: 15px;
       font-weight: bold;
+    }
+
+    .cart-button {
+      background: #d81b60;
+    }
+
+    .order-button {
+      background: #2e7d32;
     }
 
     .cart {
@@ -128,18 +158,6 @@
       margin-top: 15px;
     }
 
-    .order-button {
-      width: 100%;
-      padding: 14px;
-      border: none;
-      border-radius: 25px;
-      background: #2e7d32;
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-      margin-top: 15px;
-    }
-
     .empty {
       text-align: center;
       color: #777;
@@ -157,7 +175,30 @@
 
 <div class="container">
 
-  <a href="client.html" class="back">← Back to Client Dashboard</a>
+  <a href="client.html" class="back">
+    ← Back to Client Dashboard
+  </a>
+
+  <div class="shop-card">
+
+    <h2>🏪 <span id="shopName">Nail Shop</span></h2>
+
+    <p>
+      📍 <strong>Location:</strong>
+      <span id="shopLocation">Not provided</span>
+    </p>
+
+    <p>
+      📞 <strong>Phone:</strong>
+      <span id="shopPhone">Not provided</span>
+    </p>
+
+    <p>
+      <strong>About:</strong>
+      <span id="shopAbout">Welcome to our nail shop.</span>
+    </p>
+
+  </div>
 
   <input
     id="search"
@@ -200,20 +241,36 @@ let products = [];
 let cart = [];
 
 
+function loadShop() {
+
+  const saved =
+    localStorage.getItem("nailUppShop");
+
+  if (!saved) return;
+
+  const shop = JSON.parse(saved);
+
+  document.getElementById("shopName").textContent =
+    shop.name || "Nail Shop";
+
+  document.getElementById("shopLocation").textContent =
+    shop.location || "Not provided";
+
+  document.getElementById("shopPhone").textContent =
+    shop.phone || "Not provided";
+
+  document.getElementById("shopAbout").textContent =
+    shop.about || "Welcome to our nail shop.";
+}
+
+
 function loadProducts() {
 
   const saved =
     localStorage.getItem("nailUppProducts");
 
-  if (!saved) {
-
-    products = [];
-
-  } else {
-
-    products = JSON.parse(saved);
-
-  }
+  products =
+    saved ? JSON.parse(saved) : [];
 
   displayProducts();
 }
@@ -228,7 +285,6 @@ function displayProducts() {
     document.getElementById("search").value
       .toLowerCase()
       .trim();
-
 
   const filtered =
     products.filter(function(product) {
@@ -368,7 +424,6 @@ function addToCart(productId) {
   displayCart();
 
   alert(product.name + " added to cart.");
-
 }
 
 
@@ -429,11 +484,9 @@ function displayCart() {
 
   container.innerHTML = html;
 
-
   totalElement.textContent =
     "Total: UGX " +
     total.toLocaleString();
-
 }
 
 
@@ -441,7 +494,9 @@ function placeOrder() {
 
   if (cart.length === 0) {
 
-    alert("Please add a product to your cart first.");
+    alert(
+      "Please add a product to your cart first."
+    );
 
     return;
   }
@@ -450,6 +505,19 @@ function placeOrder() {
   const clientName =
     localStorage.getItem("nailUppName") ||
     "Client";
+
+
+  const clientPhone =
+    localStorage.getItem("nailUppPhone") ||
+    "";
+
+
+  const shop =
+    localStorage.getItem("nailUppShop");
+
+
+  const shopData =
+    shop ? JSON.parse(shop) : {};
 
 
   const total =
@@ -467,6 +535,10 @@ function placeOrder() {
 
     clientName: clientName,
 
+    clientPhone: clientPhone,
+
+    shopName: shopData.name || "Nail Shop",
+
     items: cart,
 
     total: total,
@@ -483,16 +555,17 @@ function placeOrder() {
 
 
   alert(
-    "Order submitted successfully!"
+    "Your order has been submitted!"
   );
 
 
   cart = [];
 
   displayCart();
-
 }
 
+
+loadShop();
 
 loadProducts();
 
