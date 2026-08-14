@@ -1,0 +1,530 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Nail Shop Orders - Nail Upp</title>
+
+<style>
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #fff7fb;
+  color: #333;
+}
+
+header {
+  background: #d9165b;
+  color: white;
+  text-align: center;
+  padding: 28px 18px;
+  border-radius: 0 0 30px 30px;
+}
+
+header h1 {
+  font-size: 28px;
+}
+
+header p {
+  margin-top: 7px;
+}
+
+.container {
+  max-width: 700px;
+  margin: auto;
+  padding: 20px 15px 50px;
+}
+
+.back {
+  display: inline-block;
+  color: #d9165b;
+  font-weight: bold;
+  text-decoration: none;
+  margin-bottom: 18px;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 20px;
+  margin-bottom: 18px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+.order {
+  background: white;
+  padding: 18px;
+  border-radius: 18px;
+  margin-bottom: 18px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+.order h2 {
+  color: #c91b5b;
+  font-size: 20px;
+}
+
+.order-info {
+  margin-top: 10px;
+  line-height: 1.6;
+}
+
+.item {
+  border-top: 1px solid #eee;
+  padding: 12px 0;
+  margin-top: 10px;
+}
+
+.total {
+  font-size: 19px;
+  font-weight: bold;
+  color: #c91b5b;
+  margin-top: 12px;
+}
+
+.status {
+  display: inline-block;
+  padding: 7px 12px;
+  border-radius: 20px;
+  background: #fff0f5;
+  color: #c91b5b;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+button {
+  width: 100%;
+  border: none;
+  border-radius: 25px;
+  padding: 13px;
+  margin-top: 12px;
+  background: #d9165b;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.secondary {
+  background: #555;
+}
+
+.empty {
+  text-align: center;
+  color: #777;
+  padding: 25px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+  <h1>
+    📦 Shop Orders
+  </h1>
+
+  <p id="shopName">
+    Loading shop...
+  </p>
+
+</header>
+
+
+<div class="container">
+
+  <a
+    href="shop.html"
+    class="back">
+
+    ← Back to Shop Dashboard
+
+  </a>
+
+
+  <div class="card">
+
+    <h2>
+      Customer Orders
+    </h2>
+
+    <p style="margin-top:8px;color:#777;">
+      Orders placed for your nail products will appear here.
+    </p>
+
+  </div>
+
+
+  <div id="orders">
+
+    <div class="empty">
+      Loading orders...
+    </div>
+
+  </div>
+
+
+  <button
+    class="secondary"
+    onclick="loadOrders()">
+
+    🔄 Refresh Orders
+
+  </button>
+
+
+  <button
+    class="secondary"
+    onclick="goBack()">
+
+    ← Shop Dashboard
+
+  </button>
+
+</div>
+
+
+<script>
+
+/* CURRENT SHOP */
+
+const savedShop =
+  localStorage.getItem(
+    "nailUppShop"
+  );
+
+
+if (!savedShop) {
+
+  alert(
+    "Please login as a Nail Shop first."
+  );
+
+  window.location.href =
+    "index.html";
+
+}
+
+
+const currentShop =
+  JSON.parse(savedShop);
+
+
+/* SHOP NAME */
+
+document.getElementById(
+  "shopName"
+).textContent =
+  currentShop.name ||
+  "Nail Shop";
+
+
+/* LOAD ORDERS */
+
+function loadOrders() {
+
+  const saved =
+    localStorage.getItem(
+      "nailUppProductOrders"
+    );
+
+
+  const orders =
+    saved
+      ? JSON.parse(saved)
+      : [];
+
+
+  const myOrders =
+    orders.filter(
+      function(order) {
+
+        return (
+          order.shopId ===
+          currentShop.id
+        );
+
+      }
+    );
+
+
+  const container =
+    document.getElementById(
+      "orders"
+    );
+
+
+  if (
+    myOrders.length === 0
+  ) {
+
+    container.innerHTML =
+
+      '<div class="card empty">' +
+
+      '<h3>No Orders Yet</h3>' +
+
+      '<p style="margin-top:8px;">' +
+
+      'When customers order your products, ' +
+      'the orders will appear here.' +
+
+      '</p>' +
+
+      '</div>';
+
+    return;
+
+  }
+
+
+  let html = "";
+
+
+  myOrders.forEach(
+    function(order) {
+
+      let itemsHTML = "";
+
+
+      order.items.forEach(
+        function(item) {
+
+          itemsHTML +=
+
+            '<div class="item">' +
+
+            '<strong>' +
+            escapeHTML(
+              item.name
+            ) +
+            '</strong>' +
+
+            '<br>' +
+
+            'Quantity: ' +
+            item.quantity +
+
+            '<br>' +
+
+            'Price: UGX ' +
+            Number(
+              item.price
+            ).toLocaleString() +
+
+            '<br>' +
+
+            'Subtotal: UGX ' +
+            Number(
+              item.price *
+              item.quantity
+            ).toLocaleString() +
+
+            '</div>';
+
+        }
+      );
+
+
+      html +=
+
+        '<div class="order">' +
+
+        '<h2>' +
+
+        '📦 Order #' +
+
+        escapeHTML(
+          String(order.id)
+        ) +
+
+        '</h2>' +
+
+        '<div class="order-info">' +
+
+        '<strong>Customer:</strong> ' +
+
+        escapeHTML(
+          order.customerName ||
+          "Not provided"
+        ) +
+
+        '<br>' +
+
+        '<strong>Phone:</strong> ' +
+
+        escapeHTML(
+          order.customerPhone ||
+          "Not provided"
+        ) +
+
+        '<br>' +
+
+        '<strong>Date:</strong> ' +
+
+        escapeHTML(
+          order.date ||
+          "Not provided"
+        ) +
+
+        '</div>' +
+
+        itemsHTML +
+
+        '<div class="total">' +
+
+        'Total: UGX ' +
+
+        Number(
+          order.total
+        ).toLocaleString() +
+
+        '</div>' +
+
+        '<div class="status">' +
+
+        'Status: ' +
+
+        escapeHTML(
+          order.status ||
+          "Pending"
+        ) +
+
+        '</div>' +
+
+        '<button onclick="updateStatus(\'' +
+        order.id +
+        '\', \'Accepted\')">' +
+
+        '✅ Accept Order' +
+
+        '</button>' +
+
+        '<button onclick="updateStatus(\'' +
+        order.id +
+        '\', \'Preparing\')">' +
+
+        '📦 Mark Preparing' +
+
+        '</button>' +
+
+        '<button onclick="updateStatus(\'' +
+        order.id +
+        '\', \'Ready\')">' +
+
+        '✅ Mark Ready' +
+
+        '</button>' +
+
+        '</div>';
+
+    }
+  );
+
+
+  container.innerHTML =
+    html;
+
+}
+
+
+/* UPDATE ORDER STATUS */
+
+function updateStatus(
+  orderId,
+  newStatus
+) {
+
+  const saved =
+    localStorage.getItem(
+      "nailUppProductOrders"
+    );
+
+
+  const orders =
+    saved
+      ? JSON.parse(saved)
+      : [];
+
+
+  const order =
+    orders.find(
+      function(item) {
+
+        return (
+          String(item.id) ===
+          String(orderId)
+        );
+
+      }
+    );
+
+
+  if (!order) {
+
+    alert(
+      "Order not found."
+    );
+
+    return;
+
+  }
+
+
+  order.status =
+    newStatus;
+
+
+  localStorage.setItem(
+    "nailUppProductOrders",
+    JSON.stringify(orders)
+  );
+
+
+  loadOrders();
+
+}
+
+
+/* ESCAPE TEXT */
+
+function escapeHTML(text) {
+
+  return String(text)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+
+}
+
+
+/* BACK */
+
+function goBack() {
+
+  window.location.href =
+    "shop.html";
+
+}
+
+
+/* START */
+
+loadOrders();
+
+</script>
+
+</body>
+</html>
+```
