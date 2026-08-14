@@ -4,11 +4,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Nail Shop Products</title>
 
 <style>
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -51,16 +49,22 @@ header p {
   margin-bottom: 18px;
 }
 
-.shop-card {
+.shop-card,
+.product,
+.cart {
   background: white;
-  padding: 22px;
-  border-radius: 22px;
-  margin-bottom: 20px;
-  text-align: center;
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 18px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.08);
 }
 
-.shop-card h2 {
+.shop-card {
+  text-align: center;
+}
+
+.shop-card h2,
+.cart h2 {
   color: #c91b5b;
   margin-bottom: 10px;
 }
@@ -70,32 +74,21 @@ header p {
   color: #666;
 }
 
-.product {
-  background: white;
-  border-radius: 20px;
-  padding: 15px;
-  margin-bottom: 18px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-}
-
 .product-image {
   width: 100%;
   height: 210px;
   object-fit: cover;
   border-radius: 15px;
-  background: #fff0f5;
 }
 
 .product h3 {
   color: #c91b5b;
   margin-top: 13px;
-  font-size: 21px;
 }
 
 .description {
   color: #666;
   margin-top: 7px;
-  line-height: 1.4;
 }
 
 .price {
@@ -106,7 +99,6 @@ header p {
 
 .stock {
   margin-top: 7px;
-  color: #555;
 }
 
 button {
@@ -121,16 +113,14 @@ button {
   font-weight: bold;
 }
 
-.cart {
-  background: white;
-  border-radius: 20px;
-  padding: 20px;
-  margin-top: 25px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+.secondary {
+  background: #555;
 }
 
-.cart h2 {
-  color: #c91b5b;
+.empty {
+  text-align: center;
+  color: #777;
+  padding: 25px;
 }
 
 .cart-item {
@@ -141,113 +131,57 @@ button {
 .total {
   font-size: 20px;
   font-weight: bold;
+  color: #c91b5b;
   margin-top: 15px;
 }
-
-.empty {
-  background: white;
-  padding: 25px;
-  border-radius: 20px;
-  text-align: center;
-  color: #777;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-}
-
-.secondary {
-  background: #555;
-}
-
 </style>
 </head>
 
 <body>
 
 <header>
-
-  <h1>
-    🛍️ Nail Shop
-  </h1>
-
-  <p id="shopHeader">
-    Products
-  </p>
-
+  <h1>🛍️ Nail Shop</h1>
+  <p id="shopHeader">Products</p>
 </header>
-
 
 <div class="container">
 
-  <a
-    href="shops.html"
-    class="back">
-
+  <a href="shops.html" class="back">
     ← Back to Nail Shops
-
   </a>
 
-
-  <!-- SHOP INFORMATION -->
-
-  <div
-    class="shop-card"
-    id="shopInfo">
-
+  <div class="shop-card" id="shopInfo">
     Loading shop...
-
   </div>
 
-
-  <!-- PRODUCTS -->
-
   <div id="productList">
-
     <div class="empty">
       Loading products...
     </div>
-
   </div>
 
+  <div class="cart">
 
-  <!-- CART -->
-
-  <div
-    class="cart"
-    id="cart">
-
-    <h2>
-      🛒 My Cart
-    </h2>
+    <h2>🛒 My Cart</h2>
 
     <div id="cartItems">
-      <p class="empty">
+      <div class="empty">
         Your cart is empty.
-      </p>
+      </div>
     </div>
 
-    <div
-      class="total"
-      id="cartTotal">
-
+    <div class="total" id="cartTotal">
       Total: UGX 0
-
     </div>
 
-    <button
-      onclick="checkout()">
-
-      🛒 Order Products
-
+    <button onclick="checkout()">
+      🛍️ Order Products
     </button>
 
   </div>
 
-
-  <button
-    class="secondary"
-    onclick="goBack()">
-
+  <button class="secondary" onclick="goBack()">
     ← Back to Shops
-
   </button>
 
 </div>
@@ -255,13 +189,12 @@ button {
 
 <script>
 
-/* GET SELECTED SHOP */
+/* SELECTED SHOP */
 
 const savedShop =
   localStorage.getItem(
     "selectedNailUppShop"
   );
-
 
 if (!savedShop) {
 
@@ -274,18 +207,16 @@ if (!savedShop) {
 
 }
 
-
 const selectedShop =
   JSON.parse(savedShop);
 
 
-/* SHOW SHOP */
+/* SHOP INFORMATION */
 
 document.getElementById(
   "shopHeader"
 ).textContent =
-  selectedShop.name ||
-  "Nail Shop";
+  selectedShop.name || "Nail Shop";
 
 
 document.getElementById(
@@ -294,8 +225,7 @@ document.getElementById(
 
   "<h2>🏪 " +
   escapeHTML(
-    selectedShop.name ||
-    "Nail Shop"
+    selectedShop.name || "Nail Shop"
   ) +
   "</h2>" +
 
@@ -311,14 +241,12 @@ document.getElementById(
     selectedShop.phone ||
     "Phone not provided"
   ) +
-  "</p>" +
-
-  "<p>" +
-  escapeHTML(
-    selectedShop.about ||
-    "Nail products available here."
-  ) +
   "</p>";
+
+
+/* CART */
+
+let cartItems = [];
 
 
 /* LOAD PRODUCTS */
@@ -330,12 +258,10 @@ function loadProducts() {
       "nailUppProducts"
     );
 
-
   const products =
     saved
       ? JSON.parse(saved)
       : [];
-
 
   const shopProducts =
     products.filter(
@@ -348,7 +274,6 @@ function loadProducts() {
 
       }
     );
-
 
   const list =
     document.getElementById(
@@ -363,13 +288,8 @@ function loadProducts() {
     list.innerHTML =
 
       '<div class="empty">' +
-
       '<h3>No Products Yet</h3>' +
-
-      '<p>' +
-      'This nail shop has not added products yet.' +
-      '</p>' +
-
+      '<p>This shop has not added products yet.</p>' +
       '</div>';
 
     return;
@@ -391,17 +311,13 @@ function loadProducts() {
 
         '<div class="product">' +
 
-        '<img ' +
-        'class="product-image" ' +
+        '<img class="product-image" ' +
         'src="' +
         product.image +
-        '" ' +
-        'alt="Product">' +
+        '" alt="Product">' +
 
         '<h3>' +
-        escapeHTML(
-          product.name
-        ) +
+        escapeHTML(product.name) +
         '</h3>' +
 
         '<p class="description">' +
@@ -413,9 +329,8 @@ function loadProducts() {
 
         '<p class="price">' +
         'UGX ' +
-        Number(
-          product.price
-        ).toLocaleString() +
+        Number(product.price)
+          .toLocaleString() +
         '</p>' +
 
         '<p class="stock">' +
@@ -454,10 +369,7 @@ function loadProducts() {
 }
 
 
-/* CART */
-
-let cartItems = [];
-
+/* ADD TO CART */
 
 function addToCart(productId) {
 
@@ -466,12 +378,10 @@ function addToCart(productId) {
       "nailUppProducts"
     );
 
-
   const products =
     saved
       ? JSON.parse(saved)
       : [];
-
 
   const product =
     products.find(
@@ -568,9 +478,9 @@ function updateCart() {
   ) {
 
     container.innerHTML =
-      '<p class="empty">' +
+      '<div class="empty">' +
       'Your cart is empty.' +
-      '</p>';
+      '</div>';
 
     document.getElementById(
       "cartTotal"
@@ -589,13 +499,11 @@ function updateCart() {
   cartItems.forEach(
     function(item) {
 
-      const itemTotal =
+      const subtotal =
         item.price *
         item.quantity;
 
-
-      total +=
-        itemTotal;
+      total += subtotal;
 
 
       html +=
@@ -603,9 +511,7 @@ function updateCart() {
         '<div class="cart-item">' +
 
         '<strong>' +
-        escapeHTML(
-          item.name
-        ) +
+        escapeHTML(item.name) +
         '</strong>' +
 
         '<br>' +
@@ -615,8 +521,8 @@ function updateCart() {
 
         '<br>' +
 
-        'UGX ' +
-        itemTotal.toLocaleString() +
+        'Subtotal: UGX ' +
+        subtotal.toLocaleString() +
 
         '<button ' +
         'onclick="removeFromCart(\'' +
@@ -641,14 +547,13 @@ function updateCart() {
   document.getElementById(
     "cartTotal"
   ).textContent =
-
     "Total: UGX " +
     total.toLocaleString();
 
 }
 
 
-/* REMOVE FROM CART */
+/* REMOVE ITEM */
 
 function removeFromCart(productId) {
 
@@ -664,13 +569,12 @@ function removeFromCart(productId) {
       }
     );
 
-
   updateCart();
 
 }
 
 
-/* CHECKOUT */
+/* PLACE ORDER */
 
 function checkout() {
 
@@ -687,25 +591,113 @@ function checkout() {
   }
 
 
-  localStorage.setItem(
-    "nailUppCart",
-    JSON.stringify(
-      cartItems
-    )
+  const customerName =
+    prompt(
+      "Enter your name:"
+    );
+
+
+  if (!customerName) {
+
+    return;
+
+  }
+
+
+  const customerPhone =
+    prompt(
+      "Enter your phone number:"
+    );
+
+
+  if (!customerPhone) {
+
+    return;
+
+  }
+
+
+  let total = 0;
+
+
+  cartItems.forEach(
+    function(item) {
+
+      total +=
+        item.price *
+        item.quantity;
+
+    }
   );
 
 
+  const order = {
+
+    id:
+      "ORD-" +
+      Date.now(),
+
+    shopId:
+      selectedShop.id,
+
+    shopName:
+      selectedShop.name,
+
+    customerName:
+      customerName,
+
+    customerPhone:
+      customerPhone,
+
+    items:
+      cartItems,
+
+    total:
+      total,
+
+    date:
+      new Date().toLocaleString(),
+
+    status:
+      "Pending"
+
+  };
+
+
+  const saved =
+    localStorage.getItem(
+      "nailUppProductOrders"
+    );
+
+
+  const orders =
+    saved
+      ? JSON.parse(saved)
+      : [];
+
+
+  orders.push(order);
+
+
   localStorage.setItem(
-    "nailUppOrderShop",
-    JSON.stringify(
-      selectedShop
-    )
+    "nailUppProductOrders",
+    JSON.stringify(orders)
   );
 
 
   alert(
-    "Your products are ready to order!"
+    "✅ Order placed successfully!\n\n" +
+    "Order Number: " +
+    order.id +
+    "\n" +
+    "Total: UGX " +
+    total.toLocaleString()
   );
+
+
+  cartItems = [];
+
+  updateCart();
 
 }
 
@@ -737,6 +729,7 @@ function goBack() {
 /* START */
 
 loadProducts();
+
 updateCart();
 
 </script>
