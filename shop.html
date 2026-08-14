@@ -70,6 +70,11 @@
       font-size: 15px;
     }
 
+    input[type="file"] {
+      padding: 10px;
+      background: #fff;
+    }
+
     textarea {
       min-height: 70px;
     }
@@ -91,6 +96,15 @@
       border-radius: 14px;
       padding: 15px;
       margin-top: 12px;
+    }
+
+    .product-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      background: #f5f5f5;
     }
 
     .product h3 {
@@ -131,6 +145,15 @@
       color: #777;
       text-align: center;
       padding: 10px;
+    }
+
+    .preview {
+      display: none;
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-top: 10px;
     }
   </style>
 </head>
@@ -174,7 +197,23 @@
 
     <h2>➕ Add Nail Product</h2>
 
+    <label>Product Picture</label>
+
+    <input
+      id="productImage"
+      type="file"
+      accept="image/*"
+      onchange="previewImage()"
+    >
+
+    <img
+      id="imagePreview"
+      class="preview"
+      alt="Product preview"
+    >
+
     <label>Product Name</label>
+
     <input
       id="productName"
       type="text"
@@ -189,37 +228,14 @@
         Select category
       </option>
 
-      <option>
-        Nail Polish
-      </option>
-
-      <option>
-        Gel
-      </option>
-
-      <option>
-        Acrylic
-      </option>
-
-      <option>
-        Nail Tips
-      </option>
-
-      <option>
-        Nail Tools
-      </option>
-
-      <option>
-        Nail Accessories
-      </option>
-
-      <option>
-        Nail Care
-      </option>
-
-      <option>
-        Other
-      </option>
+      <option>Nail Polish</option>
+      <option>Gel</option>
+      <option>Acrylic</option>
+      <option>Nail Tips</option>
+      <option>Nail Tools</option>
+      <option>Nail Accessories</option>
+      <option>Nail Care</option>
+      <option>Other</option>
 
     </select>
 
@@ -263,11 +279,9 @@
     <h2>🛒 Customer Orders</h2>
 
     <div id="orders">
-
       <p class="empty">
         No customer orders yet.
       </p>
-
     </div>
 
   </div>
@@ -280,6 +294,11 @@
 </div>
 
 <script>
+
+let selectedImage = "";
+
+
+/* SHOP PROFILE */
 
 function saveShop() {
 
@@ -305,15 +324,10 @@ function saveShop() {
   }
 
   const shop = {
-
     name: name,
-
     location: location,
-
     phone: phone,
-
     about: about
-
   };
 
   localStorage.setItem(
@@ -323,34 +337,41 @@ function saveShop() {
 
   alert("Shop profile saved.");
 
-  loadShop();
-
 }
 
 
-function loadShop() {
+/* IMAGE PREVIEW */
 
-  const saved =
-    localStorage.getItem("nailUppShop");
+function previewImage() {
 
-  if (!saved) return;
+  const file =
+    document.getElementById("productImage").files[0];
 
-  const shop = JSON.parse(saved);
+  if (!file) {
+    return;
+  }
 
-  document.getElementById("shopName").value =
-    shop.name || "";
+  const reader = new FileReader();
 
-  document.getElementById("shopLocation").value =
-    shop.location || "";
+  reader.onload = function(event) {
 
-  document.getElementById("shopPhone").value =
-    shop.phone || "";
+    selectedImage =
+      event.target.result;
 
-  document.getElementById("shopAbout").value =
-    shop.about || "";
+    const preview =
+      document.getElementById("imagePreview");
 
+    preview.src = selectedImage;
+
+    preview.style.display = "block";
+
+  };
+
+  reader.readAsDataURL(file);
 }
 
+
+/* ADD PRODUCT */
 
 function addProduct() {
 
@@ -365,6 +386,14 @@ function addProduct() {
 
   const description =
     document.getElementById("productDescription").value.trim();
+
+
+  if (!selectedImage) {
+
+    alert("Please choose a product picture.");
+
+    return;
+  }
 
 
   if (!name || !category || !price) {
@@ -394,7 +423,9 @@ function addProduct() {
 
     price: price,
 
-    description: description
+    description: description,
+
+    image: selectedImage
 
   };
 
@@ -408,6 +439,8 @@ function addProduct() {
   );
 
 
+  document.getElementById("productImage").value = "";
+
   document.getElementById("productName").value = "";
 
   document.getElementById("category").value = "";
@@ -416,11 +449,21 @@ function addProduct() {
 
   document.getElementById("productDescription").value = "";
 
+  document.getElementById("imagePreview").style.display = "none";
+
+  document.getElementById("imagePreview").src = "";
+
+  selectedImage = "";
+
 
   loadProducts();
 
+  alert("Product added successfully.");
+
 }
 
+
+/* SHOW PRODUCTS */
 
 function loadProducts() {
 
@@ -462,6 +505,12 @@ function loadProducts() {
 
       '<div class="product">' +
 
+      '<img class="product-image" src="' +
+      product.image +
+      '" alt="' +
+      product.name +
+      '">' +
+
       '<h3>' +
       product.name +
       '</h3>' +
@@ -494,6 +543,8 @@ function loadProducts() {
 }
 
 
+/* DELETE PRODUCT */
+
 function deleteProduct(id) {
 
   const saved =
@@ -524,6 +575,8 @@ function deleteProduct(id) {
 
 }
 
+
+/* ORDERS */
 
 function loadOrders() {
 
@@ -578,17 +631,17 @@ function loadOrders() {
 }
 
 
+/* LOGOUT */
+
 function logout() {
 
   localStorage.removeItem("nailUppShop");
 
-  window.location.href =
-    "index.html";
+  window.location.href = "index.html";
 
 }
 
 
-loadShop();
 loadProducts();
 loadOrders();
 
