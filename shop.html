@@ -1,183 +1,211 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nail Upp - Nail Shop</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nail Upp - Nail Shop</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #fff7fb;
-      color: #333;
-    }
+body {
+  font-family: Arial, sans-serif;
+  background: #fff7fb;
+  color: #333;
+}
 
-    header {
-      background: #d81b60;
-      color: white;
-      text-align: center;
-      padding: 25px 15px;
-      border-radius: 0 0 25px 25px;
-    }
+header {
+  background: #d81b60;
+  color: white;
+  text-align: center;
+  padding: 25px 15px;
+  border-radius: 0 0 25px 25px;
+}
 
-    header h1 {
-      font-size: 28px;
-    }
+header h1 {
+  font-size: 28px;
+}
 
-    .container {
-      max-width: 700px;
-      margin: auto;
-      padding: 20px 15px 40px;
-    }
+.container {
+  max-width: 700px;
+  margin: auto;
+  padding: 20px 15px 40px;
+}
 
-    .card {
-      background: white;
-      padding: 20px;
-      margin-bottom: 20px;
-      border-radius: 18px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-    }
+.card {
+  background: white;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 18px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
 
-    h2 {
-      color: #d81b60;
-      margin-bottom: 15px;
-    }
+h2 {
+  color: #d81b60;
+  margin-bottom: 15px;
+}
 
-    .shop-info p {
-      margin: 8px 0;
-    }
+.shop-info p {
+  margin: 8px 0;
+}
 
-    label {
-      display: block;
-      font-weight: bold;
-      margin-top: 12px;
-      margin-bottom: 6px;
-    }
+label {
+  display: block;
+  font-weight: bold;
+  margin-top: 12px;
+  margin-bottom: 6px;
+}
 
-    input,
-    textarea {
-      width: 100%;
-      padding: 13px;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      font-size: 15px;
-    }
+input,
+textarea {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 15px;
+}
 
-    input[type="file"] {
-      padding: 10px;
-    }
+input[type="file"] {
+  padding: 10px;
+}
 
-    textarea {
-      min-height: 70px;
-    }
+textarea {
+  min-height: 70px;
+}
 
-    button {
-      width: 100%;
-      border: none;
-      border-radius: 25px;
-      padding: 13px;
-      margin-top: 15px;
-      background: #d81b60;
-      color: white;
-      font-size: 15px;
-      font-weight: bold;
-    }
+button {
+  width: 100%;
+  border: none;
+  border-radius: 25px;
+  padding: 13px;
+  margin-top: 15px;
+  background: #d81b60;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+}
 
-    .product {
-      border: 1px solid #eee;
-      padding: 15px;
-      border-radius: 15px;
-      margin-bottom: 15px;
-    }
+.product {
+  border: 1px solid #eee;
+  padding: 15px;
+  border-radius: 15px;
+  margin-bottom: 15px;
+}
 
-    .product img {
-      width: 100%;
-      max-height: 220px;
-      object-fit: cover;
-      border-radius: 12px;
-      margin-bottom: 12px;
-    }
+.product img {
+  width: 100%;
+  max-height: 220px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
 
-    .product h3 {
-      color: #d81b60;
-      margin-bottom: 8px;
-    }
+.product h3 {
+  color: #d81b60;
+  margin-bottom: 8px;
+}
 
-    .product p {
-      margin: 7px 0;
-    }
+.product p {
+  margin: 7px 0;
+}
 
-    .delete {
-      background: #c62828;
-    }
+.delete,
+.decline {
+  background: #c62828;
+}
 
-    .empty {
-      text-align: center;
-      color: #777;
-      padding: 15px;
-    }
+.accept {
+  background: #2e7d32;
+}
 
-    .order {
-      border: 1px solid #eee;
-      padding: 15px;
-      border-radius: 15px;
-      margin-bottom: 15px;
-    }
+.prepare {
+  background: #ef6c00;
+}
 
-    .order p {
-      margin: 8px 0;
-    }
+.delivery {
+  background: #1565c0;
+}
 
-    .order-item {
-      background: #fff7fb;
-      padding: 10px;
-      border-radius: 10px;
-      margin-top: 8px;
-    }
+.delivered {
+  background: #00897b;
+}
 
-    .order-total {
-      font-size: 17px;
-      font-weight: bold;
-      margin-top: 12px;
-    }
+.empty {
+  text-align: center;
+  color: #777;
+  padding: 15px;
+}
 
-    .status {
-      text-align: center;
-      padding: 10px;
-      border-radius: 10px;
-      margin-top: 12px;
-      font-weight: bold;
-    }
+.order {
+  border: 1px solid #eee;
+  padding: 15px;
+  border-radius: 15px;
+  margin-bottom: 15px;
+}
 
-    .waiting {
-      background: #fff3cd;
-      color: #856404;
-    }
+.order p {
+  margin: 8px 0;
+}
 
-    .accepted {
-      background: #e8f5e9;
-      color: #2e7d32;
-    }
+.order-item {
+  background: #fff7fb;
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 8px;
+}
 
-    .declined {
-      background: #ffebee;
-      color: #c62828;
-    }
+.order-total {
+  font-size: 17px;
+  font-weight: bold;
+  margin-top: 12px;
+}
 
-    .accept {
-      background: #2e7d32;
-    }
+.status {
+  text-align: center;
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 12px;
+  font-weight: bold;
+}
 
-    .logout {
-      background: #555;
-    }
-  </style>
+.waiting {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.accepted {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.preparing {
+  background: #fff3e0;
+  color: #e65100;
+}
+
+.out {
+  background: #e3f2fd;
+  color: #1565c0;
+}
+
+.done {
+  background: #e0f2f1;
+  color: #00695c;
+}
+
+.declined {
+  background: #ffebee;
+  color: #c62828;
+}
+
+.logout {
+  background: #555;
+}
+</style>
 </head>
 
 <body>
@@ -189,108 +217,112 @@
 
 <div class="container">
 
-  <!-- SHOP INFORMATION -->
+<!-- SHOP INFORMATION -->
 
-  <div class="card shop-info">
+<div class="card shop-info">
 
-    <h2>🏪 My Shop</h2>
+  <h2>🏪 My Shop</h2>
 
-    <p>
-      <strong>Name:</strong>
-      <span id="shopName">Nail Shop</span>
-    </p>
+  <p>
+    <strong>Name:</strong>
+    <span id="shopName">Nail Shop</span>
+  </p>
 
-    <p>
-      <strong>Phone:</strong>
-      <span id="shopPhone">Not provided</span>
-    </p>
+  <p>
+    <strong>Phone:</strong>
+    <span id="shopPhone">Not provided</span>
+  </p>
 
-    <p>
-      <strong>Location:</strong>
-      <span id="shopLocation">Not provided</span>
-    </p>
+  <p>
+    <strong>Location:</strong>
+    <span id="shopLocation">Not provided</span>
+  </p>
 
-    <p>
-      <strong>About:</strong>
-      <span id="shopAbout">Not provided</span>
-    </p>
+  <p>
+    <strong>About:</strong>
+    <span id="shopAbout">Not provided</span>
+  </p>
 
-  </div>
-
-
-  <!-- ADD PRODUCT -->
-
-  <div class="card">
-
-    <h2>➕ Add Product</h2>
-
-    <label>Product Name</label>
-
-    <input
-      id="productName"
-      type="text"
-      placeholder="Example: Gel Polish"
-    >
-
-    <label>Price (UGX)</label>
-
-    <input
-      id="productPrice"
-      type="number"
-      placeholder="Example: 15000"
-    >
-
-    <label>Product Description</label>
-
-    <textarea
-      id="productDescription"
-      placeholder="Describe your product"
-    ></textarea>
-
-    <label>Product Picture</label>
-
-    <input
-      id="productImage"
-      type="file"
-      accept="image/*"
-    >
-
-    <button onclick="addProduct()">
-      ➕ Add Product
-    </button>
-
-  </div>
+</div>
 
 
-  <!-- MY PRODUCTS -->
+<!-- ADD PRODUCT -->
 
-  <div class="card">
+<div class="card">
 
-    <h2>📦 My Products</h2>
+  <h2>➕ Add Product</h2>
 
-    <div id="products">
-      <p class="empty">No products added yet.</p>
-    </div>
+  <label>Product Name</label>
 
-  </div>
+  <input
+    id="productName"
+    type="text"
+    placeholder="Example: Gel Polish"
+  >
 
+  <label>Price (UGX)</label>
 
-  <!-- CUSTOMER ORDERS -->
+  <input
+    id="productPrice"
+    type="number"
+    placeholder="Example: 15000"
+  >
 
-  <div class="card">
+  <label>Product Description</label>
 
-    <h2>🛒 Customer Orders</h2>
+  <textarea
+    id="productDescription"
+    placeholder="Describe your product"
+  ></textarea>
 
-    <div id="orders">
-      <p class="empty">No customer orders yet.</p>
-    </div>
+  <label>Product Picture</label>
 
-  </div>
+  <input
+    id="productImage"
+    type="file"
+    accept="image/*"
+  >
 
-
-  <button class="logout" onclick="logout()">
-    Log Out
+  <button onclick="addProduct()">
+    ➕ Add Product
   </button>
+
+</div>
+
+
+<!-- PRODUCTS -->
+
+<div class="card">
+
+  <h2>📦 My Products</h2>
+
+  <div id="products">
+    <p class="empty">
+      No products added yet.
+    </p>
+  </div>
+
+</div>
+
+
+<!-- ORDERS -->
+
+<div class="card">
+
+  <h2>🛒 Customer Orders</h2>
+
+  <div id="orders">
+    <p class="empty">
+      No customer orders yet.
+    </p>
+  </div>
+
+</div>
+
+
+<button class="logout" onclick="logout()">
+  Log Out
+</button>
 
 </div>
 
@@ -298,9 +330,7 @@
 <script>
 
 let shop = null;
-
 let products = [];
-
 let orders = [];
 
 
@@ -310,7 +340,6 @@ function loadShop() {
 
   const savedShop =
     localStorage.getItem("nailUppShop");
-
 
   if (!savedShop) {
 
@@ -324,10 +353,7 @@ function loadShop() {
     return;
   }
 
-
-  shop =
-    JSON.parse(savedShop);
-
+  shop = JSON.parse(savedShop);
 
   document.getElementById("shopName").textContent =
     shop.name || "Nail Shop";
@@ -341,15 +367,12 @@ function loadShop() {
   document.getElementById("shopAbout").textContent =
     shop.about || "Not provided";
 
-
   loadProducts();
-
   loadOrders();
-
 }
 
 
-/* LOAD PRODUCTS */
+/* PRODUCTS */
 
 function loadProducts() {
 
@@ -358,17 +381,12 @@ function loadProducts() {
       "nailUppProducts_" + shop.id
     );
 
-
   products =
     saved ? JSON.parse(saved) : [];
 
-
   displayProducts();
-
 }
 
-
-/* ADD PRODUCT */
 
 function addProduct() {
 
@@ -387,7 +405,6 @@ function addProduct() {
   const imageInput =
     document.getElementById("productImage");
 
-
   if (!name || !price) {
 
     alert(
@@ -396,7 +413,6 @@ function addProduct() {
 
     return;
   }
-
 
   if (imageInput.files.length === 0) {
 
@@ -407,13 +423,8 @@ function addProduct() {
     return;
   }
 
-
-  const file =
-    imageInput.files[0];
-
   const reader =
     new FileReader();
-
 
   reader.onload = function(event) {
 
@@ -435,27 +446,19 @@ function addProduct() {
 
     };
 
-
     products.push(product);
-
 
     localStorage.setItem(
       "nailUppProducts_" + shop.id,
       JSON.stringify(products)
     );
 
-
     document.getElementById("productName").value = "";
-
     document.getElementById("productPrice").value = "";
-
     document.getElementById("productDescription").value = "";
-
     document.getElementById("productImage").value = "";
 
-
     displayProducts();
-
 
     alert(
       "Product added successfully!"
@@ -463,19 +466,16 @@ function addProduct() {
 
   };
 
-
-  reader.readAsDataURL(file);
-
+  reader.readAsDataURL(
+    imageInput.files[0]
+  );
 }
 
-
-/* DISPLAY PRODUCTS */
 
 function displayProducts() {
 
   const container =
     document.getElementById("products");
-
 
   if (products.length === 0) {
 
@@ -487,9 +487,7 @@ function displayProducts() {
     return;
   }
 
-
   let html = "";
-
 
   products.forEach(function(product) {
 
@@ -530,21 +528,15 @@ function displayProducts() {
 
   });
 
-
-  container.innerHTML =
-    html;
-
+  container.innerHTML = html;
 }
 
-
-/* DELETE PRODUCT */
 
 function deleteProduct(id) {
 
   if (!confirm("Delete this product?")) {
     return;
   }
-
 
   products =
     products.filter(
@@ -553,19 +545,16 @@ function deleteProduct(id) {
       }
     );
 
-
   localStorage.setItem(
     "nailUppProducts_" + shop.id,
     JSON.stringify(products)
   );
 
-
   displayProducts();
-
 }
 
 
-/* LOAD ORDERS */
+/* ORDERS */
 
 function loadOrders() {
 
@@ -574,23 +563,17 @@ function loadOrders() {
       "nailUppOrders_" + shop.id
     );
 
-
   orders =
     saved ? JSON.parse(saved) : [];
 
-
   displayOrders();
-
 }
 
-
-/* DISPLAY ORDERS */
 
 function displayOrders() {
 
   const container =
     document.getElementById("orders");
-
 
   if (orders.length === 0) {
 
@@ -602,15 +585,13 @@ function displayOrders() {
     return;
   }
 
-
   let html = "";
-
 
   orders.slice().reverse().forEach(
     function(order) {
 
-      let statusClass = "status waiting";
-
+      let statusClass =
+        "status waiting";
 
       if (
         order.status ===
@@ -620,6 +601,29 @@ function displayOrders() {
           "status accepted";
       }
 
+      if (
+        order.status ===
+        "Preparing order"
+      ) {
+        statusClass =
+          "status preparing";
+      }
+
+      if (
+        order.status ===
+        "Out for delivery"
+      ) {
+        statusClass =
+          "status out";
+      }
+
+      if (
+        order.status ===
+        "Delivered"
+      ) {
+        statusClass =
+          "status done";
+      }
 
       if (
         order.status ===
@@ -639,39 +643,58 @@ function displayOrders() {
         '</p>' +
 
         '<p><strong>Date:</strong> ' +
-        order.date +
+        (order.date || "") +
         '</p>' +
 
         '<p><strong>Customer:</strong> ' +
         (order.customerName ||
         "Nail Upp Client") +
+        '</p>' +
+
+        '<p><strong>Phone:</strong> ' +
+        (order.customerPhone ||
+        "Not provided") +
+        '</p>' +
+
+        '<p><strong>Delivery Location:</strong> ' +
+        (order.deliveryLocation ||
+        "Not provided") +
+        '</p>' +
+
+        '<p><strong>Instructions:</strong> ' +
+        (order.deliveryInstructions ||
+        "None") +
         '</p>';
 
 
-      order.items.forEach(
-        function(item) {
+      if (order.items) {
 
-          html +=
+        order.items.forEach(
+          function(item) {
 
-            '<div class="order-item">' +
+            html +=
 
-            '<strong>' +
-            item.name +
-            '</strong>' +
+              '<div class="order-item">' +
 
-            '<p>Quantity: ' +
-            item.quantity +
-            '</p>' +
+              '<strong>' +
+              item.name +
+              '</strong>' +
 
-            '<p>Price: UGX ' +
-            Number(item.price)
-              .toLocaleString() +
-            '</p>' +
+              '<p>Quantity: ' +
+              item.quantity +
+              '</p>' +
 
-            '</div>';
+              '<p>Price: UGX ' +
+              Number(item.price)
+                .toLocaleString() +
+              '</p>' +
 
-        }
-      );
+              '</div>';
+
+          }
+        );
+
+      }
 
 
       html +=
@@ -680,7 +703,7 @@ function displayOrders() {
 
         'TOTAL: UGX ' +
 
-        Number(order.total)
+        Number(order.total || 0)
           .toLocaleString() +
 
         '</p>' +
@@ -689,10 +712,13 @@ function displayOrders() {
         statusClass +
         '">' +
 
-        order.status +
+        (order.status ||
+        "Waiting for shop") +
 
         '</div>';
 
+
+      /* WAITING */
 
       if (
         order.status ===
@@ -702,20 +728,83 @@ function displayOrders() {
         html +=
 
           '<button class="accept" ' +
-          'onclick="acceptOrder(\'' +
+          'onclick="updateOrder(\'' +
           order.id +
-          '\')">' +
+          '\',\'Accepted by shop\')">' +
 
           '✅ Accept Order' +
 
           '</button>' +
 
-          '<button class="delete" ' +
-          'onclick="declineOrder(\'' +
+          '<button class="decline" ' +
+          'onclick="updateOrder(\'' +
           order.id +
-          '\')">' +
+          '\',\'Declined by shop\')">' +
 
           '❌ Decline Order' +
+
+          '</button>';
+
+      }
+
+
+      /* ACCEPTED */
+
+      if (
+        order.status ===
+        "Accepted by shop"
+      ) {
+
+        html +=
+
+          '<button class="prepare" ' +
+          'onclick="updateOrder(\'' +
+          order.id +
+          '\',\'Preparing order\')">' +
+
+          '📦 Start Preparing' +
+
+          '</button>';
+
+      }
+
+
+      /* PREPARING */
+
+      if (
+        order.status ===
+        "Preparing order"
+      ) {
+
+        html +=
+
+          '<button class="delivery" ' +
+          'onclick="updateOrder(\'' +
+          order.id +
+          '\',\'Out for delivery\')">' +
+
+          '🚚 Out for Delivery' +
+
+          '</button>';
+
+      }
+
+
+      /* OUT FOR DELIVERY */
+
+      if (
+        order.status ===
+        "Out for delivery"
+      ) {
+
+        html +=
+
+          '<button class="delivered" ' +
+          'onclick="updateOrder(\'' +
+          order.id +
+          '\',\'Delivered\')">' +
+
+          '✅ Mark as Delivered' +
 
           '</button>';
 
@@ -727,16 +816,17 @@ function displayOrders() {
     }
   );
 
-
   container.innerHTML =
     html;
-
 }
 
 
-/* ACCEPT ORDER */
+/* UPDATE ORDER STATUS */
 
-function acceptOrder(orderId) {
+function updateOrder(
+  orderId,
+  newStatus
+) {
 
   const order =
     orders.find(
@@ -745,65 +835,19 @@ function acceptOrder(orderId) {
       }
     );
 
-
   if (!order) return;
 
-
   order.status =
-    "Accepted by shop";
-
+    newStatus;
 
   saveOrders();
 
-
   updateClientOrder(order);
 
-
   alert(
-    "Order accepted successfully!"
+    "Order updated to: " +
+    newStatus
   );
-
-}
-
-
-/* DECLINE ORDER */
-
-function declineOrder(orderId) {
-
-  if (
-    !confirm(
-      "Decline this order?"
-    )
-  ) {
-    return;
-  }
-
-
-  const order =
-    orders.find(
-      function(item) {
-        return item.id === orderId;
-      }
-    );
-
-
-  if (!order) return;
-
-
-  order.status =
-    "Declined by shop";
-
-
-  saveOrders();
-
-
-  updateClientOrder(order);
-
-
-  alert(
-    "Order declined."
-  );
-
 }
 
 
@@ -816,13 +860,11 @@ function saveOrders() {
     JSON.stringify(orders)
   );
 
-
   displayOrders();
-
 }
 
 
-/* UPDATE CLIENT ORDER */
+/* UPDATE CLIENT */
 
 function updateClientOrder(order) {
 
@@ -830,7 +872,6 @@ function updateClientOrder(order) {
     "nailUppProductOrder",
     JSON.stringify(order)
   );
-
 }
 
 
@@ -842,10 +883,8 @@ function logout() {
     "nailUppShop"
   );
 
-
   window.location.href =
     "index.html";
-
 }
 
 
