@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nail Upp - Nail Shop</title>
+  <title>Nail Upp - Shop Dashboard</title>
 
   <style>
     * {
@@ -28,10 +28,6 @@
 
     header h1 {
       font-size: 28px;
-    }
-
-    header p {
-      margin-top: 6px;
     }
 
     .container {
@@ -70,11 +66,6 @@
       font-size: 15px;
     }
 
-    input[type="file"] {
-      padding: 10px;
-      background: #fff;
-    }
-
     textarea {
       min-height: 70px;
     }
@@ -100,11 +91,10 @@
 
     .product-image {
       width: 100%;
-      height: 200px;
+      max-height: 250px;
       object-fit: cover;
       border-radius: 12px;
       margin-bottom: 12px;
-      background: #f5f5f5;
     }
 
     .product h3 {
@@ -131,6 +121,65 @@
       margin-top: 8px;
     }
 
+    .order {
+      border: 1px solid #eee;
+      border-radius: 14px;
+      padding: 15px;
+      margin-top: 12px;
+    }
+
+    .order-item {
+      background: #fff7fb;
+      padding: 10px;
+      border-radius: 10px;
+      margin-top: 8px;
+    }
+
+    .order-status {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 10px;
+      background: #fff3cd;
+      color: #856404;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .accepted {
+      background: #e8f5e9;
+      color: #2e7d32;
+    }
+
+    .declined {
+      background: #ffebee;
+      color: #c62828;
+    }
+
+    .accept {
+      background: #2e7d32;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      padding: 10px 18px;
+      margin-top: 12px;
+      margin-right: 8px;
+    }
+
+    .decline {
+      background: #c62828;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      padding: 10px 18px;
+      margin-top: 12px;
+    }
+
+    .empty {
+      color: #777;
+      text-align: center;
+      padding: 10px;
+    }
+
     .logout {
       width: 100%;
       background: #333;
@@ -141,19 +190,13 @@
       font-size: 15px;
     }
 
-    .empty {
-      color: #777;
-      text-align: center;
-      padding: 10px;
-    }
-
     .preview {
       display: none;
       width: 100%;
-      height: 180px;
+      max-height: 220px;
       object-fit: cover;
       border-radius: 12px;
-      margin-top: 10px;
+      margin-top: 12px;
     }
   </style>
 </head>
@@ -166,6 +209,8 @@
 </header>
 
 <div class="container">
+
+  <!-- SHOP PROFILE -->
 
   <div class="card">
 
@@ -181,6 +226,7 @@
     <input id="shopPhone" type="tel" placeholder="Enter phone number">
 
     <label>About Your Shop</label>
+
     <textarea
       id="shopAbout"
       placeholder="Describe your nail shop"
@@ -192,6 +238,8 @@
 
   </div>
 
+
+  <!-- ADD PRODUCT -->
 
   <div class="card">
 
@@ -207,7 +255,7 @@
     >
 
     <img
-      id="imagePreview"
+      id="preview"
       class="preview"
       alt="Product preview"
     >
@@ -224,9 +272,7 @@
 
     <select id="category">
 
-      <option value="">
-        Select category
-      </option>
+      <option value="">Select category</option>
 
       <option>Nail Polish</option>
       <option>Gel</option>
@@ -255,33 +301,33 @@
     ></textarea>
 
     <button class="button" onclick="addProduct()">
-      Add Product
+      📦 Add Product
     </button>
 
   </div>
 
+
+  <!-- PRODUCTS -->
 
   <div class="card">
 
     <h2>📦 My Products</h2>
 
     <div id="products">
-      <p class="empty">
-        No products added yet.
-      </p>
+      <p class="empty">No products added yet.</p>
     </div>
 
   </div>
 
+
+  <!-- CUSTOMER ORDERS -->
 
   <div class="card">
 
     <h2>🛒 Customer Orders</h2>
 
     <div id="orders">
-      <p class="empty">
-        No customer orders yet.
-      </p>
+      <p class="empty">No customer orders yet.</p>
     </div>
 
   </div>
@@ -292,6 +338,7 @@
   </button>
 
 </div>
+
 
 <script>
 
@@ -314,6 +361,7 @@ function saveShop() {
   const about =
     document.getElementById("shopAbout").value.trim();
 
+
   if (!name || !location || !phone) {
 
     alert(
@@ -323,19 +371,57 @@ function saveShop() {
     return;
   }
 
+
   const shop = {
+
     name: name,
+
     location: location,
+
     phone: phone,
+
     about: about
+
   };
+
 
   localStorage.setItem(
     "nailUppShop",
     JSON.stringify(shop)
   );
 
+
   alert("Shop profile saved.");
+
+}
+
+
+/* LOAD SHOP */
+
+function loadShop() {
+
+  const saved =
+    localStorage.getItem("nailUppShop");
+
+
+  if (!saved) return;
+
+
+  const shop =
+    JSON.parse(saved);
+
+
+  document.getElementById("shopName").value =
+    shop.name || "";
+
+  document.getElementById("shopLocation").value =
+    shop.location || "";
+
+  document.getElementById("shopPhone").value =
+    shop.phone || "";
+
+  document.getElementById("shopAbout").value =
+    shop.about || "";
 
 }
 
@@ -347,27 +433,37 @@ function previewImage() {
   const file =
     document.getElementById("productImage").files[0];
 
-  if (!file) {
-    return;
-  }
 
-  const reader = new FileReader();
+  if (!file) return;
 
-  reader.onload = function(event) {
 
-    selectedImage =
-      event.target.result;
+  const reader =
+    new FileReader();
 
-    const preview =
-      document.getElementById("imagePreview");
 
-    preview.src = selectedImage;
+  reader.onload =
+    function(event) {
 
-    preview.style.display = "block";
+      selectedImage =
+        event.target.result;
 
-  };
+
+      const preview =
+        document.getElementById("preview");
+
+
+      preview.src =
+        selectedImage;
+
+
+      preview.style.display =
+        "block";
+
+    };
+
 
   reader.readAsDataURL(file);
+
 }
 
 
@@ -409,11 +505,12 @@ function addProduct() {
   const saved =
     localStorage.getItem("nailUppProducts");
 
+
   const products =
     saved ? JSON.parse(saved) : [];
 
 
-  const product = {
+  products.push({
 
     id: Date.now(),
 
@@ -427,10 +524,7 @@ function addProduct() {
 
     image: selectedImage
 
-  };
-
-
-  products.push(product);
+  });
 
 
   localStorage.setItem(
@@ -449,26 +543,27 @@ function addProduct() {
 
   document.getElementById("productDescription").value = "";
 
-  document.getElementById("imagePreview").style.display = "none";
+  document.getElementById("preview").style.display = "none";
 
-  document.getElementById("imagePreview").src = "";
 
   selectedImage = "";
 
 
   loadProducts();
 
+
   alert("Product added successfully.");
 
 }
 
 
-/* SHOW PRODUCTS */
+/* LOAD PRODUCTS */
 
 function loadProducts() {
 
   const saved =
     localStorage.getItem("nailUppProducts");
+
 
   const container =
     document.getElementById("products");
@@ -530,7 +625,7 @@ function loadProducts() {
       '<button class="delete" onclick="deleteProduct(' +
       product.id +
       ')">' +
-      'Delete Product' +
+      '🗑️ Delete Product' +
       '</button>' +
 
       '</div>';
@@ -538,7 +633,8 @@ function loadProducts() {
   });
 
 
-  container.innerHTML = html;
+  container.innerHTML =
+    html;
 
 }
 
@@ -549,6 +645,7 @@ function deleteProduct(id) {
 
   const saved =
     localStorage.getItem("nailUppProducts");
+
 
   if (!saved) return;
 
@@ -576,20 +673,21 @@ function deleteProduct(id) {
 }
 
 
-/* ORDERS */
+/* LOAD CUSTOMER ORDER */
 
 function loadOrders() {
 
   const saved =
     localStorage.getItem("nailUppProductOrder");
 
-  const orders =
+
+  const container =
     document.getElementById("orders");
 
 
   if (!saved) {
 
-    orders.innerHTML =
+    container.innerHTML =
       '<p class="empty">No customer orders yet.</p>';
 
     return;
@@ -600,33 +698,154 @@ function loadOrders() {
     JSON.parse(saved);
 
 
-  orders.innerHTML =
+  let html =
 
-    '<div class="product">' +
+    '<div class="order">' +
 
-    '<h3>🛒 New Order</h3>' +
+    '<h3>🛒 Order #' +
+    order.id +
+    '</h3>' +
 
     '<p><strong>Customer:</strong> ' +
     order.clientName +
     '</p>' +
 
-    '<p><strong>Product:</strong> ' +
-    order.productName +
-    '</p>' +
+    '<p><strong>Phone:</strong> ' +
+    (order.clientPhone || "Not provided") +
+    '</p>';
 
-    '<p><strong>Quantity:</strong> ' +
-    order.quantity +
-    '</p>' +
 
-    '<p><strong>Total:</strong> UGX ' +
+  order.items.forEach(function(item) {
+
+    html +=
+
+      '<div class="order-item">' +
+
+      '<strong>' +
+      item.name +
+      '</strong>' +
+
+      '<p>Quantity: ' +
+      item.quantity +
+      '</p>' +
+
+      '<p>Price: UGX ' +
+      Number(item.price).toLocaleString() +
+      '</p>' +
+
+      '<p>Subtotal: UGX ' +
+      Number(
+        item.price * item.quantity
+      ).toLocaleString() +
+      '</p>' +
+
+      '</div>';
+
+  });
+
+
+  html +=
+
+    '<p class="price" style="margin-top:15px;">' +
+
+    'TOTAL: UGX ' +
+
     Number(order.total).toLocaleString() +
-    '</p>' +
 
-    '<p><strong>Status:</strong> ' +
+    '</p>';
+
+
+  if (order.status === "Waiting for shop") {
+
+    html +=
+
+      '<button class="accept" onclick="updateOrderStatus(\'Accepted by shop\')">' +
+
+      '✅ Accept Order' +
+
+      '</button>' +
+
+      '<button class="decline" onclick="updateOrderStatus(\'Declined by shop\')">' +
+
+      '❌ Decline' +
+
+      '</button>';
+
+  }
+
+
+  let statusClass =
+    "order-status";
+
+
+  if (order.status === "Accepted by shop") {
+
+    statusClass =
+      "order-status accepted";
+
+  }
+
+
+  if (order.status === "Declined by shop") {
+
+    statusClass =
+      "order-status declined";
+
+  }
+
+
+  html +=
+
+    '<div class="' +
+    statusClass +
+    '">' +
+
+    'STATUS: ' +
     order.status +
-    '</p>' +
+
+    '</div>' +
 
     '</div>';
+
+
+  container.innerHTML =
+    html;
+
+}
+
+
+/* ACCEPT OR DECLINE ORDER */
+
+function updateOrderStatus(status) {
+
+  const saved =
+    localStorage.getItem("nailUppProductOrder");
+
+
+  if (!saved) return;
+
+
+  const order =
+    JSON.parse(saved);
+
+
+  order.status =
+    status;
+
+
+  localStorage.setItem(
+    "nailUppProductOrder",
+    JSON.stringify(order)
+  );
+
+
+  loadOrders();
+
+
+  alert(
+    "Order status updated to: " +
+    status
+  );
 
 }
 
@@ -637,12 +856,18 @@ function logout() {
 
   localStorage.removeItem("nailUppShop");
 
-  window.location.href = "index.html";
+  window.location.href =
+    "index.html";
 
 }
 
 
+/* START */
+
+loadShop();
+
 loadProducts();
+
 loadOrders();
 
 </script>
