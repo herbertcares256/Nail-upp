@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nail Upp - Shop</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff7fb;
+      color: #333;
+    }
+
+    header {
+      background: #d81b60;
+      color: white;
+      text-align: center;
+      padding: 25px 15px;
+      border-radius: 0 0 25px 25px;
+    }
+
+    header h1 {
+      font-size: 28px;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: auto;
+      padding: 20px 15px 40px;
+    }
+
+    .back {
+      display: inline-block;
+      margin-bottom: 15px;
+      color: #d81b60;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .search {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #ddd;
+      border-radius: 25px;
+      font-size: 15px;
+      margin-bottom: 18px;
+    }
+
+    .categories {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      margin-bottom: 18px;
+    }
+
+    .category {
+      white-space: nowrap;
+      border: none;
+      background: white;
+      padding: 10px 15px;
+      border-radius: 20px;
+      color: #d81b60;
+      font-weight: bold;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .product {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    .product img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      background: #eee;
+    }
+
+    .info {
+      padding: 12px;
+    }
+
+    .info h3 {
+      color: #d81b60;
+      font-size: 16px;
+      margin-bottom: 6px;
+    }
+
+    .info p {
+      font-size: 12px;
+      margin: 5px 0;
+    }
+
+    .price {
+      font-weight: bold;
+      font-size: 16px !important;
+    }
+
+    .cart-btn {
+      width: 100%;
+      border: none;
+      background: #d81b60;
+      color: white;
+      padding: 10px;
+      border-radius: 20px;
+      margin-top: 8px;
+      font-weight: bold;
+    }
+
+    .cart {
+      background: white;
+      margin-top: 22px;
+      padding: 18px;
+      border-radius: 18px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    .cart h2 {
+      color: #d81b60;
+      margin-bottom: 12px;
+    }
+
+    .cart-item {
+      border-bottom: 1px solid #eee;
+      padding: 10px 0;
+    }
+
+    .cart-item:last-child {
+      border-bottom: none;
+    }
+
+    .cart-item p {
+      margin: 5px 0;
+      font-size: 14px;
+    }
+
+    .quantity {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .quantity button {
+      border: none;
+      background: #fff0f6;
+      color: #d81b60;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      font-weight: bold;
+    }
+
+    .checkout {
+      width: 100%;
+      border: none;
+      background: #d81b60;
+      color: white;
+      padding: 14px;
+      border-radius: 25px;
+      margin-top: 15px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .empty {
+      text-align: center;
+      color: #777;
+      padding: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>💅 Nail Upp</h1>
+  <p>Shop Nail Products</p>
+</header>
+
+<div class="container">
+
+  <a href="client.html" class="back">
+    ← Back to Client Dashboard
+  </a>
+
+  <input
+    id="search"
+    class="search"
+    type="text"
+    placeholder="🔎 Search nail products..."
+    oninput="showProducts()"
+  >
+
+  <div class="categories">
+
+    <button class="category" onclick="filterCategory('All')">
+      All
+    </button>
+
+    <button class="category" onclick="filterCategory('Nail Polish')">
+      Polish
+    </button>
+
+    <button class="category" onclick="filterCategory('Gel')">
+      Gel
+    </button>
+
+    <button class="category" onclick="filterCategory('Acrylic')">
+      Acrylic
+    </button>
+
+    <button class="category" onclick="filterCategory('Nail Tips')">
+      Tips
+    </button>
+
+    <button class="category" onclick="filterCategory('Nail Tools')">
+      Tools
+    </button>
+
+  </div>
+
+  <div id="products" class="products"></div>
+
+  <div class="cart">
+
+    <h2>🛒 My Cart</h2>
+
+    <div id="cartItems">
+      <p class="empty">Your cart is empty.</p>
+    </div>
+
+    <h3 id="total">
+      Total: UGX 0
+    </h3>
+
+    <button class="checkout" onclick="checkout()">
+      Checkout
+    </button>
+
+  </div>
+
+</div>
+
+<script>
+
+let currentCategory = "All";
+
+
+function getProducts() {
+
+  const saved =
+    localStorage.getItem("nailUppProducts");
+
+  if (!saved) {
+    return [];
+  }
+
+  return JSON.parse(saved);
+}
+
+
+function filterCategory(category) {
+
+  currentCategory = category;
+
+  showProducts();
+}
+
+
+function showProducts() {
+
+  const products =
+    getProducts();
+
+  const search =
+    document.getElementById("search").value
+    .toLowerCase()
+    .trim();
+
+  const container =
+    document.getElementById("products");
+
+
+  const filtered =
+    products.filter(function(product) {
+
+      const matchesSearch =
+        product.name.toLowerCase().includes(search);
+
+      const matchesCategory =
+        currentCategory === "All" ||
+        product.category === currentCategory;
+
+      return matchesSearch && matchesCategory;
+
+    });
+
+
+  if (filtered.length === 0) {
+
+    container.innerHTML =
+      '<p class="empty">No products available.</p>';
+
+    return;
+  }
+
+
+  let html = "";
+
+
+  filtered.forEach(function(product) {
+
+    html +=
+
+      '<div class="product">' +
+
+      '<img src="' +
+      product.image +
+      '" alt="' +
+      product.name +
+      '">' +
+
+      '<div class="info">' +
+
+      '<h3>' +
+      product.name +
+      '</h3>' +
+
+      '<p>' +
+      product.category +
+      '</p>' +
+
+      '<p class="price">UGX ' +
+      Number(product.price).toLocaleString() +
+      '</p>' +
+
+      '<p>' +
+      (product.description || "") +
+      '</p>' +
+
+      '<button class="cart-btn" onclick="addToCart(' +
+      product.id +
+      ')">' +
+
+      '🛒 Add to Cart' +
+
+      '</button>' +
+
+      '</div>' +
+
+      '</div>';
+
+  });
+
+
+  container.innerHTML = html;
+
+}
+
+
+function getCart() {
+
+  const saved =
+    localStorage.getItem("nailUppCart");
+
+  if (!saved) {
+    return [];
+  }
+
+  return JSON.parse(saved);
+}
+
+
+function addToCart(id) {
+
+  const products =
+    getProducts();
+
+  const product =
+    products.find(function(item) {
+
+      return item.id === id;
+
+    });
+
+
+  if (!product) {
+    return;
+  }
+
+
+  const cart =
+    getCart();
+
+
+  const existing =
+    cart.find(function(item) {
+
+      return item.id === id;
+
+    });
+
+
+  if (existing) {
+
+    existing.quantity++;
+
+  } else {
+
+    cart.push({
+
+      id: product.id,
+
+      name: product.name,
+
+      price: Number(product.price),
+
+      image: product.image,
+
+      quantity: 1
+
+    });
+
+  }
+
+
+  localStorage.setItem(
+    "nailUppCart",
+    JSON.stringify(cart)
+  );
+
+
+  showCart();
+
+}
+
+
+function changeQuantity(id, amount) {
+
+  const cart =
+    getCart();
+
+
+  const item =
+    cart.find(function(product) {
+
+      return product.id === id;
+
+    });
+
+
+  if (!item) {
+    return;
+  }
+
+
+  item.quantity += amount;
+
+
+  if (item.quantity <= 0) {
+
+    const index =
+      cart.findIndex(function(product) {
+
+        return product.id === id;
+
+      });
+
+    cart.splice(index, 1);
+
+  }
+
+
+  localStorage.setItem(
+    "nailUppCart",
+    JSON.stringify(cart)
+  );
+
+
+  showCart();
+
+}
+
+
+function showCart() {
+
+  const cart =
+    getCart();
+
+  const container =
+    document.getElementById("cartItems");
+
+  let total = 0;
+
+
+  if (cart.length === 0) {
+
+    container.innerHTML =
+      '<p class="empty">Your cart is empty.</p>';
+
+    document.getElementById("total").textContent =
+      "Total: UGX 0";
+
+    return;
+
+  }
+
+
+  let html = "";
+
+
+  cart.forEach(function(item) {
+
+    const itemTotal =
+      item.price * item.quantity;
+
+    total += itemTotal;
+
+
+    html +=
+
+      '<div class="cart-item">' +
+
+      '<p><strong>' +
+      item.name +
+      '</strong></p>' +
+
+      '<p>UGX ' +
+      item.price.toLocaleString() +
+      ' each</p>' +
+
+      '<div class="quantity">' +
+
+      '<button onclick="changeQuantity(' +
+      item.id +
+      ',-1)">−</button>' +
+
+      '<strong>' +
+      item.quantity +
+      '</strong>' +
+
+      '<button onclick="changeQuantity(' +
+      item.id +
+      ',1)">+</button>' +
+
+      '</div>' +
+
+      '<p><strong>Subtotal: UGX ' +
+      itemTotal.toLocaleString() +
+      '</strong></p>' +
+
+      '</div>';
+
+  });
+
+
+  container.innerHTML = html;
+
+
+  document.getElementById("total").textContent =
+    "Total: UGX " + total.toLocaleString();
+
+}
+
+
+function checkout() {
+
+  const cart =
+    getCart();
+
+
+  if (cart.length === 0) {
+
+    alert("Your cart is empty.");
+
+    return;
+
+  }
+
+
+  localStorage.setItem(
+    "nailUppCheckout",
+    JSON.stringify(cart)
+  );
+
+
+  window.location.href =
+    "shop-checkout.html";
+
+}
+
+
+showProducts();
+showCart();
+
+</script>
+
+</body>
+  </html>
