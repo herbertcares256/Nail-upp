@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nail Upp - Nail Shops</title>
+  <title>Nail Upp - Nail Shop</title>
 
   <style>
     * {
@@ -36,57 +36,95 @@
       padding: 20px 15px 40px;
     }
 
-    .back {
-      display: inline-block;
-      margin-bottom: 18px;
-      color: #d81b60;
-      font-weight: bold;
-      text-decoration: none;
-    }
-
-    .search {
-      width: 100%;
-      padding: 14px;
-      border: 1px solid #ddd;
-      border-radius: 25px;
-      font-size: 15px;
-      margin-bottom: 20px;
-    }
-
-    .shop {
+    .card {
       background: white;
       padding: 20px;
-      margin-bottom: 18px;
+      margin-bottom: 20px;
       border-radius: 18px;
       box-shadow: 0 4px 15px rgba(0,0,0,0.08);
     }
 
-    .shop h2 {
+    h2 {
       color: #d81b60;
-      margin-bottom: 10px;
+      margin-bottom: 15px;
     }
 
-    .shop p {
-      margin: 7px 0;
-      font-size: 14px;
+    .shop-info p {
+      margin: 8px 0;
     }
 
-    .view-button {
-      width: 100%;
+    label {
+      display: block;
+      font-weight: bold;
       margin-top: 12px;
+      margin-bottom: 6px;
+    }
+
+    input,
+    textarea {
+      width: 100%;
       padding: 13px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      font-size: 15px;
+    }
+
+    input[type="file"] {
+      padding: 10px;
+    }
+
+    textarea {
+      min-height: 70px;
+    }
+
+    button {
+      width: 100%;
       border: none;
       border-radius: 25px;
+      padding: 13px;
+      margin-top: 15px;
       background: #d81b60;
       color: white;
       font-size: 15px;
       font-weight: bold;
     }
 
+    .product {
+      border: 1px solid #eee;
+      padding: 15px;
+      border-radius: 15px;
+      margin-bottom: 15px;
+    }
+
+    .product img {
+      width: 100%;
+      max-height: 220px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 12px;
+    }
+
+    .product h3 {
+      color: #d81b60;
+      margin-bottom: 8px;
+    }
+
+    .product p {
+      margin: 7px 0;
+    }
+
+    .delete {
+      background: #c62828;
+    }
+
     .empty {
       text-align: center;
       color: #777;
-      padding: 25px;
+      padding: 15px;
+    }
+
+    .logout {
+      background: #555;
     }
   </style>
 </head>
@@ -95,109 +133,330 @@
 
 <header>
   <h1>💅 Nail Upp</h1>
-  <p>Choose a Nail Shop</p>
+  <p>Nail Shop Dashboard</p>
 </header>
 
 <div class="container">
 
-  <a href="client.html" class="back">
-    ← Back to Client Dashboard
-  </a>
+  <!-- SHOP INFORMATION -->
 
-  <input
-    id="search"
-    class="search"
-    type="text"
-    placeholder="🔍 Search shops or locations..."
-    oninput="displayShops()"
-  >
+  <div class="card shop-info">
 
-  <div id="shops">
-    <p class="empty">Loading shops...</p>
+    <h2>🏪 My Shop</h2>
+
+    <p>
+      <strong>Name:</strong>
+      <span id="shopName">Nail Shop</span>
+    </p>
+
+    <p>
+      <strong>Phone:</strong>
+      <span id="shopPhone">Not provided</span>
+    </p>
+
+    <p>
+      <strong>Location:</strong>
+      <span id="shopLocation">Not provided</span>
+    </p>
+
+    <p>
+      <strong>About:</strong>
+      <span id="shopAbout">Not provided</span>
+    </p>
+
   </div>
+
+
+  <!-- ADD PRODUCT -->
+
+  <div class="card">
+
+    <h2>➕ Add Product</h2>
+
+    <label>Product Name</label>
+
+    <input
+      id="productName"
+      type="text"
+      placeholder="Example: Gel Polish"
+    >
+
+
+    <label>Price (UGX)</label>
+
+    <input
+      id="productPrice"
+      type="number"
+      placeholder="Example: 15000"
+    >
+
+
+    <label>Product Description</label>
+
+    <textarea
+      id="productDescription"
+      placeholder="Describe your product"
+    ></textarea>
+
+
+    <label>Product Picture</label>
+
+    <input
+      id="productImage"
+      type="file"
+      accept="image/*"
+    >
+
+
+    <button onclick="addProduct()">
+      ➕ Add Product
+    </button>
+
+  </div>
+
+
+  <!-- MY PRODUCTS -->
+
+  <div class="card">
+
+    <h2>📦 My Products</h2>
+
+    <div id="products">
+
+      <p class="empty">
+        No products added yet.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <button class="logout" onclick="logout()">
+    Log Out
+  </button>
 
 </div>
 
+
 <script>
 
-let shops = [];
+let shop = null;
+
+let products = [];
 
 
-function loadShops() {
+/* LOAD SHOP */
 
-  const saved =
-    localStorage.getItem("nailUppShops");
+function loadShop() {
 
-  if (saved) {
+  const savedShop =
+    localStorage.getItem("nailUppShop");
 
-    shops =
-      JSON.parse(saved);
 
-  } else {
+  if (!savedShop) {
 
-    /*
-      Temporary shop list for testing.
+    alert(
+      "No Nail Shop is registered yet."
+    );
 
-      Later Firebase will automatically
-      provide all registered Nail Shops.
-    */
+    window.location.href =
+      "index.html";
 
-    const singleShop =
-      localStorage.getItem("nailUppShop");
-
-    if (singleShop) {
-
-      shops = [
-        JSON.parse(singleShop)
-      ];
-
-    } else {
-
-      shops = [];
-
-    }
-
+    return;
   }
 
-  displayShops();
+
+  shop =
+    JSON.parse(savedShop);
+
+
+  document.getElementById(
+    "shopName"
+  ).textContent =
+    shop.name || "Nail Shop";
+
+
+  document.getElementById(
+    "shopPhone"
+  ).textContent =
+    shop.phone || "Not provided";
+
+
+  document.getElementById(
+    "shopLocation"
+  ).textContent =
+    shop.location || "Not provided";
+
+
+  document.getElementById(
+    "shopAbout"
+  ).textContent =
+    shop.about || "Not provided";
+
+
+  loadProducts();
+
 }
 
 
-function displayShops() {
+/* LOAD PRODUCTS */
+
+function loadProducts() {
+
+  const saved =
+    localStorage.getItem(
+      "nailUppProducts_" + shop.id
+    );
+
+
+  products =
+    saved ? JSON.parse(saved) : [];
+
+
+  displayProducts();
+
+}
+
+
+/* ADD PRODUCT */
+
+function addProduct() {
+
+  const name =
+    document.getElementById(
+      "productName"
+    ).value.trim();
+
+
+  const price =
+    document.getElementById(
+      "productPrice"
+    ).value;
+
+
+  const description =
+    document.getElementById(
+      "productDescription"
+    ).value.trim();
+
+
+  const imageInput =
+    document.getElementById(
+      "productImage"
+    );
+
+
+  if (!name || !price) {
+
+    alert(
+      "Please enter the product name and price."
+    );
+
+    return;
+  }
+
+
+  if (imageInput.files.length === 0) {
+
+    alert(
+      "Please choose a product picture."
+    );
+
+    return;
+  }
+
+
+  const file =
+    imageInput.files[0];
+
+
+  const reader =
+    new FileReader();
+
+
+  reader.onload = function(event) {
+
+    const product = {
+
+      id: Date.now(),
+
+      name: name,
+
+      price: Number(price),
+
+      description: description,
+
+      image: event.target.result,
+
+      shopId: shop.id,
+
+      shopName: shop.name
+
+    };
+
+
+    products.push(product);
+
+
+    localStorage.setItem(
+      "nailUppProducts_" + shop.id,
+      JSON.stringify(products)
+    );
+
+
+    /* Clear form */
+
+    document.getElementById(
+      "productName"
+    ).value = "";
+
+
+    document.getElementById(
+      "productPrice"
+    ).value = "";
+
+
+    document.getElementById(
+      "productDescription"
+    ).value = "";
+
+
+    document.getElementById(
+      "productImage"
+    ).value = "";
+
+
+    displayProducts();
+
+
+    alert(
+      "Product added successfully!"
+    );
+
+  };
+
+
+  reader.readAsDataURL(file);
+
+}
+
+
+/* DISPLAY PRODUCTS */
+
+function displayProducts() {
 
   const container =
-    document.getElementById("shops");
-
-  const search =
-    document.getElementById("search").value
-      .toLowerCase()
-      .trim();
+    document.getElementById(
+      "products"
+    );
 
 
-  const filtered =
-    shops.filter(function(shop) {
-
-      return (
-        (shop.name || "")
-          .toLowerCase()
-          .includes(search) ||
-
-        (shop.location || "")
-          .toLowerCase()
-          .includes(search)
-      );
-
-    });
-
-
-  if (filtered.length === 0) {
+  if (products.length === 0) {
 
     container.innerHTML =
-
       '<p class="empty">' +
-
-      'No nail shops available yet.' +
-
+      'No products added yet.' +
       '</p>';
 
     return;
@@ -207,34 +466,39 @@ function displayShops() {
   let html = "";
 
 
-  filtered.forEach(function(shop, index) {
+  products.forEach(function(product) {
 
     html +=
 
-      '<div class="shop">' +
+      '<div class="product">' +
 
-      '<h2>🏪 ' +
-      (shop.name || "Nail Shop") +
-      '</h2>' +
+      '<img src="' +
+      product.image +
+      '" alt="' +
+      product.name +
+      '">' +
 
-      '<p>📍 <strong>Location:</strong> ' +
-      (shop.location || "Not provided") +
+      '<h3>' +
+      product.name +
+      '</h3>' +
+
+      '<p><strong>Price:</strong> UGX ' +
+      Number(
+        product.price
+      ).toLocaleString() +
       '</p>' +
 
-      '<p>📞 <strong>Phone:</strong> ' +
-      (shop.phone || "Not provided") +
+      '<p>' +
+      (product.description ||
+      "No description") +
       '</p>' +
 
-      '<p>ℹ️ ' +
-      (shop.about || "Nail products and supplies.") +
-      '</p>' +
-
-      '<button class="view-button" ' +
-      'onclick="viewShop(' +
-      index +
+      '<button class="delete" ' +
+      'onclick="deleteProduct(' +
+      product.id +
       ')">' +
 
-      '🛍️ View Products' +
+      '🗑️ Delete Product' +
 
       '</button>' +
 
@@ -245,56 +509,61 @@ function displayShops() {
 
   container.innerHTML =
     html;
+
 }
 
 
-function viewShop(index) {
+/* DELETE PRODUCT */
 
-  const search =
-    document.getElementById("search").value
-      .toLowerCase()
-      .trim();
+function deleteProduct(id) {
 
-
-  const filtered =
-    shops.filter(function(shop) {
-
-      return (
-        (shop.name || "")
-          .toLowerCase()
-          .includes(search) ||
-
-        (shop.location || "")
-          .toLowerCase()
-          .includes(search)
-      );
-
-    });
+  const confirmDelete =
+    confirm(
+      "Delete this product?"
+    );
 
 
-  const shop =
-    filtered[index];
+  if (!confirmDelete) return;
 
 
-  if (!shop) return;
+  products =
+    products.filter(
+      function(product) {
 
+        return product.id !== id;
 
-  /*
-    Save the shop the client selected.
-  */
+      }
+    );
+
 
   localStorage.setItem(
-    "selectedNailUppShop",
-    JSON.stringify(shop)
+    "nailUppProducts_" + shop.id,
+    JSON.stringify(products)
   );
 
 
-  window.location.href =
-    "shop-products.html";
+  displayProducts();
+
 }
 
 
-loadShops();
+/* LOGOUT */
+
+function logout() {
+
+  localStorage.removeItem(
+    "nailUppShop"
+  );
+
+  window.location.href =
+    "index.html";
+
+}
+
+
+/* START */
+
+loadShop();
 
 </script>
 
