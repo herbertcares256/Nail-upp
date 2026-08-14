@@ -1,0 +1,551 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Register Nail Shop - Nail Upp</title>
+
+<style>
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #fff7fb;
+  color: #333;
+}
+
+header {
+  background: #d9165b;
+  color: white;
+  text-align: center;
+  padding: 35px 20px;
+  border-radius: 0 0 40px 40px;
+}
+
+.logo {
+  font-size: 55px;
+}
+
+header h1 {
+  font-size: 32px;
+  margin-top: 8px;
+}
+
+.container {
+  max-width: 650px;
+  margin: auto;
+  padding: 25px 18px 50px;
+}
+
+.card {
+  background: white;
+  padding: 25px;
+  border-radius: 25px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+}
+
+h2 {
+  text-align: center;
+  color: #c91b5b;
+  margin-bottom: 25px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-top: 15px;
+  margin-bottom: 7px;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  font-size: 16px;
+}
+
+textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+button {
+  width: 100%;
+  border: none;
+  border-radius: 25px;
+  padding: 15px;
+  margin-top: 20px;
+  background: #d9165b;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.back {
+  background: #555;
+}
+
+.message {
+  text-align: center;
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+.preview {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: none;
+  margin: 15px auto;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+  <div class="logo">
+    🛍️
+  </div>
+
+  <h1>
+    Register Your Nail Shop
+  </h1>
+
+</header>
+
+
+<div class="container">
+
+<div class="card">
+
+  <h2>
+    Shop Information
+  </h2>
+
+
+  <label>
+    Shop Name *
+  </label>
+
+  <input
+    id="shopName"
+    type="text"
+    placeholder="Example: Beauty Nails Shop"
+  >
+
+
+  <label>
+    Owner Name *
+  </label>
+
+  <input
+    id="ownerName"
+    type="text"
+    placeholder="Enter owner's name"
+  >
+
+
+  <label>
+    Phone Number *
+  </label>
+
+  <input
+    id="shopPhone"
+    type="tel"
+    placeholder="Example: 0700000000"
+  >
+
+
+  <label>
+    Shop Location *
+  </label>
+
+  <input
+    id="shopLocation"
+    type="text"
+    placeholder="Example: Kireka"
+  >
+
+
+  <label>
+    About Your Shop
+  </label>
+
+  <textarea
+    id="shopAbout"
+    placeholder="Tell customers about your shop"
+  ></textarea>
+
+
+  <label>
+    Shop Picture
+  </label>
+
+  <input
+    id="shopImage"
+    type="file"
+    accept="image/*"
+    onchange="previewImage()"
+  >
+
+  <img
+    id="imagePreview"
+    class="preview"
+    alt="Shop preview"
+  >
+
+
+  <label>
+    Create Password *
+  </label>
+
+  <input
+    id="shopPassword"
+    type="password"
+    placeholder="Create a password"
+  >
+
+
+  <label>
+    Confirm Password *
+  </label>
+
+  <input
+    id="shopPassword2"
+    type="password"
+    placeholder="Confirm password"
+  >
+
+
+  <button onclick="registerShop()">
+    🏪 Create Nail Shop Account
+  </button>
+
+
+  <p
+    id="message"
+    class="message">
+  </p>
+
+
+  <button
+    class="back"
+    onclick="goBack()">
+
+    ← Back
+
+  </button>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* IMAGE PREVIEW */
+
+function previewImage() {
+
+  const file =
+    document.getElementById(
+      "shopImage"
+    ).files[0];
+
+  if (!file) {
+    return;
+  }
+
+  const reader =
+    new FileReader();
+
+  reader.onload =
+    function(event) {
+
+      const preview =
+        document.getElementById(
+          "imagePreview"
+        );
+
+      preview.src =
+        event.target.result;
+
+      preview.style.display =
+        "block";
+
+    };
+
+  reader.readAsDataURL(file);
+
+}
+
+
+/* REGISTER SHOP */
+
+function registerShop() {
+
+  const name =
+    document.getElementById(
+      "shopName"
+    ).value.trim();
+
+  const owner =
+    document.getElementById(
+      "ownerName"
+    ).value.trim();
+
+  const phone =
+    document.getElementById(
+      "shopPhone"
+    ).value.trim();
+
+  const location =
+    document.getElementById(
+      "shopLocation"
+    ).value.trim();
+
+  const about =
+    document.getElementById(
+      "shopAbout"
+    ).value.trim();
+
+  const password =
+    document.getElementById(
+      "shopPassword"
+    ).value;
+
+  const password2 =
+    document.getElementById(
+      "shopPassword2"
+    ).value;
+
+  const imageFile =
+    document.getElementById(
+      "shopImage"
+    ).files[0];
+
+
+  /* REQUIRED FIELDS */
+
+  if (
+    !name ||
+    !owner ||
+    !phone ||
+    !location ||
+    !password
+  ) {
+
+    showMessage(
+      "Please fill in all required fields."
+    );
+
+    return;
+  }
+
+
+  /* PASSWORD */
+
+  if (password.length < 4) {
+
+    showMessage(
+      "Password must be at least 4 characters."
+    );
+
+    return;
+  }
+
+
+  if (password !== password2) {
+
+    showMessage(
+      "Passwords do not match."
+    );
+
+    return;
+  }
+
+
+  /* GET EXISTING SHOPS */
+
+  const saved =
+    localStorage.getItem(
+      "nailUppRegisteredShops"
+    );
+
+  const shops =
+    saved
+      ? JSON.parse(saved)
+      : [];
+
+
+  /* CHECK PHONE */
+
+  const existing =
+    shops.find(
+      function(shop) {
+
+        return shop.phone === phone;
+
+      }
+    );
+
+
+  if (existing) {
+
+    showMessage(
+      "A shop with this phone number already exists."
+    );
+
+    return;
+  }
+
+
+  /* CREATE SHOP */
+
+  const shop = {
+
+    id:
+      "SHOP-" + Date.now(),
+
+    name:
+      name,
+
+    owner:
+      owner,
+
+    phone:
+      phone,
+
+    location:
+      location,
+
+    about:
+      about,
+
+    image:
+      "",
+
+    password:
+      password
+
+  };
+
+
+  /* SAVE WITH IMAGE */
+
+  if (imageFile) {
+
+    const reader =
+      new FileReader();
+
+    reader.onload =
+      function(event) {
+
+        shop.image =
+          event.target.result;
+
+        finishRegistration(
+          shop,
+          shops
+        );
+
+      };
+
+    reader.readAsDataURL(
+      imageFile
+    );
+
+  } else {
+
+    finishRegistration(
+      shop,
+      shops
+    );
+
+  }
+
+}
+
+
+/* FINISH REGISTRATION */
+
+function finishRegistration(
+  shop,
+  shops
+) {
+
+  shops.push(shop);
+
+
+  /* SAVE ALL SHOPS */
+
+  localStorage.setItem(
+    "nailUppRegisteredShops",
+    JSON.stringify(shops)
+  );
+
+
+  /* SAVE CURRENT SHOP */
+
+  localStorage.setItem(
+    "nailUppShop",
+    JSON.stringify(shop)
+  );
+
+
+  showMessage(
+    "✅ Shop registered successfully!"
+  );
+
+
+  setTimeout(
+    function() {
+
+      window.location.href =
+        "shop.html";
+
+    },
+    800
+  );
+
+}
+
+
+/* MESSAGE */
+
+function showMessage(text) {
+
+  document.getElementById(
+    "message"
+  ).textContent = text;
+
+}
+
+
+/* BACK */
+
+function goBack() {
+
+  window.location.href =
+    "index.html";
+
+}
+
+</script>
+
+</body>
+</html>
+```
