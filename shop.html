@@ -3,132 +3,596 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nail Upp Shop</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Nail Upp - Nail Shop</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff7fb;
+      color: #333;
+    }
+
+    header {
+      background: #d81b60;
+      color: white;
+      text-align: center;
+      padding: 25px 15px;
+      border-radius: 0 0 25px 25px;
+    }
+
+    header h1 {
+      font-size: 28px;
+    }
+
+    header p {
+      margin-top: 6px;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: auto;
+      padding: 20px 15px 40px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      margin-bottom: 18px;
+      border-radius: 18px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    .card h2 {
+      color: #d81b60;
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-top: 12px;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      font-size: 15px;
+    }
+
+    textarea {
+      min-height: 70px;
+    }
+
+    .button {
+      width: 100%;
+      border: none;
+      border-radius: 25px;
+      padding: 14px;
+      margin-top: 15px;
+      background: #d81b60;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .product {
+      border: 1px solid #eee;
+      border-radius: 14px;
+      padding: 15px;
+      margin-top: 12px;
+    }
+
+    .product h3 {
+      color: #d81b60;
+      margin-bottom: 8px;
+    }
+
+    .product p {
+      margin: 6px 0;
+      font-size: 14px;
+    }
+
+    .price {
+      font-weight: bold;
+      font-size: 17px;
+    }
+
+    .delete {
+      background: #c62828;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      padding: 9px 15px;
+      margin-top: 8px;
+    }
+
+    .logout {
+      width: 100%;
+      background: #333;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      padding: 13px;
+      font-size: 15px;
+    }
+
+    .empty {
+      color: #777;
+      text-align: center;
+      padding: 10px;
+    }
+  </style>
 </head>
 
 <body>
 
-  <header>
-    <h1>💅 Nail Upp Shop</h1>
-    <p>Shop professional nail products</p>
-  </header>
+<header>
+  <h1>💅 Nail Upp</h1>
+  <p>Nail Shop Dashboard</p>
+</header>
 
-  <main>
+<div class="container">
 
-    <section class="shop">
-      <h2>Nail Products</h2>
+  <div class="card">
 
-      <div class="products">
+    <h2>🛍️ Shop Profile</h2>
 
-        <div class="product">
-          <div class="product-image">💅</div>
-          <h3>Gel Nail Polish</h3>
-          <p>UGX 15,000</p>
-          <button onclick="addToCart('Gel Nail Polish', 15000)">
-            Add to Cart
-          </button>
-        </div>
+    <label>Shop Name</label>
+    <input id="shopName" type="text" placeholder="Enter shop name">
 
-        <div class="product">
-          <div class="product-image">💎</div>
-          <h3>Nail Tips</h3>
-          <p>UGX 10,000</p>
-          <button onclick="addToCart('Nail Tips', 10000)">
-            Add to Cart
-          </button>
-        </div>
+    <label>Location</label>
+    <input id="shopLocation" type="text" placeholder="Enter shop location">
 
-        <div class="product">
-          <div class="product-image">✨</div>
-          <h3>Nail Glitter</h3>
-          <p>UGX 8,000</p>
-          <button onclick="addToCart('Nail Glitter', 8000)">
-            Add to Cart
-          </button>
-        </div>
+    <label>Phone Number</label>
+    <input id="shopPhone" type="tel" placeholder="Enter phone number">
 
-        <div class="product">
-          <div class="product-image">🖌️</div>
-          <h3>Nail Brush Set</h3>
-          <p>UGX 20,000</p>
-          <button onclick="addToCart('Nail Brush Set', 20000)">
-            Add to Cart
-          </button>
-        </div>
+    <label>About Your Shop</label>
+    <textarea
+      id="shopAbout"
+      placeholder="Describe your nail shop"
+    ></textarea>
 
-      </div>
-    </section>
+    <button class="button" onclick="saveShop()">
+      Save Shop
+    </button>
 
-    <section class="cart">
-      <h2>🛒 Your Cart</h2>
+  </div>
 
-      <div id="cartItems">
-        <p>Your cart is empty.</p>
-      </div>
 
-      <h3>Total: UGX <span id="cartTotal">0</span></h3>
+  <div class="card">
 
-      <button onclick="checkout()">Checkout</button>
-    </section>
+    <h2>➕ Add Nail Product</h2>
 
-  </main>
+    <label>Product Name</label>
+    <input
+      id="productName"
+      type="text"
+      placeholder="Example: Gel Polish"
+    >
 
-  <script>
-    let cart = [];
-    let total = 0;
+    <label>Category</label>
 
-    function addToCart(name, price) {
-      cart.push({ name: name, price: price });
-      total += price;
+    <select id="category">
 
-      displayCart();
+      <option value="">
+        Select category
+      </option>
 
-      alert(name + " added to cart!");
-    }
+      <option>
+        Nail Polish
+      </option>
 
-    function displayCart() {
-      const cartItems = document.getElementById("cartItems");
+      <option>
+        Gel
+      </option>
 
-      cartItems.innerHTML = "";
+      <option>
+        Acrylic
+      </option>
 
-      cart.forEach(function(item, index) {
-        const itemElement = document.createElement("p");
+      <option>
+        Nail Tips
+      </option>
 
-        itemElement.innerHTML =
-          item.name + " - UGX " + item.price.toLocaleString() +
-          ' <button onclick="removeItem(' + index + ')">Remove</button>';
+      <option>
+        Nail Tools
+      </option>
 
-        cartItems.appendChild(itemElement);
-      });
+      <option>
+        Nail Accessories
+      </option>
 
-      document.getElementById("cartTotal").textContent =
-        total.toLocaleString();
+      <option>
+        Nail Care
+      </option>
 
-      if (cart.length === 0) {
-        cartItems.innerHTML = "<p>Your cart is empty.</p>";
-      }
-    }
+      <option>
+        Other
+      </option>
 
-    function removeItem(index) {
-      total -= cart[index].price;
-      cart.splice(index, 1);
-      displayCart();
-    }
+    </select>
 
-    function checkout() {
-      if (cart.length === 0) {
-        alert("Your cart is empty.");
-        return;
-      }
+    <label>Price (UGX)</label>
 
-      alert(
-        "Order received! Total: UGX " +
-        total.toLocaleString() +
-        ". We will continue with checkout."
-      );
-    }
-  </script>
+    <input
+      id="productPrice"
+      type="number"
+      placeholder="Example: 15000"
+    >
+
+    <label>Description</label>
+
+    <textarea
+      id="productDescription"
+      placeholder="Describe the product"
+    ></textarea>
+
+    <button class="button" onclick="addProduct()">
+      Add Product
+    </button>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>📦 My Products</h2>
+
+    <div id="products">
+      <p class="empty">
+        No products added yet.
+      </p>
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>🛒 Customer Orders</h2>
+
+    <div id="orders">
+
+      <p class="empty">
+        No customer orders yet.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <button class="logout" onclick="logout()">
+    Log Out
+  </button>
+
+</div>
+
+<script>
+
+function saveShop() {
+
+  const name =
+    document.getElementById("shopName").value.trim();
+
+  const location =
+    document.getElementById("shopLocation").value.trim();
+
+  const phone =
+    document.getElementById("shopPhone").value.trim();
+
+  const about =
+    document.getElementById("shopAbout").value.trim();
+
+  if (!name || !location || !phone) {
+
+    alert(
+      "Please enter the shop name, location and phone number."
+    );
+
+    return;
+  }
+
+  const shop = {
+
+    name: name,
+
+    location: location,
+
+    phone: phone,
+
+    about: about
+
+  };
+
+  localStorage.setItem(
+    "nailUppShop",
+    JSON.stringify(shop)
+  );
+
+  alert("Shop profile saved.");
+
+  loadShop();
+
+}
+
+
+function loadShop() {
+
+  const saved =
+    localStorage.getItem("nailUppShop");
+
+  if (!saved) return;
+
+  const shop = JSON.parse(saved);
+
+  document.getElementById("shopName").value =
+    shop.name || "";
+
+  document.getElementById("shopLocation").value =
+    shop.location || "";
+
+  document.getElementById("shopPhone").value =
+    shop.phone || "";
+
+  document.getElementById("shopAbout").value =
+    shop.about || "";
+
+}
+
+
+function addProduct() {
+
+  const name =
+    document.getElementById("productName").value.trim();
+
+  const category =
+    document.getElementById("category").value;
+
+  const price =
+    document.getElementById("productPrice").value;
+
+  const description =
+    document.getElementById("productDescription").value.trim();
+
+
+  if (!name || !category || !price) {
+
+    alert(
+      "Please enter the product name, category and price."
+    );
+
+    return;
+  }
+
+
+  const saved =
+    localStorage.getItem("nailUppProducts");
+
+  const products =
+    saved ? JSON.parse(saved) : [];
+
+
+  const product = {
+
+    id: Date.now(),
+
+    name: name,
+
+    category: category,
+
+    price: price,
+
+    description: description
+
+  };
+
+
+  products.push(product);
+
+
+  localStorage.setItem(
+    "nailUppProducts",
+    JSON.stringify(products)
+  );
+
+
+  document.getElementById("productName").value = "";
+
+  document.getElementById("category").value = "";
+
+  document.getElementById("productPrice").value = "";
+
+  document.getElementById("productDescription").value = "";
+
+
+  loadProducts();
+
+}
+
+
+function loadProducts() {
+
+  const saved =
+    localStorage.getItem("nailUppProducts");
+
+  const container =
+    document.getElementById("products");
+
+
+  if (!saved) {
+
+    container.innerHTML =
+      '<p class="empty">No products added yet.</p>';
+
+    return;
+  }
+
+
+  const products =
+    JSON.parse(saved);
+
+
+  if (products.length === 0) {
+
+    container.innerHTML =
+      '<p class="empty">No products added yet.</p>';
+
+    return;
+  }
+
+
+  let html = "";
+
+
+  products.forEach(function(product) {
+
+    html +=
+
+      '<div class="product">' +
+
+      '<h3>' +
+      product.name +
+      '</h3>' +
+
+      '<p><strong>Category:</strong> ' +
+      product.category +
+      '</p>' +
+
+      '<p class="price">UGX ' +
+      Number(product.price).toLocaleString() +
+      '</p>' +
+
+      '<p>' +
+      (product.description || "No description") +
+      '</p>' +
+
+      '<button class="delete" onclick="deleteProduct(' +
+      product.id +
+      ')">' +
+      'Delete Product' +
+      '</button>' +
+
+      '</div>';
+
+  });
+
+
+  container.innerHTML = html;
+
+}
+
+
+function deleteProduct(id) {
+
+  const saved =
+    localStorage.getItem("nailUppProducts");
+
+  if (!saved) return;
+
+
+  let products =
+    JSON.parse(saved);
+
+
+  products =
+    products.filter(function(product) {
+
+      return product.id !== id;
+
+    });
+
+
+  localStorage.setItem(
+    "nailUppProducts",
+    JSON.stringify(products)
+  );
+
+
+  loadProducts();
+
+}
+
+
+function loadOrders() {
+
+  const saved =
+    localStorage.getItem("nailUppProductOrder");
+
+  const orders =
+    document.getElementById("orders");
+
+
+  if (!saved) {
+
+    orders.innerHTML =
+      '<p class="empty">No customer orders yet.</p>';
+
+    return;
+  }
+
+
+  const order =
+    JSON.parse(saved);
+
+
+  orders.innerHTML =
+
+    '<div class="product">' +
+
+    '<h3>🛒 New Order</h3>' +
+
+    '<p><strong>Customer:</strong> ' +
+    order.clientName +
+    '</p>' +
+
+    '<p><strong>Product:</strong> ' +
+    order.productName +
+    '</p>' +
+
+    '<p><strong>Quantity:</strong> ' +
+    order.quantity +
+    '</p>' +
+
+    '<p><strong>Total:</strong> UGX ' +
+    Number(order.total).toLocaleString() +
+    '</p>' +
+
+    '<p><strong>Status:</strong> ' +
+    order.status +
+    '</p>' +
+
+    '</div>';
+
+}
+
+
+function logout() {
+
+  localStorage.removeItem("nailUppShop");
+
+  window.location.href =
+    "index.html";
+
+}
+
+
+loadShop();
+loadProducts();
+loadOrders();
+
+</script>
 
 </body>
 </html>
