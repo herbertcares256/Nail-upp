@@ -44,39 +44,35 @@ header h1 {
   text-decoration: none;
 }
 
-.search {
-  width: 100%;
-  padding: 14px;
-  border: 1px solid #ddd;
-  border-radius: 25px;
-  font-size: 15px;
-  margin-bottom: 20px;
+h2 {
+  color: #d81b60;
+  margin-bottom: 15px;
 }
 
 .shop {
   background: white;
   padding: 20px;
-  margin-bottom: 18px;
   border-radius: 18px;
+  margin-bottom: 18px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.08);
 }
 
-.shop h2 {
+.shop h3 {
   color: #d81b60;
+  font-size: 20px;
   margin-bottom: 10px;
 }
 
 .shop p {
   margin: 8px 0;
-  font-size: 14px;
 }
 
-.view-button {
+.shop button {
   width: 100%;
-  margin-top: 12px;
-  padding: 13px;
   border: none;
   border-radius: 25px;
+  padding: 13px;
+  margin-top: 12px;
   background: #d81b60;
   color: white;
   font-size: 15px;
@@ -84,9 +80,16 @@ header h1 {
 }
 
 .empty {
+  background: white;
+  padding: 25px;
+  border-radius: 18px;
   text-align: center;
   color: #777;
-  padding: 25px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+.refresh {
+  background: #555 !important;
 }
 </style>
 </head>
@@ -95,7 +98,7 @@ header h1 {
 
 <header>
   <h1>💅 Nail Upp</h1>
-  <p>Choose a Nail Shop</p>
+  <p>Find Nail Shops</p>
 </header>
 
 <div class="container">
@@ -104,90 +107,56 @@ header h1 {
 ← Back to Client Dashboard
 </a>
 
-<input
-  id="search"
-  class="search"
-  type="text"
-  placeholder="🔍 Search shops or locations..."
-  oninput="displayShops()"
->
+<h2>🏪 Nail Shops</h2>
 
 <div id="shops">
-  <p class="empty">Loading shops...</p>
+  <div class="empty">
+    Loading shops...
+  </div>
 </div>
 
+<button
+  class="shop refresh"
+  onclick="loadShops()">
+  🔄 Refresh Shops
+</button>
+
 </div>
+
 
 <script>
 
-let shops = [];
-
-
 function loadShops() {
-
-  const saved =
-    localStorage.getItem("nailUppShops");
-
-  if (saved) {
-
-    shops = JSON.parse(saved);
-
-  } else {
-
-    const singleShop =
-      localStorage.getItem("nailUppShop");
-
-    if (singleShop) {
-
-      shops = [
-        JSON.parse(singleShop)
-      ];
-
-    } else {
-
-      shops = [];
-
-    }
-  }
-
-  displayShops();
-}
-
-
-function displayShops() {
 
   const container =
     document.getElementById("shops");
 
-  const search =
-    document.getElementById("search")
-    .value
-    .toLowerCase()
-    .trim();
+
+  const saved =
+    localStorage.getItem(
+      "nailUppRegisteredShops"
+    );
 
 
-  const filtered =
-    shops.filter(function(shop) {
-
-      return (
-        (shop.name || "")
-        .toLowerCase()
-        .includes(search) ||
-
-        (shop.location || "")
-        .toLowerCase()
-        .includes(search)
-      );
-
-    });
+  const shops =
+    saved
+      ? JSON.parse(saved)
+      : [];
 
 
-  if (filtered.length === 0) {
+  if (shops.length === 0) {
 
     container.innerHTML =
-      '<p class="empty">' +
-      'No nail shops available yet.' +
-      '</p>';
+      '<div class="empty">' +
+
+      '<h3>No Nail Shops Yet</h3>' +
+
+      '<p>' +
+      'Nail shops will appear here ' +
+      'when they register.' +
+      '</p>' +
+
+      '</div>';
 
     return;
   }
@@ -196,33 +165,35 @@ function displayShops() {
   let html = "";
 
 
-  filtered.forEach(function(shop, index) {
+  shops.forEach(function(shop) {
 
     html +=
 
       '<div class="shop">' +
 
-      '<h2>🏪 ' +
-      (shop.name || "Nail Shop") +
-      '</h2>' +
+      '<h3>🏪 ' +
+      (shop.name ||
+      "Nail Shop") +
+      '</h3>' +
 
       '<p>📍 <strong>Location:</strong> ' +
-      (shop.location || "Not provided") +
+      (shop.location ||
+      "Not provided") +
       '</p>' +
 
       '<p>📞 <strong>Phone:</strong> ' +
-      (shop.phone || "Not provided") +
+      (shop.phone ||
+      "Not provided") +
       '</p>' +
 
       '<p>ℹ️ ' +
       (shop.about ||
-      "Nail products and supplies.") +
+      "Nail services and products") +
       '</p>' +
 
-      '<button class="view-button" ' +
-      'onclick="viewShop(' +
-      index +
-      ')">' +
+      '<button onclick="viewShop(\'' +
+      shop.id +
+      '\')">' +
 
       '🛍️ View Products' +
 
@@ -233,41 +204,53 @@ function displayShops() {
   });
 
 
-  container.innerHTML = html;
+  container.innerHTML =
+    html;
+
 }
 
 
-function viewShop(index) {
+/* OPEN SHOP */
 
-  const search =
-    document.getElementById("search")
-    .value
-    .toLowerCase()
-    .trim();
+function viewShop(shopId) {
+
+  const saved =
+    localStorage.getItem(
+      "nailUppRegisteredShops"
+    );
 
 
-  const filtered =
-    shops.filter(function(shop) {
-
-      return (
-        (shop.name || "")
-        .toLowerCase()
-        .includes(search) ||
-
-        (shop.location || "")
-        .toLowerCase()
-        .includes(search)
-      );
-
-    });
+  const shops =
+    saved
+      ? JSON.parse(saved)
+      : [];
 
 
   const shop =
-    filtered[index];
+    shops.find(
+      function(item) {
+
+        return item.id === shopId;
+
+      }
+    );
 
 
-  if (!shop) return;
+  if (!shop) {
 
+    alert(
+      "Shop could not be found."
+    );
+
+    return;
+  }
+
+
+  /*
+    Save the selected shop so
+    shop-products.html knows
+    which shop the client chose.
+  */
 
   localStorage.setItem(
     "selectedNailUppShop",
@@ -277,8 +260,11 @@ function viewShop(index) {
 
   window.location.href =
     "shop-products.html";
+
 }
 
+
+/* LOAD SHOPS */
 
 loadShops();
 
