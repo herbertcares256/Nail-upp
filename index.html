@@ -35,22 +35,47 @@ header p {
 }
 
 .container {
-  max-width: 600px;
+  max-width: 650px;
   margin: auto;
   padding: 25px 15px;
 }
 
 .card {
   background: white;
-  padding: 22px;
+  padding: 25px;
   border-radius: 20px;
-  margin-bottom: 20px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.08);
 }
 
 h2 {
   color: #d81b60;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.option {
+  width: 100%;
+  border: none;
+  border-radius: 30px;
+  padding: 16px;
+  margin-top: 12px;
+  background: #d81b60;
+  color: white;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.option:hover {
+  opacity: 0.9;
+}
+
+.back {
+  background: #555;
+}
+
+.form {
+  display: none;
 }
 
 label {
@@ -73,36 +98,10 @@ textarea {
   min-height: 80px;
 }
 
-button {
-  width: 100%;
-  border: none;
-  border-radius: 25px;
-  padding: 14px;
-  margin-top: 15px;
-  background: #d81b60;
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.secondary {
-  background: #555;
-}
-
 .message {
   text-align: center;
   margin-top: 12px;
   font-weight: bold;
-}
-
-.hidden {
-  display: none;
-}
-
-.divider {
-  text-align: center;
-  margin: 20px 0;
-  color: #888;
 }
 </style>
 </head>
@@ -116,251 +115,257 @@ button {
 
 <div class="container">
 
-  <!-- MAIN MENU -->
+<!-- MAIN MENU -->
 
-  <div class="card" id="mainMenu">
+<div class="card" id="mainMenu">
 
-    <h2>Welcome to Nail Upp</h2>
+  <h2>Welcome to Nail Upp</h2>
 
-    <button onclick="showClientLogin()">
-      👤 Client
-    </button>
+  <button class="option"
+    onclick="openClient()">
+    👤 Client
+  </button>
 
-    <button onclick="showShopLogin()">
-      🏪 Nail Shop
-    </button>
+  <button class="option"
+    onclick="openTechnician()">
+    💅 Nail Technician
+  </button>
 
-  </div>
+  <button class="option"
+    onclick="openParlor()">
+    💇 Nail Parlor
+  </button>
 
+  <button class="option"
+    onclick="openShop()">
+    🏪 Nail Shop
+  </button>
 
-  <!-- CLIENT LOGIN -->
-
-  <div class="card hidden" id="clientLogin">
-
-    <h2>👤 Client</h2>
-
-    <label>Your Name</label>
-
-    <input
-      id="clientName"
-      type="text"
-      placeholder="Enter your name"
-    >
-
-    <label>Phone Number</label>
-
-    <input
-      id="clientPhone"
-      type="tel"
-      placeholder="Enter your phone number"
-    >
-
-    <button onclick="enterClient()">
-      Continue
-    </button>
-
-    <button
-      class="secondary"
-      onclick="showMainMenu()">
-      ← Back
-    </button>
-
-  </div>
+</div>
 
 
-  <!-- SHOP LOGIN -->
+<!-- CLIENT -->
 
-  <div class="card hidden" id="shopLogin">
+<div class="card form" id="clientForm">
 
-    <h2>🏪 Nail Shop Login</h2>
+  <h2>👤 Client</h2>
 
-    <label>Shop Phone Number</label>
+  <label>Your Name</label>
 
-    <input
-      id="loginPhone"
-      type="tel"
-      placeholder="Enter shop phone"
-    >
+  <input
+    id="clientName"
+    type="text"
+    placeholder="Enter your name"
+  >
 
-    <label>Password</label>
+  <label>Phone Number</label>
 
-    <input
-      id="loginPassword"
-      type="password"
-      placeholder="Enter password"
-    >
+  <input
+    id="clientPhone"
+    type="tel"
+    placeholder="Enter your phone number"
+  >
 
-    <button onclick="shopLoginSubmit()">
-      🔐 Login
-    </button>
+  <button class="option"
+    onclick="enterClient()">
+    Continue
+  </button>
 
-    <p id="loginMessage" class="message"></p>
+  <button class="option back"
+    onclick="showMain()">
+    ← Back
+  </button>
 
-    <div class="divider">
-      Don't have a shop account?
-    </div>
-
-    <button onclick="showShopRegister()">
-      ➕ Register Nail Shop
-    </button>
-
-    <button
-      class="secondary"
-      onclick="showMainMenu()">
-      ← Back
-    </button>
-
-  </div>
+</div>
 
 
-  <!-- SHOP REGISTRATION -->
+<!-- NAIL SHOP -->
 
-  <div class="card hidden" id="shopRegister">
+<div class="card form" id="shopForm">
 
-    <h2>🏪 Register Nail Shop</h2>
+  <h2>🏪 Nail Shop</h2>
 
-    <label>Shop Name</label>
+  <button class="option"
+    onclick="showShopLogin()">
+    🔐 Shop Login
+  </button>
 
-    <input
-      id="registerName"
-      type="text"
-      placeholder="Example: Beauty Nails"
-    >
+  <button class="option"
+    onclick="showShopRegister()">
+    ➕ Register Nail Shop
+  </button>
 
-    <label>Phone Number</label>
+  <button class="option back"
+    onclick="showMain()">
+    ← Back
+  </button>
 
-    <input
-      id="registerPhone"
-      type="tel"
-      placeholder="Enter shop phone"
-    >
+</div>
 
-    <label>Location</label>
 
-    <input
-      id="registerLocation"
-      type="text"
-      placeholder="Example: Kireka"
-    >
+<!-- SHOP LOGIN -->
 
-    <label>About Your Shop</label>
+<div class="card form" id="shopLogin">
 
-    <textarea
-      id="registerAbout"
-      placeholder="Tell customers about your shop"
-    ></textarea>
+  <h2>🔐 Nail Shop Login</h2>
 
-    <label>Password</label>
+  <label>Shop Phone Number</label>
 
-    <input
-      id="registerPassword"
-      type="password"
-      placeholder="Create a password"
-    >
+  <input
+    id="loginPhone"
+    type="tel"
+    placeholder="Enter shop phone"
+  >
 
-    <label>Confirm Password</label>
+  <label>Password</label>
 
-    <input
-      id="registerPassword2"
-      type="password"
-      placeholder="Confirm your password"
-    >
+  <input
+    id="loginPassword"
+    type="password"
+    placeholder="Enter password"
+  >
 
-    <button onclick="registerShop()">
-      🏪 Create Shop Account
-    </button>
+  <button class="option"
+    onclick="loginShop()">
+    🔐 Login
+  </button>
 
-    <p id="registerMessage" class="message"></p>
+  <p id="loginMessage"
+     class="message"></p>
 
-    <button
-      class="secondary"
-      onclick="showShopLogin()">
-      ← Back to Login
-    </button>
+  <button class="option back"
+    onclick="openShop()">
+    ← Back
+  </button>
 
-  </div>
+</div>
+
+
+<!-- SHOP REGISTER -->
+
+<div class="card form" id="shopRegister">
+
+  <h2>🏪 Register Nail Shop</h2>
+
+  <label>Shop Name</label>
+
+  <input
+    id="registerName"
+    type="text"
+    placeholder="Example: Beauty Nails"
+  >
+
+  <label>Phone Number</label>
+
+  <input
+    id="registerPhone"
+    type="tel"
+    placeholder="Enter shop phone"
+  >
+
+  <label>Location</label>
+
+  <input
+    id="registerLocation"
+    type="text"
+    placeholder="Example: Kireka"
+  >
+
+  <label>About Your Shop</label>
+
+  <textarea
+    id="registerAbout"
+    placeholder="Tell customers about your shop"
+  ></textarea>
+
+  <label>Password</label>
+
+  <input
+    id="registerPassword"
+    type="password"
+    placeholder="Create password"
+  >
+
+  <label>Confirm Password</label>
+
+  <input
+    id="registerPassword2"
+    type="password"
+    placeholder="Confirm password"
+  >
+
+  <button class="option"
+    onclick="registerShop()">
+    🏪 Create Shop Account
+  </button>
+
+  <p id="registerMessage"
+     class="message"></p>
+
+  <button class="option back"
+    onclick="openShop()">
+    ← Back
+  </button>
+
+</div>
 
 </div>
 
 
 <script>
 
-/* SHOW MAIN MENU */
-
-function showMainMenu() {
-
-  hideAll();
-
-  document.getElementById(
-    "mainMenu"
-  ).classList.remove("hidden");
-
-}
-
-
-/* CLIENT LOGIN */
-
-function showClientLogin() {
-
-  hideAll();
-
-  document.getElementById(
-    "clientLogin"
-  ).classList.remove("hidden");
-
-}
-
-
-/* SHOP LOGIN */
-
-function showShopLogin() {
-
-  hideAll();
-
-  document.getElementById(
-    "shopLogin"
-  ).classList.remove("hidden");
-
-}
-
-
-/* SHOP REGISTER */
-
-function showShopRegister() {
-
-  hideAll();
-
-  document.getElementById(
-    "shopRegister"
-  ).classList.remove("hidden");
-
-}
-
-
-/* HIDE ALL */
+/* HIDE ALL FORMS */
 
 function hideAll() {
 
   document.getElementById(
     "mainMenu"
-  ).classList.add("hidden");
+  ).style.display = "none";
 
   document.getElementById(
-    "clientLogin"
-  ).classList.add("hidden");
+    "clientForm"
+  ).style.display = "none";
+
+  document.getElementById(
+    "shopForm"
+  ).style.display = "none";
 
   document.getElementById(
     "shopLogin"
-  ).classList.add("hidden");
+  ).style.display = "none";
 
   document.getElementById(
     "shopRegister"
-  ).classList.add("hidden");
+  ).style.display = "none";
+
+}
+
+
+/* MAIN MENU */
+
+function showMain() {
+
+  hideAll();
+
+  document.getElementById(
+    "mainMenu"
+  ).style.display = "block";
 
 }
 
 
 /* CLIENT */
+
+function openClient() {
+
+  hideAll();
+
+  document.getElementById(
+    "clientForm"
+  ).style.display = "block";
+
+}
+
 
 function enterClient() {
 
@@ -374,7 +379,6 @@ function enterClient() {
       "clientPhone"
     ).value.trim();
 
-
   if (!name || !phone) {
 
     alert(
@@ -383,7 +387,6 @@ function enterClient() {
 
     return;
   }
-
 
   localStorage.setItem(
     "nailUppName",
@@ -395,9 +398,66 @@ function enterClient() {
     phone
   );
 
-
   window.location.href =
     "client.html";
+}
+
+
+/* TECHNICIAN */
+
+function openTechnician() {
+
+  window.location.href =
+    "technician.html";
+
+}
+
+
+/* PARLOR */
+
+function openParlor() {
+
+  window.location.href =
+    "parlor.html";
+
+}
+
+
+/* NAIL SHOP */
+
+function openShop() {
+
+  hideAll();
+
+  document.getElementById(
+    "shopForm"
+  ).style.display = "block";
+
+}
+
+
+/* SHOP LOGIN */
+
+function showShopLogin() {
+
+  hideAll();
+
+  document.getElementById(
+    "shopLogin"
+  ).style.display = "block";
+
+}
+
+
+/* SHOP REGISTRATION */
+
+function showShopRegister() {
+
+  hideAll();
+
+  document.getElementById(
+    "shopRegister"
+  ).style.display = "block";
 
 }
 
@@ -472,19 +532,40 @@ function registerShop() {
   }
 
 
-  /*
-    Create a unique shop ID.
-  */
+  const saved =
+    localStorage.getItem(
+      "nailUppRegisteredShops"
+    );
 
-  const shopId =
-    "SHOP-" +
-    Date.now();
+
+  const shops =
+    saved
+      ? JSON.parse(saved)
+      : [];
+
+
+  const existing =
+    shops.find(
+      function(shop) {
+        return shop.phone === phone;
+      }
+    );
+
+
+  if (existing) {
+
+    alert(
+      "A shop with this phone number already exists."
+    );
+
+    return;
+  }
 
 
   const shop = {
 
     id:
-      shopId,
+      "SHOP-" + Date.now(),
 
     name:
       name,
@@ -504,32 +585,6 @@ function registerShop() {
   };
 
 
-  /*
-    Save the shop account.
-  */
-
-  localStorage.setItem(
-    "nailUppShop",
-    JSON.stringify(shop)
-  );
-
-
-  /*
-    Also save a list of registered shops.
-  */
-
-  const savedShops =
-    localStorage.getItem(
-      "nailUppRegisteredShops"
-    );
-
-
-  const shops =
-    savedShops
-      ? JSON.parse(savedShops)
-      : [];
-
-
   shops.push(shop);
 
 
@@ -539,14 +594,16 @@ function registerShop() {
   );
 
 
+  localStorage.setItem(
+    "nailUppShop",
+    JSON.stringify(shop)
+  );
+
+
   alert(
     "Nail Shop registered successfully!"
   );
 
-
-  /*
-    Open the shop dashboard.
-  */
 
   window.location.href =
     "shop.html";
@@ -556,7 +613,7 @@ function registerShop() {
 
 /* SHOP LOGIN */
 
-function shopLoginSubmit() {
+function loginShop() {
 
   const phone =
     document.getElementById(
@@ -569,15 +626,15 @@ function shopLoginSubmit() {
     ).value;
 
 
-  const savedShops =
+  const saved =
     localStorage.getItem(
       "nailUppRegisteredShops"
     );
 
 
   const shops =
-    savedShops
-      ? JSON.parse(savedShops)
+    saved
+      ? JSON.parse(saved)
       : [];
 
 
@@ -605,10 +662,6 @@ function shopLoginSubmit() {
   }
 
 
-  /*
-    Save the logged-in shop.
-  */
-
   localStorage.setItem(
     "nailUppShop",
     JSON.stringify(shop)
@@ -619,6 +672,11 @@ function shopLoginSubmit() {
     "shop.html";
 
 }
+
+
+/* START */
+
+showMain();
 
 </script>
 
