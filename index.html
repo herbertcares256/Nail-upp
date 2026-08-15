@@ -1,215 +1,523 @@
-```html id="j5m2xk"
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nail Upp</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nail Upp</title>
 
-<style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-body{
-  font-family:Arial,sans-serif;
-  background:#fff7fb;
-  color:#333;
-}
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff7fb;
+      color: #333;
+    }
 
-header{
-  background:#d9165b;
-  color:white;
-  text-align:center;
-  padding:45px 20px;
-  border-radius:0 0 40px 40px;
-}
+    header {
+      background: #d81b60;
+      color: white;
+      text-align: center;
+      padding: 30px 15px;
+      border-radius: 0 0 30px 30px;
+    }
 
-header h1{
-  font-size:40px;
-}
+    header h1 {
+      font-size: 32px;
+    }
 
-header p{
-  margin-top:10px;
-  font-size:17px;
-}
+    header p {
+      margin-top: 8px;
+    }
 
-.container{
-  max-width:650px;
-  margin:auto;
-  padding:30px 18px;
-}
+    .container {
+      max-width: 600px;
+      margin: auto;
+      padding: 25px 15px;
+    }
 
-.welcome{
-  text-align:center;
-  margin-bottom:25px;
-}
+    .welcome {
+      text-align: center;
+      margin-bottom: 25px;
+    }
 
-.welcome h2{
-  color:#c2185b;
-  font-size:28px;
-  margin-bottom:8px;
-}
+    .welcome h2 {
+      color: #d81b60;
+      margin-bottom: 8px;
+    }
 
-.welcome p{
-  color:#777;
-}
+    .choice {
+      background: white;
+      padding: 20px;
+      margin-bottom: 15px;
+      border-radius: 18px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      cursor: pointer;
+    }
 
-.card{
-  background:white;
-  padding:24px;
-  margin-bottom:18px;
-  border-radius:24px;
-  box-shadow:0 4px 15px rgba(0,0,0,.08);
-}
+    .choice h3 {
+      color: #d81b60;
+      margin-bottom: 7px;
+    }
 
-.card h3{
-  color:#c2185b;
-  font-size:21px;
-  margin-bottom:8px;
-}
+    .choice p {
+      color: #777;
+      font-size: 14px;
+    }
 
-.card p{
-  color:#777;
-  line-height:1.5;
-  margin-bottom:16px;
-}
+    .icon {
+      font-size: 35px;
+      margin-bottom: 8px;
+    }
 
-button{
-  width:100%;
-  padding:15px;
-  border:0;
-  border-radius:22px;
-  background:#d9165b;
-  color:white;
-  font-size:16px;
-  font-weight:bold;
-}
+    .form-box {
+      display: none;
+      background: white;
+      padding: 20px;
+      border-radius: 18px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
 
-.customer{
-  background:#fff0f6;
-}
+    .form-box h2 {
+      color: #d81b60;
+      margin-bottom: 18px;
+    }
 
-.customer h3{
-  color:#c2185b;
-}
-</style>
+    label {
+      display: block;
+      margin-top: 12px;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      font-size: 15px;
+    }
+
+    textarea {
+      min-height: 80px;
+    }
+
+    .button {
+      width: 100%;
+      border: none;
+      border-radius: 25px;
+      padding: 14px;
+      margin-top: 18px;
+      background: #d81b60;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .back {
+      width: 100%;
+      border: none;
+      background: none;
+      color: #d81b60;
+      font-weight: bold;
+      margin-bottom: 15px;
+      padding: 5px;
+    }
+  </style>
 </head>
 
 <body>
 
 <header>
   <h1>💅 Nail Upp</h1>
-  <p>Your nail services, wherever you are.</p>
+  <p>Your Nail Services & Products Platform</p>
 </header>
 
 <div class="container">
 
-  <div class="welcome">
-    <h2>Welcome to Nail Upp</h2>
-    <p>Choose how you want to use Nail Upp</p>
+  <div id="choices">
+
+    <div class="welcome">
+      <h2>Welcome to Nail Upp</h2>
+      <p>How would you like to register?</p>
+    </div>
+
+
+    <div class="choice" onclick="showForm('client')">
+      <div class="icon">👤</div>
+      <h3>1. Register as a Client</h3>
+      <p>Book nail services and shop for nail products.</p>
+    </div>
+
+
+    <div class="choice" onclick="showForm('technician')">
+      <div class="icon">💅</div>
+      <h3>2. Register as a Nail Technician</h3>
+      <p>Offer nail services to customers.</p>
+    </div>
+
+
+    <div class="choice" onclick="showForm('parlor')">
+      <div class="icon">🏪</div>
+      <h3>3. Register as a Nail Parlor</h3>
+      <p>Register your nail parlor and receive bookings.</p>
+    </div>
+
+
+    <div class="choice" onclick="showForm('shop')">
+      <div class="icon">🛍️</div>
+      <h3>4. Register as a Nail Shop</h3>
+      <p>Sell nail products to customers.</p>
+    </div>
+
   </div>
 
 
-  <!-- CLIENT -->
+  <!-- CLIENT FORM -->
 
-  <div class="card">
-    <h3>👤 Client</h3>
+  <div id="clientForm" class="form-box">
 
-    <p>
-      Book home nail services, visit nail parlors
-      and shop for nail products.
-    </p>
+    <button class="back" onclick="goBack()">
+      ← Back
+    </button>
 
-    <button onclick="go('client-register.html')">
+    <h2>👤 Client Registration</h2>
+
+    <label>Full Name</label>
+    <input id="clientName" type="text" placeholder="Enter your name">
+
+    <label>Phone Number</label>
+    <input id="clientPhone" type="tel" placeholder="Enter phone number">
+
+    <label>Email</label>
+    <input id="clientEmail" type="email" placeholder="Enter email">
+
+    <button class="button" onclick="registerClient()">
       Register as Client
     </button>
+
   </div>
 
 
-  <!-- TECHNICIAN -->
+  <!-- TECHNICIAN FORM -->
 
-  <div class="card">
-    <h3>💅 Nail Technician</h3>
+  <div id="technicianForm" class="form-box">
 
-    <p>
-      Offer your nail services and receive
-      bookings from clients.
-    </p>
-
-    <button onclick="go('technician-register.html')">
-      Register as Nail Technician
+    <button class="back" onclick="goBack()">
+      ← Back
     </button>
+
+    <h2>💅 Technician Registration</h2>
+
+    <label>Full Name</label>
+    <input id="technicianName" type="text" placeholder="Enter your name">
+
+    <label>Phone Number</label>
+    <input id="technicianPhone" type="tel" placeholder="Enter phone number">
+
+    <label>Location</label>
+    <input id="technicianLocation" type="text" placeholder="Enter your location">
+
+    <button class="button" onclick="registerTechnician()">
+      Register as Technician
+    </button>
+
   </div>
 
 
-  <!-- PARLOR -->
+  <!-- PARLOR FORM -->
 
-  <div class="card">
-    <h3>🏪 Nail Parlor</h3>
+  <div id="parlorForm" class="form-box">
 
-    <p>
-      Register your parlor and receive
-      appointments from Nail Upp clients.
-    </p>
-
-    <button onclick="go('parlor-register.html')">
-      Register as Nail Parlor
+    <button class="back" onclick="goBack()">
+      ← Back
     </button>
+
+    <h2>🏪 Nail Parlor Registration</h2>
+
+    <label>Parlor Name</label>
+    <input id="parlorName" type="text" placeholder="Enter parlor name">
+
+    <label>Phone Number</label>
+    <input id="parlorPhone" type="tel" placeholder="Enter phone number">
+
+    <label>Location</label>
+    <input id="parlorLocation" type="text" placeholder="Enter parlor location">
+
+    <button class="button" onclick="registerParlor()">
+      Register Nail Parlor
+    </button>
+
   </div>
 
 
-  <!-- NAIL SHOP -->
+  <!-- SHOP FORM -->
 
-  <div class="card">
-    <h3>🛍️ Nail Shop</h3>
+  <div id="shopForm" class="form-box">
 
-    <p>
-      Sell nail products and materials
-      to Nail Upp customers.
-    </p>
-
-    <button onclick="go('shop-register.html')">
-      Register as Nail Shop
+    <button class="back" onclick="goBack()">
+      ← Back
     </button>
-  </div>
 
+    <h2>🛍️ Nail Shop Registration</h2>
 
-  <!-- CUSTOMER CARE -->
+    <label>Shop Name</label>
+    <input id="shopName" type="text" placeholder="Enter shop name">
 
-  <div class="card customer">
-    <h3>💬 Customer Care</h3>
+    <label>Phone Number</label>
+    <input id="shopPhone" type="tel" placeholder="Enter shop phone">
 
-    <p>
-      Need help with registration, bookings,
-      orders or payments?
-    </p>
+    <label>Location</label>
+    <input id="shopLocation" type="text" placeholder="Enter shop location">
 
-    <button onclick="customerCare()">
-      Contact Customer Care
+    <label>About Your Shop</label>
+    <textarea
+      id="shopAbout"
+      placeholder="Tell customers about your shop"
+    ></textarea>
+
+    <button class="button" onclick="registerShop()">
+      Register Nail Shop
     </button>
+
   </div>
 
 </div>
 
+
 <script>
 
-function go(page){
-  window.location.href = page;
+function showForm(type) {
+
+  document.getElementById("choices").style.display = "none";
+
+  document.getElementById("clientForm").style.display = "none";
+  document.getElementById("technicianForm").style.display = "none";
+  document.getElementById("parlorForm").style.display = "none";
+  document.getElementById("shopForm").style.display = "none";
+
+
+  if (type === "client") {
+    document.getElementById("clientForm").style.display = "block";
+  }
+
+  if (type === "technician") {
+    document.getElementById("technicianForm").style.display = "block";
+  }
+
+  if (type === "parlor") {
+    document.getElementById("parlorForm").style.display = "block";
+  }
+
+  if (type === "shop") {
+    document.getElementById("shopForm").style.display = "block";
+  }
 }
 
-function customerCare(){
-  alert(
-    "Nail Upp Customer Care\n\n" +
-    "We are here to help you with registration, " +
-    "bookings, orders and payments."
+
+function goBack() {
+
+  document.getElementById("choices").style.display = "block";
+
+  document.getElementById("clientForm").style.display = "none";
+  document.getElementById("technicianForm").style.display = "none";
+  document.getElementById("parlorForm").style.display = "none";
+  document.getElementById("shopForm").style.display = "none";
+}
+
+
+/* CLIENT */
+
+function registerClient() {
+
+  const name =
+    document.getElementById("clientName").value.trim();
+
+  const phone =
+    document.getElementById("clientPhone").value.trim();
+
+  const email =
+    document.getElementById("clientEmail").value.trim();
+
+
+  if (!name || !phone) {
+
+    alert("Please enter your name and phone number.");
+
+    return;
+  }
+
+
+  localStorage.setItem("nailUppName", name);
+  localStorage.setItem("nailUppPhone", phone);
+  localStorage.setItem("nailUppEmail", email);
+
+
+  alert("Client registration successful!");
+
+  window.location.href = "client.html";
+}
+
+
+/* TECHNICIAN */
+
+function registerTechnician() {
+
+  const name =
+    document.getElementById("technicianName").value.trim();
+
+  const phone =
+    document.getElementById("technicianPhone").value.trim();
+
+  const location =
+    document.getElementById("technicianLocation").value.trim();
+
+
+  if (!name || !phone || !location) {
+
+    alert("Please complete all fields.");
+
+    return;
+  }
+
+
+  localStorage.setItem(
+    "nailUppTechnician",
+    JSON.stringify({
+      name: name,
+      phone: phone,
+      location: location
+    })
   );
+
+
+  alert("Technician registration successful!");
+
+  window.location.href = "technician.html";
+}
+
+
+/* PARLOR */
+
+function registerParlor() {
+
+  const name =
+    document.getElementById("parlorName").value.trim();
+
+  const phone =
+    document.getElementById("parlorPhone").value.trim();
+
+  const location =
+    document.getElementById("parlorLocation").value.trim();
+
+
+  if (!name || !phone || !location) {
+
+    alert("Please complete all fields.");
+
+    return;
+  }
+
+
+  localStorage.setItem(
+    "nailUppParlor",
+    JSON.stringify({
+      name: name,
+      phone: phone,
+      location: location
+    })
+  );
+
+
+  alert("Nail parlor registration successful!");
+
+  window.location.href = "parlor.html";
+}
+
+
+/* NAIL SHOP */
+
+function registerShop() {
+
+  const name =
+    document.getElementById("shopName").value.trim();
+
+  const phone =
+    document.getElementById("shopPhone").value.trim();
+
+  const location =
+    document.getElementById("shopLocation").value.trim();
+
+  const about =
+    document.getElementById("shopAbout").value.trim();
+
+
+  if (!name || !phone || !location) {
+
+    alert(
+      "Please enter the shop name, phone number and location."
+    );
+
+    return;
+  }
+
+
+  const shop = {
+
+    id: Date.now(),
+
+    name: name,
+
+    phone: phone,
+
+    location: location,
+
+    about: about
+
+  };
+
+
+  /* Save shop for the shop dashboard */
+
+  localStorage.setItem(
+    "nailUppShop",
+    JSON.stringify(shop)
+  );
+
+
+  /* Add shop to the list of Nail Shops */
+
+  const saved =
+    localStorage.getItem("nailUppShops");
+
+
+  const shops =
+    saved ? JSON.parse(saved) : [];
+
+
+  shops.push(shop);
+
+
+  localStorage.setItem(
+    "nailUppShops",
+    JSON.stringify(shops)
+  );
+
+
+  alert(
+    "Nail Shop registered successfully!"
+  );
+
+
+  window.location.href = "shop.html";
 }
 
 </script>
 
 </body>
 </html>
-```
