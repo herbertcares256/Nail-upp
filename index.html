@@ -1,463 +1,476 @@
+```html
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nail Upp</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nail Upp</title>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff5f9;
+      margin: 0;
+      color: #333;
+    }
 
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
+    header {
+      background: #d81b60;
+      color: white;
+      text-align: center;
+      padding: 30px 15px;
+      border-radius: 0 0 30px 30px;
+    }
 
-body{
-  font-family:Arial,sans-serif;
-  background:#fff7fb;
-  color:#333;
-}
+    header h1 {
+      margin: 0;
+      font-size: 32px;
+    }
 
-header{
-  background:#d81b60;
-  color:white;
-  text-align:center;
-  padding:30px 15px;
-  border-radius:0 0 30px 30px;
-}
+    .container {
+      max-width: 600px;
+      margin: auto;
+      padding: 25px 15px;
+    }
 
-header h1{font-size:32px}
-header p{margin-top:8px}
+    .choice, .form {
+      background: white;
+      padding: 20px;
+      margin-bottom: 15px;
+      border-radius: 18px;
+      box-shadow: 0 3px 12px #ddd;
+    }
 
-.container{
-  max-width:600px;
-  margin:auto;
-  padding:25px 15px;
-}
+    .choice {
+      cursor: pointer;
+    }
 
-.welcome{
-  text-align:center;
-  margin-bottom:25px;
-}
+    h2, h3 {
+      color: #d81b60;
+    }
 
-.welcome h2{
-  color:#d81b60;
-  margin-bottom:8px;
-}
+    .icon {
+      font-size: 35px;
+    }
 
-.choice,.form-box{
-  background:white;
-  padding:20px;
-  margin-bottom:15px;
-  border-radius:18px;
-  box-shadow:0 4px 15px rgba(0,0,0,.08);
-}
+    .form {
+      display: none;
+    }
 
-.choice{cursor:pointer}
+    label {
+      display: block;
+      margin-top: 12px;
+      font-weight: bold;
+    }
 
-.choice h3{
-  color:#d81b60;
-  margin-bottom:7px;
-}
+    input, textarea {
+      width: 100%;
+      padding: 13px;
+      margin-top: 6px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      box-sizing: border-box;
+    }
 
-.choice p{
-  color:#777;
-  font-size:14px;
-}
+    textarea {
+      height: 90px;
+    }
 
-.icon{
-  font-size:35px;
-  margin-bottom:8px;
-}
+    button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 18px;
+      border: none;
+      border-radius: 25px;
+      background: #d81b60;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+    }
 
-.form-box{display:none}
-
-.form-box h2{
-  color:#d81b60;
-  margin-bottom:18px;
-}
-
-label{
-  display:block;
-  margin-top:12px;
-  margin-bottom:6px;
-  font-weight:bold;
-}
-
-input,textarea{
-  width:100%;
-  padding:13px;
-  border:1px solid #ddd;
-  border-radius:10px;
-  font-size:15px;
-}
-
-textarea{min-height:80px}
-
-.button{
-  width:100%;
-  border:none;
-  border-radius:25px;
-  padding:14px;
-  margin-top:18px;
-  background:#d81b60;
-  color:white;
-  font-size:16px;
-  font-weight:bold;
-}
-
-.back{
-  width:100%;
-  border:none;
-  background:none;
-  color:#d81b60;
-  font-weight:bold;
-  margin-bottom:15px;
-  padding:5px;
-}
-</style>
+    .back {
+      background: none;
+      color: #d81b60;
+      margin-top: 0;
+    }
+  </style>
 </head>
 
 <body>
 
 <header>
-<h1>💅 Nail Upp</h1>
-<p>Your Nail Services & Products Platform</p>
+  <h1>💅 Nail Upp</h1>
+  <p>Your Nail Services & Products Platform</p>
 </header>
 
 <div class="container">
 
-<div id="choices">
+  <div id="choices">
+    <h2 style="text-align:center;">Welcome to Nail Upp</h2>
+    <p style="text-align:center;">Choose how you want to register</p>
 
-<div class="welcome">
-<h2>Welcome to Nail Upp</h2>
-<p>How would you like to register?</p>
-</div>
+    <div class="choice" onclick="showForm('client')">
+      <div class="icon">👤</div>
+      <h3>Register as Client</h3>
+      <p>Book nail services and shop for products.</p>
+    </div>
 
-<div class="choice" onclick="showForm('client')">
-<div class="icon">👤</div>
-<h3>1. Register as a Client</h3>
-<p>Book nail services and shop for nail products.</p>
-</div>
+    <div class="choice" onclick="showForm('technician')">
+      <div class="icon">💅</div>
+      <h3>Register as Nail Technician</h3>
+      <p>Offer nail services to customers.</p>
+    </div>
 
-<div class="choice" onclick="showForm('technician')">
-<div class="icon">💅</div>
-<h3>2. Register as a Nail Technician</h3>
-<p>Offer nail services to customers.</p>
-</div>
+    <div class="choice" onclick="showForm('parlor')">
+      <div class="icon">🏪</div>
+      <h3>Register as Nail Parlor</h3>
+      <p>Receive bookings from customers.</p>
+    </div>
 
-<div class="choice" onclick="showForm('parlor')">
-<div class="icon">🏪</div>
-<h3>3. Register as a Nail Parlor</h3>
-<p>Register your nail parlor and receive bookings.</p>
-</div>
-
-<div class="choice" onclick="showForm('shop')">
-<div class="icon">🛍️</div>
-<h3>4. Register as a Nail Shop</h3>
-<p>Sell nail products to customers.</p>
-</div>
-
-</div>
+    <div class="choice" onclick="showForm('shop')">
+      <div class="icon">🛍️</div>
+      <h3>Register as Nail Shop</h3>
+      <p>Sell nail products.</p>
+    </div>
+  </div>
 
 
-<!-- CLIENT -->
+  <!-- CLIENT -->
 
-<div id="clientForm" class="form-box">
+  <div id="clientForm" class="form">
 
-<button class="back" onclick="goBack()">← Back</button>
+    <button class="back" onclick="goBack()">← Back</button>
 
-<h2>👤 Client Registration</h2>
+    <h2>👤 Client Registration</h2>
 
-<label>Full Name</label>
-<input id="clientName" type="text" placeholder="Enter your name">
+    <label>Full Name</label>
+    <input id="clientName" type="text">
 
-<label>Phone Number</label>
-<input id="clientPhone" type="tel" placeholder="Enter phone number">
+    <label>Phone Number</label>
+    <input id="clientPhone" type="tel">
 
-<label>Email</label>
-<input id="clientEmail" type="email" placeholder="Enter email">
+    <label>Email</label>
+    <input id="clientEmail" type="email">
 
-<button class="button" onclick="registerClient()">Register as Client</button>
+    <button onclick="registerClient()">Register</button>
 
-</div>
-
-
-<!-- TECHNICIAN -->
-
-<div id="technicianForm" class="form-box">
-
-<button class="back" onclick="goBack()">← Back</button>
-
-<h2>💅 Technician Registration</h2>
-
-<label>Full Name</label>
-<input id="technicianName" type="text" placeholder="Enter your name">
-
-<label>Phone Number</label>
-<input id="technicianPhone" type="tel" placeholder="Enter phone number">
-
-<label>Location</label>
-<input id="technicianLocation" type="text" placeholder="Enter your location">
-
-<button class="button" onclick="registerTechnician()">Register as Technician</button>
-
-</div>
+  </div>
 
 
-<!-- PARLOR -->
+  <!-- TECHNICIAN -->
 
-<div id="parlorForm" class="form-box">
+  <div id="technicianForm" class="form">
 
-<button class="back" onclick="goBack()">← Back</button>
+    <button class="back" onclick="goBack()">← Back</button>
 
-<h2>🏪 Nail Parlor Registration</h2>
+    <h2>💅 Technician Registration</h2>
 
-<label>Parlor Name</label>
-<input id="parlorName" type="text" placeholder="Enter parlor name">
+    <label>Full Name</label>
+    <input id="technicianName" type="text">
 
-<label>Phone Number</label>
-<input id="parlorPhone" type="tel" placeholder="Enter phone number">
+    <label>Phone Number</label>
+    <input id="technicianPhone" type="tel">
 
-<label>Location</label>
-<input id="parlorLocation" type="text" placeholder="Enter parlor location">
+    <label>Location</label>
+    <input id="technicianLocation" type="text">
 
-<button class="button" onclick="registerParlor()">Register Nail Parlor</button>
+    <button onclick="registerTechnician()">Register</button>
 
-</div>
+  </div>
 
 
-<!-- SHOP -->
+  <!-- PARLOR -->
 
-<div id="shopForm" class="form-box">
+  <div id="parlorForm" class="form">
 
-<button class="back" onclick="goBack()">← Back</button>
+    <button class="back" onclick="goBack()">← Back</button>
 
-<h2>🛍️ Nail Shop Registration</h2>
+    <h2>🏪 Nail Parlor Registration</h2>
 
-<label>Shop Name</label>
-<input id="shopName" type="text" placeholder="Enter shop name">
+    <label>Parlor Name</label>
+    <input id="parlorName" type="text">
 
-<label>Phone Number</label>
-<input id="shopPhone" type="tel" placeholder="Enter shop phone">
+    <label>Phone Number</label>
+    <input id="parlorPhone" type="tel">
 
-<label>Location</label>
-<input id="shopLocation" type="text" placeholder="Enter shop location">
+    <label>Location</label>
+    <input id="parlorLocation" type="text">
 
-<label>About Your Shop</label>
-<textarea id="shopAbout" placeholder="Tell customers about your shop"></textarea>
+    <button onclick="registerParlor()">Register</button>
 
-<button class="button" onclick="registerShop()">Register Nail Shop</button>
+  </div>
 
-</div>
+
+  <!-- SHOP -->
+
+  <div id="shopForm" class="form">
+
+    <button class="back" onclick="goBack()">← Back</button>
+
+    <h2>🛍️ Nail Shop Registration</h2>
+
+    <label>Shop Name</label>
+    <input id="shopName" type="text">
+
+    <label>Phone Number</label>
+    <input id="shopPhone" type="tel">
+
+    <label>Location</label>
+    <input id="shopLocation" type="text">
+
+    <label>About Your Shop</label>
+    <textarea id="shopAbout"></textarea>
+
+    <button onclick="registerShop()">Register</button>
+
+  </div>
 
 </div>
 
 
 <script>
 
-/* SUPABASE CONNECTION */
+/* ================================
+   SUPABASE SETTINGS
+================================ */
 
 const SUPABASE_URL =
-"https://czkstsubdkcieelqwbai.supabase.co";
+  "https://czkstsubdkcieelqwbai.supabase.co";
 
 const SUPABASE_KEY =
-"sb_publishable_ZgzazaqGSzgfXMrBSHY77A_KPJYjtVA";
-
-const db = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
+  "sb_publishable_ZgzazaqGSzgfXMrBSHY77A_KPJYjtVA";
 
 
-/* SHOW FORM */
+/* ================================
+   SEND DATA TO SUPABASE
+================================ */
 
-function showForm(type){
+async function saveData(table, data) {
 
-document.getElementById("choices").style.display="none";
+  const response = await fetch(
+    SUPABASE_URL + "/rest/v1/" + table,
+    {
+      method: "POST",
 
-document.getElementById("clientForm").style.display="none";
-document.getElementById("technicianForm").style.display="none";
-document.getElementById("parlorForm").style.display="none";
-document.getElementById("shopForm").style.display="none";
+      headers: {
+        "Content-Type": "application/json",
+        "apikey": SUPABASE_KEY,
+        "Authorization": "Bearer " + SUPABASE_KEY,
+        "Prefer": "return=minimal"
+      },
 
-document.getElementById(type+"Form").style.display="block";
+      body: JSON.stringify(data)
+    }
+  );
+
+  if (!response.ok) {
+
+    const errorText = await response.text();
+
+    throw new Error(errorText);
+  }
 }
 
 
-/* BACK */
+/* ================================
+   SHOW FORM
+================================ */
 
-function goBack(){
+function showForm(type) {
 
-document.getElementById("choices").style.display="block";
+  document.getElementById("choices").style.display = "none";
 
-document.getElementById("clientForm").style.display="none";
-document.getElementById("technicianForm").style.display="none";
-document.getElementById("parlorForm").style.display="none";
-document.getElementById("shopForm").style.display="none";
+  document.querySelectorAll(".form").forEach(function(form) {
+    form.style.display = "none";
+  });
+
+  document.getElementById(type + "Form").style.display = "block";
 }
 
 
-/* CLIENT */
+/* ================================
+   BACK
+================================ */
 
-async function registerClient(){
+function goBack() {
 
-const name=document.getElementById("clientName").value.trim();
-const phone=document.getElementById("clientPhone").value.trim();
-const email=document.getElementById("clientEmail").value.trim();
+  document.getElementById("choices").style.display = "block";
 
-if(!name || !phone){
-alert("Please enter your name and phone number.");
-return;
-}
-
-const button=document.querySelector("#clientForm .button");
-button.disabled=true;
-button.innerText="Registering...";
-
-const {error}=await db
-.from("clients")
-.insert([{
-full_name:name,
-phone:phone,
-email:email
-}]);
-
-button.disabled=false;
-button.innerText="Register as Client";
-
-if(error){
-console.error(error);
-alert("Registration failed: "+error.message);
-return;
-}
-
-alert("Client registration successful!");
-
-window.location.href="client.html";
+  document.querySelectorAll(".form").forEach(function(form) {
+    form.style.display = "none";
+  });
 }
 
 
-/* TECHNICIAN */
+/* ================================
+   CLIENT
+================================ */
 
-async function registerTechnician(){
+async function registerClient() {
 
-const name=document.getElementById("technicianName").value.trim();
-const phone=document.getElementById("technicianPhone").value.trim();
-const location=document.getElementById("technicianLocation").value.trim();
+  const name =
+    document.getElementById("clientName").value.trim();
 
-if(!name || !phone || !location){
-alert("Please complete all fields.");
-return;
-}
+  const phone =
+    document.getElementById("clientPhone").value.trim();
 
-const button=document.querySelector("#technicianForm .button");
-button.disabled=true;
-button.innerText="Registering...";
+  const email =
+    document.getElementById("clientEmail").value.trim();
 
-const {error}=await db
-.from("technicians")
-.insert([{
-full_name:name,
-phone:phone,
-location:location
-}]);
+  if (!name || !phone) {
+    alert("Please enter your name and phone number.");
+    return;
+  }
 
-button.disabled=false;
-button.innerText="Register as Technician";
+  try {
 
-if(error){
-console.error(error);
-alert("Registration failed: "+error.message);
-return;
-}
+    await saveData("clients", {
+      full_name: name,
+      phone: phone,
+      email: email || null
+    });
 
-alert("Technician registration successful!");
+    alert("Client registration successful!");
 
-window.location.href="technician.html";
-}
+    window.location.href = "client.html";
 
+  } catch (error) {
 
-/* PARLOR */
+    console.error(error);
 
-async function registerParlor(){
-
-const name=document.getElementById("parlorName").value.trim();
-const phone=document.getElementById("parlorPhone").value.trim();
-const location=document.getElementById("parlorLocation").value.trim();
-
-if(!name || !phone || !location){
-alert("Please complete all fields.");
-return;
-}
-
-const button=document.querySelector("#parlorForm .button");
-button.disabled=true;
-button.innerText="Registering...";
-
-const {error}=await db
-.from("parlors")
-.insert([{
-full_name:name,
-phone:phone,
-location:location
-}]);
-
-button.disabled=false;
-button.innerText="Register Nail Parlor";
-
-if(error){
-console.error(error);
-alert("Registration failed: "+error.message);
-return;
-}
-
-alert("Nail parlor registration successful!");
-
-window.location.href="parlor.html";
+    alert("Registration failed: " + error.message);
+  }
 }
 
 
-/* SHOP */
+/* ================================
+   TECHNICIAN
+================================ */
 
-async function registerShop(){
+async function registerTechnician() {
 
-const name=document.getElementById("shopName").value.trim();
-const phone=document.getElementById("shopPhone").value.trim();
-const location=document.getElementById("shopLocation").value.trim();
-const about=document.getElementById("shopAbout").value.trim();
+  const name =
+    document.getElementById("technicianName").value.trim();
 
-if(!name || !phone || !location){
-alert("Please enter the shop name, phone number and location.");
-return;
+  const phone =
+    document.getElementById("technicianPhone").value.trim();
+
+  const location =
+    document.getElementById("technicianLocation").value.trim();
+
+  if (!name || !phone || !location) {
+    alert("Please complete all fields.");
+    return;
+  }
+
+  try {
+
+    await saveData("technicians", {
+      full_name: name,
+      phone: phone,
+      location: location
+    });
+
+    alert("Technician registration successful!");
+
+    window.location.href = "technician.html";
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert("Registration failed: " + error.message);
+  }
 }
 
-const button=document.querySelector("#shopForm .button");
-button.disabled=true;
-button.innerText="Registering...";
 
-const {error}=await db
-.from("shops")
-.insert([{
-full_name:name,
-phone:phone,
-location:location,
-about:about
-}]);
+/* ================================
+   PARLOR
+================================ */
 
-button.disabled=false;
-button.innerText="Register Nail Shop";
+async function registerParlor() {
 
-if(error){
-console.error(error);
-alert("Registration failed: "+error.message);
-return;
+  const name =
+    document.getElementById("parlorName").value.trim();
+
+  const phone =
+    document.getElementById("parlorPhone").value.trim();
+
+  const location =
+    document.getElementById("parlorLocation").value.trim();
+
+  if (!name || !phone || !location) {
+    alert("Please complete all fields.");
+    return;
+  }
+
+  try {
+
+    await saveData("parlors", {
+      name: name,
+      phone: phone,
+      location: location
+    });
+
+    alert("Nail parlor registration successful!");
+
+    window.location.href = "parlor.html";
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert("Registration failed: " + error.message);
+  }
 }
 
-alert("Nail Shop registration successful!");
 
-window.location.href="shop.html";
+/* ================================
+   SHOP
+================================ */
+
+async function registerShop() {
+
+  const name =
+    document.getElementById("shopName").value.trim();
+
+  const phone =
+    document.getElementById("shopPhone").value.trim();
+
+  const location =
+    document.getElementById("shopLocation").value.trim();
+
+  const about =
+    document.getElementById("shopAbout").value.trim();
+
+  if (!name || !phone || !location) {
+    alert("Please complete all required fields.");
+    return;
+  }
+
+  try {
+
+    await saveData("shops", {
+      name: name,
+      phone: phone,
+      location: location,
+      about: about
+    });
+
+    alert("Nail shop registration successful!");
+
+    window.location.href = "shop.html";
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert("Registration failed: " + error.message);
+  }
 }
 
 </script>
 
 </body>
 </html>
+```
