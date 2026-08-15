@@ -1,8 +1,10 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Nail Upp - Client</title>
 
 <style>
@@ -19,112 +21,72 @@ body {
 }
 
 header {
-  background: #d81b60;
+  background: #d9165b;
   color: white;
   text-align: center;
-  padding: 25px 15px;
-  border-radius: 0 0 25px 25px;
+  padding: 30px 18px;
+  border-radius: 0 0 30px 30px;
 }
 
 header h1 {
-  font-size: 28px;
+  font-size: 30px;
+}
+
+header p {
+  margin-top: 8px;
+  font-size: 17px;
 }
 
 .container {
   max-width: 700px;
   margin: auto;
-  padding: 20px 15px 40px;
+  padding: 20px 15px 50px;
 }
 
-.welcome,
+h2 {
+  text-align: center;
+  color: #c91b5b;
+  margin: 10px 0 20px;
+}
+
 .card {
   background: white;
-  padding: 20px;
-  margin-bottom: 18px;
-  border-radius: 18px;
+  padding: 22px;
+  border-radius: 22px;
+  margin-bottom: 16px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.08);
 }
 
-.welcome {
+.icon {
+  font-size: 45px;
   text-align: center;
+  margin-bottom: 10px;
 }
 
-.welcome h2 {
-  color: #d81b60;
-  margin-bottom: 8px;
+.card h3 {
+  text-align: center;
+  font-size: 20px;
 }
 
-.menu-button {
+.card p {
+  text-align: center;
+  color: #777;
+  margin-top: 7px;
+}
+
+button {
   width: 100%;
   border: none;
   border-radius: 25px;
   padding: 15px;
-  margin-top: 12px;
-  background: #d81b60;
+  margin-top: 14px;
+  background: #d9165b;
   color: white;
   font-size: 16px;
   font-weight: bold;
 }
 
-.orders-title {
-  color: #d81b60;
-  margin-bottom: 15px;
-}
-
-.order {
-  border: 1px solid #eee;
-  padding: 15px;
-  border-radius: 15px;
-  margin-bottom: 15px;
-}
-
-.order p {
-  margin: 7px 0;
-}
-
-.item {
-  background: #fff7fb;
-  padding: 10px;
-  border-radius: 10px;
-  margin-top: 8px;
-}
-
-.total {
-  font-size: 17px;
-  font-weight: bold;
-  margin-top: 12px;
-}
-
-.status {
-  text-align: center;
-  padding: 10px;
-  border-radius: 10px;
-  margin-top: 12px;
-  font-weight: bold;
-}
-
-.waiting {
-  background: #fff3cd;
-  color: #856404;
-}
-
-.accepted {
-  background: #e8f5e9;
-  color: #2e7d32;
-}
-
-.declined {
-  background: #ffebee;
-  color: #c62828;
-}
-
-.empty {
-  text-align: center;
-  color: #777;
-  padding: 15px;
-}
-
-.logout {
+.gray {
   background: #555;
 }
 </style>
@@ -133,46 +95,103 @@ header h1 {
 <body>
 
 <header>
+
   <h1>💅 Nail Upp</h1>
-  <p>Client Dashboard</p>
+
+  <p>Your nail services, wherever you are.</p>
+
 </header>
+
 
 <div class="container">
 
-  <div class="welcome">
-    <h2>Welcome, <span id="clientName">Client</span> 👋</h2>
-    <p>What would you like to do?</p>
+  <h2>Welcome, Client</h2>
 
-    <button class="menu-button"
-      onclick="openShops()">
-      🛍️ Shop Nail Products
+
+  <!-- HOME SERVICE -->
+
+  <div class="card">
+
+    <div class="icon">🏠💅</div>
+
+    <h3>Home Nail Services</h3>
+
+    <p>
+      Order a nail technician to come to you.
+    </p>
+
+    <button onclick="openHomeService()">
+      Book Home Service
     </button>
-
-    <button class="menu-button"
-      onclick="showOrders()">
-      🛒 My Orders
-    </button>
-  </div>
-
-
-  <div class="card" id="ordersSection">
-
-    <h2 class="orders-title">
-      🛒 My Orders
-    </h2>
-
-    <div id="orders">
-      <p class="empty">
-        You have no orders yet.
-      </p>
-    </div>
 
   </div>
 
 
-  <button class="menu-button logout"
-    onclick="logout()">
-    Log Out
+  <!-- NAIL PARLORS -->
+
+  <div class="card">
+
+    <div class="icon">💅🏪</div>
+
+    <h3>Nail Parlors</h3>
+
+    <p>
+      Find nail parlors and make appointments.
+    </p>
+
+    <button onclick="openParlors()">
+      Find Nail Parlors
+    </button>
+
+  </div>
+
+
+  <!-- NAIL SHOPS -->
+
+  <div class="card">
+
+    <div class="icon">🛍️</div>
+
+    <h3>Nail Shops</h3>
+
+    <p>
+      Shop for nail products and materials.
+    </p>
+
+    <button onclick="openShops()">
+      Shop Nail Products
+    </button>
+
+  </div>
+
+
+  <!-- MY ORDERS -->
+
+  <div class="card">
+
+    <div class="icon">📦</div>
+
+    <h3>My Orders</h3>
+
+    <p>
+      Track your nail product orders.
+    </p>
+
+    <button onclick="openOrders()">
+      View My Orders
+    </button>
+
+  </div>
+
+
+  <!-- BACK -->
+
+  <button
+    class="gray"
+    onclick="goHome()">
+
+    ← Back to Nail Upp
+
   </button>
 
 </div>
@@ -180,27 +199,21 @@ header h1 {
 
 <script>
 
-let orders = [];
+function openHomeService() {
 
-
-/* LOAD CLIENT */
-
-function loadClient() {
-
-  const name =
-    localStorage.getItem("nailUppName");
-
-  document.getElementById(
-    "clientName"
-  ).textContent =
-    name || "Client";
-
-  loadOrders();
+  window.location.href =
+    "home-service.html";
 
 }
 
 
-/* OPEN NAIL SHOPS */
+function openParlors() {
+
+  window.location.href =
+    "parlor.html";
+
+}
+
 
 function openShops() {
 
@@ -210,215 +223,23 @@ function openShops() {
 }
 
 
-/* LOAD ORDERS */
+function openOrders() {
 
-function loadOrders() {
-
-  /*
-    The current test version stores the
-    latest order here.
-  */
-
-  const saved =
-    localStorage.getItem(
-      "nailUppProductOrder"
-    );
-
-
-  if (saved) {
-
-    const order =
-      JSON.parse(saved);
-
-    orders = [order];
-
-  } else {
-
-    orders = [];
-
-  }
-
-
-  displayOrders();
+  window.location.href =
+    "my-orders.html";
 
 }
 
 
-/* DISPLAY ORDERS */
-
-function displayOrders() {
-
-  const container =
-    document.getElementById(
-      "orders"
-    );
-
-
-  if (orders.length === 0) {
-
-    container.innerHTML =
-      '<p class="empty">' +
-      'You have no orders yet.' +
-      '</p>';
-
-    return;
-  }
-
-
-  let html = "";
-
-
-  orders.slice().reverse().forEach(
-    function(order) {
-
-      let statusClass =
-        "status waiting";
-
-
-      if (
-        order.status ===
-        "Accepted by shop"
-      ) {
-
-        statusClass =
-          "status accepted";
-
-      }
-
-
-      if (
-        order.status ===
-        "Declined by shop"
-      ) {
-
-        statusClass =
-          "status declined";
-
-      }
-
-
-      html +=
-
-        '<div class="order">' +
-
-        '<p><strong>Order:</strong> ' +
-        order.id +
-        '</p>' +
-
-        '<p><strong>Shop:</strong> ' +
-        (order.shopName ||
-        "Nail Shop") +
-        '</p>' +
-
-        '<p><strong>Date:</strong> ' +
-        (order.date || "") +
-        '</p>';
-
-
-      if (order.items) {
-
-        order.items.forEach(
-          function(item) {
-
-            html +=
-
-              '<div class="item">' +
-
-              '<strong>' +
-              item.name +
-              '</strong>' +
-
-              '<p>Quantity: ' +
-              item.quantity +
-              '</p>' +
-
-              '<p>Price: UGX ' +
-              Number(item.price)
-                .toLocaleString() +
-              '</p>' +
-
-              '</div>';
-
-          }
-        );
-
-      }
-
-
-      html +=
-
-        '<p class="total">' +
-
-        'TOTAL: UGX ' +
-
-        Number(order.total || 0)
-          .toLocaleString() +
-
-        '</p>' +
-
-        '<div class="' +
-        statusClass +
-        '">' +
-
-        (order.status ||
-        "Waiting for shop") +
-
-        '</div>' +
-
-        '</div>';
-
-    }
-  );
-
-
-  container.innerHTML =
-    html;
-
-}
-
-
-/* SHOW ORDERS */
-
-function showOrders() {
-
-  document.getElementById(
-    "ordersSection"
-  ).scrollIntoView({
-    behavior: "smooth"
-  });
-
-  loadOrders();
-
-}
-
-
-/* LOGOUT */
-
-function logout() {
-
-  localStorage.removeItem(
-    "nailUppName"
-  );
-
-  localStorage.removeItem(
-    "nailUppPhone"
-  );
-
-  localStorage.removeItem(
-    "nailUppEmail"
-  );
+function goHome() {
 
   window.location.href =
     "index.html";
 
 }
 
-
-/* START */
-
-loadClient();
-
 </script>
 
 </body>
 </html>
+```
