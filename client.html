@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,86 +7,101 @@
 <title>Nail Upp - Client</title>
 
 <style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
 
-body {
-  font-family: Arial, sans-serif;
-  background: #fff7fb;
-  color: #333;
+body{
+  font-family:Arial,sans-serif;
+  background:#fff7fb;
+  color:#333;
 }
 
-header {
-  background: #d9165b;
-  color: white;
-  text-align: center;
-  padding: 30px 18px;
-  border-radius: 0 0 30px 30px;
+header{
+  background:#d9165b;
+  color:white;
+  text-align:center;
+  padding:35px 20px;
+  border-radius:0 0 35px 35px;
 }
 
-header h1 {
-  font-size: 30px;
+header h1{
+  font-size:32px;
+  margin-bottom:8px;
 }
 
-header p {
-  margin-top: 8px;
-  font-size: 17px;
+header p{
+  font-size:17px;
 }
 
-.container {
-  max-width: 700px;
-  margin: auto;
-  padding: 20px 15px 50px;
+.container{
+  max-width:700px;
+  margin:auto;
+  padding:25px 16px 50px;
 }
 
-h2 {
-  text-align: center;
-  color: #c91b5b;
-  margin: 10px 0 20px;
+h2{
+  text-align:center;
+  color:#c91b5b;
+  margin-bottom:8px;
+  font-size:27px;
 }
 
-.card {
-  background: white;
-  padding: 22px;
-  border-radius: 22px;
-  margin-bottom: 16px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+.subtitle{
+  text-align:center;
+  color:#777;
+  margin-bottom:25px;
+  font-size:16px;
 }
 
-.icon {
-  font-size: 45px;
-  text-align: center;
-  margin-bottom: 10px;
+.card{
+  background:white;
+  padding:22px;
+  border-radius:24px;
+  margin-bottom:16px;
+  box-shadow:0 4px 15px rgba(0,0,0,0.08);
 }
 
-.card h3 {
-  text-align: center;
-  font-size: 20px;
+.card h3{
+  color:#333;
+  font-size:21px;
+  margin-bottom:8px;
 }
 
-.card p {
-  text-align: center;
-  color: #777;
-  margin-top: 7px;
+.card p{
+  color:#777;
+  line-height:1.5;
+  margin-bottom:15px;
 }
 
-button {
-  width: 100%;
-  border: none;
-  border-radius: 25px;
-  padding: 15px;
-  margin-top: 14px;
-  background: #d9165b;
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
+button{
+  width:100%;
+  border:none;
+  border-radius:25px;
+  padding:14px;
+  background:#d9165b;
+  color:white;
+  font-size:16px;
+  font-weight:bold;
 }
 
-.gray {
-  background: #555;
+button:active{
+  transform:scale(.98);
+}
+
+.care{
+  border:2px solid #f3c2d5;
+}
+
+.care h3{
+  color:#c91b5b;
+}
+
+.gray{
+  background:#555;
+  margin-top:5px;
 }
 </style>
 </head>
@@ -95,151 +109,111 @@ button {
 <body>
 
 <header>
-
-  <h1>💅 Nail Upp</h1>
-
+  <h1>Nail Upp</h1>
   <p>Your nail services, wherever you are.</p>
-
 </header>
-
 
 <div class="container">
 
-  <h2>Welcome, Client</h2>
+<h2>Welcome, Client</h2>
 
+<p class="subtitle">
+Choose the nail service you need
+</p>
 
-  <!-- HOME SERVICE -->
+<div class="card">
+  <h3>Home Nail Services</h3>
+  <p>
+    Order a nail technician to come to your home.
+  </p>
 
-  <div class="card">
-
-    <div class="icon">🏠💅</div>
-
-    <h3>Home Nail Services</h3>
-
-    <p>
-      Order a nail technician to come to you.
-    </p>
-
-    <button onclick="openHomeService()">
-      Book Home Service
-    </button>
-
-  </div>
-
-
-  <!-- NAIL PARLORS -->
-
-  <div class="card">
-
-    <div class="icon">💅🏪</div>
-
-    <h3>Nail Parlors</h3>
-
-    <p>
-      Find nail parlors and make appointments.
-    </p>
-
-    <button onclick="openParlors()">
-      Find Nail Parlors
-    </button>
-
-  </div>
-
-
-  <!-- NAIL SHOPS -->
-
-  <div class="card">
-
-    <div class="icon">🛍️</div>
-
-    <h3>Nail Shops</h3>
-
-    <p>
-      Shop for nail products and materials.
-    </p>
-
-    <button onclick="openShops()">
-      Shop Nail Products
-    </button>
-
-  </div>
-
-
-  <!-- MY ORDERS -->
-
-  <div class="card">
-
-    <div class="icon">📦</div>
-
-    <h3>My Orders</h3>
-
-    <p>
-      Track your nail product orders.
-    </p>
-
-    <button onclick="openOrders()">
-      View My Orders
-    </button>
-
-  </div>
-
-
-  <!-- BACK -->
-
-  <button
-    class="gray"
-    onclick="goHome()">
-
-    ← Back to Nail Upp
-
+  <button onclick="openHomeService()">
+    Book Home Service
   </button>
+</div>
+
+<div class="card">
+  <h3>Nail Parlors</h3>
+  <p>
+    Find nearby nail parlors and make an appointment.
+  </p>
+
+  <button onclick="openParlors()">
+    Find Nail Parlors
+  </button>
+</div>
+
+<div class="card">
+  <h3>Nail Shops</h3>
+  <p>
+    Shop for nail products and materials.
+  </p>
+
+  <button onclick="openShops()">
+    Shop Nail Products
+  </button>
+</div>
+
+<div class="card">
+  <h3>My Orders</h3>
+  <p>
+    Track your nail product orders.
+  </p>
+
+  <button onclick="openOrders()">
+    View My Orders
+  </button>
+</div>
+
+<div class="card care">
+  <h3>Customer Care</h3>
+  <p>
+    Need help with a booking, order or payment?
+    Contact Nail Upp customer care.
+  </p>
+
+  <button onclick="customerCare()">
+    Contact Customer Care
+  </button>
+</div>
+
+<button class="gray" onclick="goHome()">
+  ← Back to Nail Upp
+</button>
 
 </div>
 
-
 <script>
 
-function openHomeService() {
-
-  window.location.href =
-    "home-service.html";
-
+function openHomeService(){
+  window.location.href="home-service.html";
 }
 
-
-function openParlors() {
-
-  window.location.href =
-    "parlor.html";
-
+function openParlors(){
+  window.location.href="parlor.html";
 }
 
-
-function openShops() {
-
-  window.location.href =
-    "shops.html";
-
+function openShops(){
+  window.location.href="shops.html";
 }
 
-
-function openOrders() {
-
-  window.location.href =
-    "my-orders.html";
-
+function openOrders(){
+  window.location.href="my-orders.html";
 }
 
+function customerCare(){
+  alert(
+    "Nail Upp Customer Care\n\n" +
+    "We are here to help you with bookings, orders and payments.\n\n" +
+    "Please contact Nail Upp Customer Care."
+  );
+}
 
-function goHome() {
-
-  window.location.href =
-    "index.html";
-
+function goHome(){
+  window.location.href="index.html";
 }
 
 </script>
 
 </body>
 </html>
-```
