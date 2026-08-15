@@ -1,14 +1,12 @@
-```html id="h3m7qp"
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Nail Shop Dashboard</title>
 
 <style>
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -25,12 +23,12 @@ header {
   background: #d9165b;
   color: white;
   padding: 28px 18px;
-  border-radius: 0 0 30px 30px;
   text-align: center;
+  border-radius: 0 0 30px 30px;
 }
 
 header h1 {
-  font-size: 28px;
+  font-size: 27px;
 }
 
 header p {
@@ -45,9 +43,9 @@ header p {
 
 .card {
   background: white;
-  padding: 22px;
-  border-radius: 22px;
-  margin-bottom: 20px;
+  padding: 20px;
+  border-radius: 20px;
+  margin-bottom: 18px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.08);
 }
 
@@ -68,7 +66,7 @@ button {
   width: 100%;
   border: none;
   border-radius: 25px;
-  padding: 15px;
+  padding: 14px;
   margin-top: 12px;
   background: #d9165b;
   color: white;
@@ -76,134 +74,177 @@ button {
   font-weight: bold;
 }
 
-.secondary {
+.gray {
   background: #555;
 }
 
-.logout {
-  background: #777;
+.red {
+  background: #b00020;
 }
 
-.message {
-  text-align: center;
+.product {
+  border: 1px solid #eee;
+  border-radius: 18px;
+  padding: 15px;
+  margin-top: 15px;
+}
+
+.product img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 14px;
+}
+
+.product h3 {
   color: #c91b5b;
   margin-top: 10px;
 }
 
+.product p {
+  margin-top: 6px;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  margin-top: 7px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-top: 12px;
+}
+
+#editBox {
+  display: none;
+}
 </style>
 </head>
 
 <body>
 
 <header>
-
-  <h1>
-    🛍️ Nail Shop Dashboard
-  </h1>
-
-  <p id="shopNameHeader">
-    Loading shop...
-  </p>
-
+  <h1>🛍️ Nail Shop Dashboard</h1>
+  <p id="shopNameHeader">Loading shop...</p>
 </header>
-
 
 <div class="container">
 
-
-  <!-- SHOP INFORMATION -->
-
   <div class="card shop-info">
+    <div class="shop-icon">🏪</div>
 
-    <div class="shop-icon">
-      🏪
-    </div>
+    <h2 id="shopName">Nail Shop</h2>
 
-    <h2 id="shopName">
-      Nail Shop
-    </h2>
+    <p id="shopLocation">📍 Location</p>
 
-    <p id="shopLocation">
-      📍 Location
-    </p>
-
-    <p
-      id="shopPhone"
-      style="margin-top:7px;">
+    <p id="shopPhone" style="margin-top:7px;">
       📞 Phone
     </p>
-
   </div>
 
 
-  <!-- ORDERS -->
-
   <div class="card">
 
-    <h2>
-      📦 Customer Orders
-    </h2>
+    <h2>📦 Customer Orders</h2>
 
     <p>
-      View and manage orders from customers.
+      View and manage customer orders.
     </p>
 
-    <button
-      onclick="openOrders()">
-
+    <button onclick="openOrders()">
       📦 View Orders
+    </button>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>🛍️ Shop Products</h2>
+
+    <p>
+      Add, edit and delete your products.
+    </p>
+
+    <button onclick="openAddProduct()">
+      ➕ Add New Product
+    </button>
+
+    <div id="productList"></div>
+
+  </div>
+
+
+  <div class="card" id="editBox">
+
+    <h2>✏️ Edit Product</h2>
+
+    <input type="hidden" id="editId">
+
+    <label>Product Name</label>
+    <input
+      id="editName"
+      type="text"
+      placeholder="Product name"
+    >
+
+    <label>Price (UGX)</label>
+    <input
+      id="editPrice"
+      type="number"
+      placeholder="Price"
+    >
+
+    <label>Stock</label>
+    <input
+      id="editStock"
+      type="number"
+      placeholder="Stock"
+    >
+
+    <label>Description</label>
+    <textarea
+      id="editDescription"
+      placeholder="Product description"
+    ></textarea>
+
+    <button onclick="saveEdit()">
+      💾 Save Changes
+    </button>
+
+    <button
+      class="gray"
+      onclick="cancelEdit()">
+
+      Cancel
 
     </button>
 
   </div>
 
 
-  <!-- PRODUCTS -->
-
   <div class="card">
 
-    <h2>
-      🛍️ Shop Products
-    </h2>
+    <h2>👀 Customer View</h2>
 
     <p>
-      Add and manage your nail products.
+      See how customers see your shop.
     </p>
 
-    <button
-      onclick="openProducts()">
-
-      ➕ Manage Products
-
-    </button>
-
-  </div>
-
-
-  <!-- CLIENT VIEW -->
-
-  <div class="card">
-
-    <h2>
-      👀 Customer View
-    </h2>
-
-    <p>
-      See how customers view your shop.
-    </p>
-
-    <button
-      onclick="openCustomerView()">
-
+    <button onclick="openCustomerView()">
       👀 View My Shop
-
     </button>
 
   </div>
 
 
   <button
-    class="secondary"
+    class="gray"
     onclick="goHome()">
 
     ← Back to Nail Upp
@@ -212,13 +253,12 @@ button {
 
 
   <button
-    class="logout"
+    class="gray"
     onclick="logout()">
 
     🔐 Logout
 
   </button>
-
 
 </div>
 
@@ -232,18 +272,15 @@ const savedShop =
     "nailUppShop"
   );
 
-
 if (!savedShop) {
 
   alert(
-    "Please register as a Nail Shop first."
+    "Please login as a Nail Shop first."
   );
 
   window.location.href =
     "index.html";
-
 }
-
 
 const currentShop =
   JSON.parse(savedShop);
@@ -257,13 +294,11 @@ document.getElementById(
   currentShop.name ||
   "Nail Shop";
 
-
 document.getElementById(
   "shopName"
 ).textContent =
   currentShop.name ||
   "Nail Shop";
-
 
 document.getElementById(
   "shopLocation"
@@ -273,7 +308,6 @@ document.getElementById(
     currentShop.location ||
     "Location not provided"
   );
-
 
 document.getElementById(
   "shopPhone"
@@ -295,12 +329,362 @@ function openOrders() {
 }
 
 
-/* PRODUCTS */
+/* ADD PRODUCT */
 
-function openProducts() {
+function openAddProduct() {
 
   window.location.href =
     "shop.html";
+
+}
+
+
+/* LOAD PRODUCTS */
+
+function loadProducts() {
+
+  const saved =
+    localStorage.getItem(
+      "nailUppProducts"
+    );
+
+  const products =
+    saved
+      ? JSON.parse(saved)
+      : [];
+
+  const myProducts =
+    products.filter(
+      function(product) {
+
+        return (
+          product.shopId ===
+          currentShop.id
+        );
+
+      }
+    );
+
+  const list =
+    document.getElementById(
+      "productList"
+    );
+
+
+  if (
+    myProducts.length === 0
+  ) {
+
+    list.innerHTML =
+      "<p style='margin-top:15px;color:#777;text-align:center;'>" +
+      "No products added yet." +
+      "</p>";
+
+    return;
+  }
+
+
+  let html = "";
+
+
+  myProducts.forEach(
+    function(product) {
+
+      html +=
+
+        '<div class="product">' +
+
+        '<img src="' +
+        product.image +
+        '" alt="Product">' +
+
+        '<h3>' +
+        escapeHTML(
+          product.name
+        ) +
+        '</h3>' +
+
+        '<p>💰 UGX ' +
+        Number(
+          product.price
+        ).toLocaleString() +
+        '</p>' +
+
+        '<p>📦 Stock: ' +
+        product.stock +
+        '</p>' +
+
+        '<p>' +
+        escapeHTML(
+          product.description ||
+          "No description"
+        ) +
+        '</p>' +
+
+        '<button onclick="editProduct(\'' +
+        product.id +
+        '\')">' +
+
+        '✏️ Edit Product' +
+
+        '</button>' +
+
+        '<button class="red" ' +
+        'onclick="deleteProduct(\'' +
+        product.id +
+        '\')">' +
+
+        '🗑️ Delete Product' +
+
+        '</button>' +
+
+        '</div>';
+
+    }
+  );
+
+
+  list.innerHTML =
+    html;
+}
+
+
+/* EDIT PRODUCT */
+
+function editProduct(id) {
+
+  const saved =
+    localStorage.getItem(
+      "nailUppProducts"
+    );
+
+  const products =
+    saved
+      ? JSON.parse(saved)
+      : [];
+
+  const product =
+    products.find(
+      function(item) {
+
+        return item.id === id;
+
+      }
+    );
+
+
+  if (!product) {
+
+    alert(
+      "Product not found."
+    );
+
+    return;
+  }
+
+
+  document.getElementById(
+    "editId"
+  ).value =
+    product.id;
+
+  document.getElementById(
+    "editName"
+  ).value =
+    product.name;
+
+  document.getElementById(
+    "editPrice"
+  ).value =
+    product.price;
+
+  document.getElementById(
+    "editStock"
+  ).value =
+    product.stock;
+
+  document.getElementById(
+    "editDescription"
+  ).value =
+    product.description || "";
+
+
+  document.getElementById(
+    "editBox"
+  ).style.display =
+    "block";
+
+
+  window.scrollTo({
+    top: document.getElementById(
+      "editBox"
+    ).offsetTop,
+    behavior: "smooth"
+  });
+
+}
+
+
+/* SAVE EDIT */
+
+function saveEdit() {
+
+  const id =
+    document.getElementById(
+      "editId"
+    ).value;
+
+  const name =
+    document.getElementById(
+      "editName"
+    ).value.trim();
+
+  const price =
+    document.getElementById(
+      "editPrice"
+    ).value;
+
+  const stock =
+    document.getElementById(
+      "editStock"
+    ).value;
+
+  const description =
+    document.getElementById(
+      "editDescription"
+    ).value.trim();
+
+
+  if (
+    !name ||
+    !price ||
+    stock === ""
+  ) {
+
+    alert(
+      "Please fill in the product name, price and stock."
+    );
+
+    return;
+  }
+
+
+  const saved =
+    localStorage.getItem(
+      "nailUppProducts"
+    );
+
+  const products =
+    saved
+      ? JSON.parse(saved)
+      : [];
+
+
+  const product =
+    products.find(
+      function(item) {
+
+        return item.id === id;
+
+      }
+    );
+
+
+  if (!product) {
+
+    alert(
+      "Product not found."
+    );
+
+    return;
+  }
+
+
+  product.name =
+    name;
+
+  product.price =
+    Number(price);
+
+  product.stock =
+    Number(stock);
+
+  product.description =
+    description;
+
+
+  localStorage.setItem(
+    "nailUppProducts",
+    JSON.stringify(products)
+  );
+
+
+  alert(
+    "✅ Product updated successfully!"
+  );
+
+
+  cancelEdit();
+
+  loadProducts();
+
+}
+
+
+/* CANCEL EDIT */
+
+function cancelEdit() {
+
+  document.getElementById(
+    "editBox"
+  ).style.display =
+    "none";
+
+}
+
+
+/* DELETE PRODUCT */
+
+function deleteProduct(id) {
+
+  if (
+    !confirm(
+      "Are you sure you want to delete this product?"
+    )
+  ) {
+
+    return;
+  }
+
+
+  const saved =
+    localStorage.getItem(
+      "nailUppProducts"
+    );
+
+  const products =
+    saved
+      ? JSON.parse(saved)
+      : [];
+
+
+  const updated =
+    products.filter(
+      function(product) {
+
+        return product.id !== id;
+
+      }
+    );
+
+
+  localStorage.setItem(
+    "nailUppProducts",
+    JSON.stringify(updated)
+  );
+
+
+  loadProducts();
 
 }
 
@@ -315,7 +699,6 @@ function openCustomerView() {
       currentShop
     )
   );
-
 
   window.location.href =
     "shop-products.html";
@@ -341,11 +724,29 @@ function logout() {
     "nailUppShop"
   );
 
-
   window.location.href =
     "index.html";
 
 }
+
+
+/* SECURITY */
+
+function escapeHTML(text) {
+
+  return String(text)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+
+}
+
+
+/* START */
+
+loadProducts();
 
 </script>
 
