@@ -128,6 +128,12 @@
       margin-bottom: 15px;
       padding: 5px;
     }
+
+    #message {
+      text-align: center;
+      margin-top: 15px;
+      font-weight: bold;
+    }
   </style>
 </head>
 
@@ -147,13 +153,11 @@
       <p>How would you like to register?</p>
     </div>
 
-
     <div class="choice" onclick="showForm('client')">
       <div class="icon">👤</div>
       <h3>1. Register as a Client</h3>
       <p>Book nail services and shop for nail products.</p>
     </div>
-
 
     <div class="choice" onclick="showForm('technician')">
       <div class="icon">💅</div>
@@ -161,13 +165,11 @@
       <p>Offer nail services to customers.</p>
     </div>
 
-
     <div class="choice" onclick="showForm('parlor')">
       <div class="icon">🏪</div>
       <h3>3. Register as a Nail Parlor</h3>
       <p>Register your nail parlor and receive bookings.</p>
     </div>
-
 
     <div class="choice" onclick="showForm('shop')">
       <div class="icon">🛍️</div>
@@ -178,13 +180,11 @@
   </div>
 
 
-  <!-- CLIENT FORM -->
+  <!-- CLIENT -->
 
   <div id="clientForm" class="form-box">
 
-    <button class="back" onclick="goBack()">
-      ← Back
-    </button>
+    <button class="back" onclick="goBack()">← Back</button>
 
     <h2>👤 Client Registration</h2>
 
@@ -204,13 +204,11 @@
   </div>
 
 
-  <!-- TECHNICIAN FORM -->
+  <!-- TECHNICIAN -->
 
   <div id="technicianForm" class="form-box">
 
-    <button class="back" onclick="goBack()">
-      ← Back
-    </button>
+    <button class="back" onclick="goBack()">← Back</button>
 
     <h2>💅 Technician Registration</h2>
 
@@ -230,13 +228,11 @@
   </div>
 
 
-  <!-- PARLOR FORM -->
+  <!-- PARLOR -->
 
   <div id="parlorForm" class="form-box">
 
-    <button class="back" onclick="goBack()">
-      ← Back
-    </button>
+    <button class="back" onclick="goBack()">← Back</button>
 
     <h2>🏪 Nail Parlor Registration</h2>
 
@@ -256,13 +252,11 @@
   </div>
 
 
-  <!-- SHOP FORM -->
+  <!-- SHOP -->
 
   <div id="shopForm" class="form-box">
 
-    <button class="back" onclick="goBack()">
-      ← Back
-    </button>
+    <button class="back" onclick="goBack()">← Back</button>
 
     <h2>🛍️ Nail Shop Registration</h2>
 
@@ -276,10 +270,8 @@
     <input id="shopLocation" type="text" placeholder="Enter shop location">
 
     <label>About Your Shop</label>
-    <textarea
-      id="shopAbout"
-      placeholder="Tell customers about your shop"
-    ></textarea>
+    <textarea id="shopAbout"
+      placeholder="Tell customers about your shop"></textarea>
 
     <button class="button" onclick="registerShop()">
       Register Nail Shop
@@ -287,10 +279,21 @@
 
   </div>
 
+  <div id="message"></div>
+
 </div>
 
 
 <script>
+
+const SUPABASE_URL =
+  "https://czkstsubdkcieelqwbai.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_ZgzazaqGSzgfXMrBSHY77A_KPJYjtVA";
+
+
+/* SHOW FORM */
 
 function showForm(type) {
 
@@ -300,7 +303,6 @@ function showForm(type) {
   document.getElementById("technicianForm").style.display = "none";
   document.getElementById("parlorForm").style.display = "none";
   document.getElementById("shopForm").style.display = "none";
-
 
   if (type === "client") {
     document.getElementById("clientForm").style.display = "block";
@@ -320,6 +322,8 @@ function showForm(type) {
 }
 
 
+/* BACK */
+
 function goBack() {
 
   document.getElementById("choices").style.display = "block";
@@ -328,12 +332,49 @@ function goBack() {
   document.getElementById("technicianForm").style.display = "none";
   document.getElementById("parlorForm").style.display = "none";
   document.getElementById("shopForm").style.display = "none";
+
+  document.getElementById("message").innerHTML = "";
+}
+
+
+/* SUPABASE SAVE */
+
+async function saveToSupabase(table, data) {
+
+  const response = await fetch(
+    SUPABASE_URL + "/rest/v1/" + table,
+    {
+      method: "POST",
+
+      headers: {
+        "apikey": SUPABASE_KEY,
+        "Authorization": "Bearer " + SUPABASE_KEY,
+        "Content-Type": "application/json",
+        "Prefer": "return=representation"
+      },
+
+      body: JSON.stringify(data)
+    }
+  );
+
+  const result = await response.json();
+
+  if (!response.ok) {
+    throw new Error(
+      result.message ||
+      result.error_description ||
+      result.hint ||
+      "Registration failed."
+    );
+  }
+
+  return result;
 }
 
 
 /* CLIENT */
 
-function registerClient() {
+async function registerClient() {
 
   const name =
     document.getElementById("clientName").value.trim();
@@ -344,29 +385,40 @@ function registerClient() {
   const email =
     document.getElementById("clientEmail").value.trim();
 
-
   if (!name || !phone) {
-
     alert("Please enter your name and phone number.");
-
     return;
   }
 
+  try {
 
-  localStorage.setItem("nailUppName", name);
-  localStorage.setItem("nailUppPhone", phone);
-  localStorage.setItem("nailUppEmail", email);
+    const result = await saveToSupabase(
+      "clients",
+      {
+        full_name: name,
+        phone: phone,
+        email: email || null
+      }
+    );
 
+    alert("Client registration successful!");
 
-  alert("Client registration successful!");
+    const id = result[0].id;
 
-  window.location.href = "client.html";
+    window.location.href =
+      "client.html?id=" + encodeURIComponent(id);
+
+  } catch (error) {
+
+    alert("Registration failed: " + error.message);
+
+  }
 }
 
 
 /* TECHNICIAN */
 
-function registerTechnician() {
+async function registerTechnician() {
 
   const name =
     document.getElementById("technicianName").value.trim();
@@ -377,34 +429,40 @@ function registerTechnician() {
   const location =
     document.getElementById("technicianLocation").value.trim();
 
-
   if (!name || !phone || !location) {
-
     alert("Please complete all fields.");
-
     return;
   }
 
+  try {
 
-  localStorage.setItem(
-    "nailUppTechnician",
-    JSON.stringify({
-      name: name,
-      phone: phone,
-      location: location
-    })
-  );
+    const result = await saveToSupabase(
+      "technicians",
+      {
+        full_name: name,
+        phone: phone,
+        location: location
+      }
+    );
 
+    alert("Technician registration successful!");
 
-  alert("Technician registration successful!");
+    const id = result[0].id;
 
-  window.location.href = "technician.html";
+    window.location.href =
+      "technician.html?id=" + encodeURIComponent(id);
+
+  } catch (error) {
+
+    alert("Registration failed: " + error.message);
+
+  }
 }
 
 
 /* PARLOR */
 
-function registerParlor() {
+async function registerParlor() {
 
   const name =
     document.getElementById("parlorName").value.trim();
@@ -415,34 +473,40 @@ function registerParlor() {
   const location =
     document.getElementById("parlorLocation").value.trim();
 
-
   if (!name || !phone || !location) {
-
     alert("Please complete all fields.");
-
     return;
   }
 
+  try {
 
-  localStorage.setItem(
-    "nailUppParlor",
-    JSON.stringify({
-      name: name,
-      phone: phone,
-      location: location
-    })
-  );
+    const result = await saveToSupabase(
+      "parlors",
+      {
+        parlor_name: name,
+        phone: phone,
+        location: location
+      }
+    );
 
+    alert("Nail parlor registration successful!");
 
-  alert("Nail parlor registration successful!");
+    const id = result[0].id;
 
-  window.location.href = "parlor.html";
+    window.location.href =
+      "parlor.html?id=" + encodeURIComponent(id);
+
+  } catch (error) {
+
+    alert("Registration failed: " + error.message);
+
+  }
 }
 
 
 /* NAIL SHOP */
 
-function registerShop() {
+async function registerShop() {
 
   const name =
     document.getElementById("shopName").value.trim();
@@ -456,65 +520,37 @@ function registerShop() {
   const about =
     document.getElementById("shopAbout").value.trim();
 
-
   if (!name || !phone || !location) {
-
     alert(
       "Please enter the shop name, phone number and location."
     );
-
     return;
   }
 
+  try {
 
-  const shop = {
+    const result = await saveToSupabase(
+      "shops",
+      {
+        shop_name: name,
+        phone: phone,
+        location: location,
+        about: about || null
+      }
+    );
 
-    id: Date.now(),
+    alert("Nail Shop registered successfully!");
 
-    name: name,
+    const id = result[0].id;
 
-    phone: phone,
+    window.location.href =
+      "shop.html?id=" + encodeURIComponent(id);
 
-    location: location,
+  } catch (error) {
 
-    about: about
+    alert("Registration failed: " + error.message);
 
-  };
-
-
-  /* Save shop for the shop dashboard */
-
-  localStorage.setItem(
-    "nailUppShop",
-    JSON.stringify(shop)
-  );
-
-
-  /* Add shop to the list of Nail Shops */
-
-  const saved =
-    localStorage.getItem("nailUppShops");
-
-
-  const shops =
-    saved ? JSON.parse(saved) : [];
-
-
-  shops.push(shop);
-
-
-  localStorage.setItem(
-    "nailUppShops",
-    JSON.stringify(shops)
-  );
-
-
-  alert(
-    "Nail Shop registered successfully!"
-  );
-
-
-  window.location.href = "shop.html";
+  }
 }
 
 </script>
