@@ -4,121 +4,94 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Nail Upp</title>
 
 <style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
 
-body {
-  font-family: Arial, sans-serif;
-  background: #fff7fb;
-  color: #333;
+body{
+  font-family:Arial,sans-serif;
+  background:#fff7fb;
+  color:#333;
 }
 
-/* TOP */
-header {
-  background: #d9165b;
-  color: white;
-  text-align: center;
-  padding: 45px 20px 50px;
-  border-radius: 0 0 45px 45px;
+header{
+  background:#d9165b;
+  color:white;
+  text-align:center;
+  padding:40px 20px;
+  border-radius:0 0 35px 35px;
 }
 
-.logo {
-  font-size: 42px;
-  font-weight: bold;
-  letter-spacing: 1px;
+header h1{
+  font-size:36px;
 }
 
-.tagline {
-  margin-top: 10px;
-  font-size: 18px;
-  opacity: 0.95;
+header p{
+  margin-top:8px;
+  font-size:17px;
 }
 
-/* MAIN */
-.container {
-  max-width: 700px;
-  margin: auto;
-  padding: 30px 18px 50px;
+.container{
+  max-width:650px;
+  margin:auto;
+  padding:25px 16px;
 }
 
-.welcome {
-  text-align: center;
-  margin-bottom: 28px;
+.welcome{
+  text-align:center;
+  margin-bottom:25px;
 }
 
-.welcome h2 {
-  color: #c91b5b;
-  font-size: 32px;
-  margin-bottom: 10px;
+.welcome h2{
+  color:#c91b5b;
+  margin-bottom:8px;
 }
 
-.welcome p {
-  color: #666;
-  font-size: 17px;
+.welcome p{
+  color:#777;
 }
 
-/* MENU CARDS */
-.card {
-  background: white;
-  border-radius: 25px;
-  padding: 24px;
-  margin-bottom: 18px;
-  box-shadow: 0 5px 18px rgba(0,0,0,0.07);
-  transition: 0.2s;
+.card{
+  background:white;
+  padding:22px;
+  border-radius:22px;
+  margin-bottom:16px;
+  box-shadow:0 4px 15px rgba(0,0,0,.08);
 }
 
-.card h3 {
-  color: #333;
-  font-size: 21px;
-  margin-bottom: 8px;
+.card h3{
+  margin-bottom:8px;
+  font-size:20px;
 }
 
-.card p {
-  color: #777;
-  font-size: 15px;
-  line-height: 1.5;
-  margin-bottom: 15px;
+.card p{
+  color:#777;
+  line-height:1.5;
+  margin-bottom:15px;
 }
 
-.card button {
-  width: 100%;
-  border: none;
-  border-radius: 18px;
-  padding: 14px;
-  background: #d9165b;
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
+button{
+  width:100%;
+  border:none;
+  border-radius:20px;
+  padding:14px;
+  background:#d9165b;
+  color:white;
+  font-size:16px;
+  font-weight:bold;
 }
 
-.card button:active {
-  transform: scale(0.98);
+.care{
+  background:#fff0f6;
 }
 
-/* CUSTOMER CARE */
-.customer-care {
-  background: #fff0f6;
-  border: 1px solid #f3c2d6;
-}
-
-.customer-care h3 {
-  color: #c91b5b;
-}
-
-/* FOOTER */
-footer {
-  text-align: center;
-  color: #888;
-  font-size: 13px;
-  padding: 10px 20px 30px;
+.care h3{
+  color:#c91b5b;
 }
 </style>
 </head>
@@ -126,117 +99,68 @@ footer {
 <body>
 
 <header>
-  <div class="logo">Nail Upp</div>
-  <div class="tagline">
-    Your nail services, wherever you are.
-  </div>
+  <h1>💅 Nail Upp</h1>
+  <p>Your nail services, wherever you are.</p>
 </header>
 
 <div class="container">
 
   <div class="welcome">
     <h2>Welcome to Nail Upp</h2>
-    <p>How would you like to use Nail Upp?</p>
+    <p>Choose how you want to use Nail Upp</p>
   </div>
 
-  <!-- CLIENT -->
-  <div class="card">
-    <h3>Register as a Client</h3>
-    <p>
-      Book nail services, order home services,
-      visit nail parlors and shop for nail products.
-    </p>
 
-    <button onclick="openClient()">
-      Continue as Client
+  <div class="card">
+    <h3>👤 Client</h3>
+    <p>Book nail services, visit parlors and shop for nail products.</p>
+
+    <button onclick="location.href='client-register.html'">
+      Register as a Client
     </button>
   </div>
 
-  <!-- TECHNICIAN -->
-  <div class="card">
-    <h3>Register as a Nail Technician</h3>
-    <p>
-      Offer professional nail services and
-      receive home-service bookings from clients.
-    </p>
 
-    <button onclick="openTechnician()">
-      Continue as Technician
+  <div class="card">
+    <h3>💅 Nail Technician</h3>
+    <p>Offer your nail services and receive client bookings.</p>
+
+    <button onclick="location.href='technician-register.html'">
+      Register as Nail Technician
     </button>
   </div>
 
-  <!-- PARLOR -->
-  <div class="card">
-    <h3>Register as a Nail Parlor</h3>
-    <p>
-      List your nail parlor, receive appointments
-      and connect with Nail Upp clients.
-    </p>
 
-    <button onclick="openParlor()">
-      Continue as Nail Parlor
+  <div class="card">
+    <h3>🏪 Nail Parlor</h3>
+    <p>Register your parlor and receive customer appointments.</p>
+
+    <button onclick="location.href='parlor-register.html'">
+      Register as Nail Parlor
     </button>
   </div>
 
-  <!-- SHOP -->
-  <div class="card">
-    <h3>Register as a Nail Shop</h3>
-    <p>
-      Sell nail products, materials and accessories
-      to Nail Upp customers.
-    </p>
 
-    <button onclick="openShop()">
-      Continue as Nail Shop
+  <div class="card">
+    <h3>🛍️ Nail Shop</h3>
+    <p>Sell nail products and materials to Nail Upp customers.</p>
+
+    <button onclick="location.href='shop-register.html'">
+      Register as Nail Shop
     </button>
   </div>
 
-  <!-- CUSTOMER CARE -->
-  <div class="card customer-care">
-    <h3>Customer Care</h3>
-    <p>
-      Need help with bookings, orders, payments
-      or your Nail Upp account? Contact our support team.
-    </p>
 
-    <button onclick="openCustomerCare()">
+  <div class="card care">
+    <h3>💬 Customer Care</h3>
+    <p>Need help with Nail Upp?</p>
+
+    <button onclick="alert('Nail Upp Customer Care\\n\\nCustomer care contacts will be added here.')">
       Contact Customer Care
     </button>
   </div>
 
 </div>
-
-<footer>
-  © 2026 Nail Upp — Your nail services, wherever you are.
-</footer>
-
-<script>
-
-function openClient() {
-  window.location.href = "client.html";
-}
-
-function openTechnician() {
-  window.location.href = "technician.html";
-}
-
-function openParlor() {
-  window.location.href = "parlor.html";
-}
-
-function openShop() {
-  window.location.href = "shop-register.html";
-}
-
-function openCustomerCare() {
-  alert(
-    "Nail Upp Customer Care\n\n" +
-    "We are here to help with bookings, orders, payments and accounts.\n\n" +
-    "Customer Care contact details will be added here."
-  );
-}
-
-</script>
 
 </body>
 </html>
