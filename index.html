@@ -117,6 +117,11 @@
       color: white;
       font-size: 16px;
       font-weight: bold;
+      cursor: pointer;
+    }
+
+    .button:disabled {
+      background: #aaa;
     }
 
     .back {
@@ -127,12 +132,7 @@
       font-weight: bold;
       margin-bottom: 15px;
       padding: 5px;
-    }
-
-    #message {
-      text-align: center;
-      margin-top: 15px;
-      font-weight: bold;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -145,6 +145,8 @@
 </header>
 
 <div class="container">
+
+  <!-- CHOICES -->
 
   <div id="choices">
 
@@ -197,7 +199,7 @@
     <label>Email</label>
     <input id="clientEmail" type="email" placeholder="Enter email">
 
-    <button class="button" onclick="registerClient()">
+    <button id="clientButton" class="button" onclick="registerClient()">
       Register as Client
     </button>
 
@@ -221,7 +223,7 @@
     <label>Location</label>
     <input id="technicianLocation" type="text" placeholder="Enter your location">
 
-    <button class="button" onclick="registerTechnician()">
+    <button id="technicianButton" class="button" onclick="registerTechnician()">
       Register as Technician
     </button>
 
@@ -245,7 +247,7 @@
     <label>Location</label>
     <input id="parlorLocation" type="text" placeholder="Enter parlor location">
 
-    <button class="button" onclick="registerParlor()">
+    <button id="parlorButton" class="button" onclick="registerParlor()">
       Register Nail Parlor
     </button>
 
@@ -270,21 +272,24 @@
     <input id="shopLocation" type="text" placeholder="Enter shop location">
 
     <label>About Your Shop</label>
-    <textarea id="shopAbout"
+    <textarea
+      id="shopAbout"
       placeholder="Tell customers about your shop"></textarea>
 
-    <button class="button" onclick="registerShop()">
+    <button id="shopButton" class="button" onclick="registerShop()">
       Register Nail Shop
     </button>
 
   </div>
 
-  <div id="message"></div>
-
 </div>
 
 
 <script>
+
+/* =========================================
+   SUPABASE CONNECTION
+========================================= */
 
 const SUPABASE_URL =
   "https://czkstsubdkcieelqwbai.supabase.co";
@@ -293,7 +298,59 @@ const SUPABASE_KEY =
   "sb_publishable_ZgzazaqGSzgfXMrBSHY77A_KPJYjtVA";
 
 
-/* SHOW FORM */
+/* =========================================
+   SAVE DATA TO SUPABASE
+========================================= */
+
+async function saveToSupabase(table, data) {
+
+  try {
+
+    const response = await fetch(
+      SUPABASE_URL + "/rest/v1/" + table,
+      {
+        method: "POST",
+
+        headers: {
+          "apikey": SUPABASE_KEY,
+          "Authorization": "Bearer " + SUPABASE_KEY,
+          "Content-Type": "application/json",
+          "Prefer": "return=minimal"
+        },
+
+        body: JSON.stringify(data)
+      }
+    );
+
+
+    if (!response.ok) {
+
+      const errorText = await response.text();
+
+      console.error(errorText);
+
+      throw new Error(errorText);
+    }
+
+
+    return true;
+
+  } catch (error) {
+
+    console.error("Supabase error:", error);
+
+    alert(
+      "Registration failed.\n\nPlease check your internet connection or database settings."
+    );
+
+    return false;
+  }
+}
+
+
+/* =========================================
+   SHOW FORM
+========================================= */
 
 function showForm(type) {
 
@@ -303,6 +360,7 @@ function showForm(type) {
   document.getElementById("technicianForm").style.display = "none";
   document.getElementById("parlorForm").style.display = "none";
   document.getElementById("shopForm").style.display = "none";
+
 
   if (type === "client") {
     document.getElementById("clientForm").style.display = "block";
@@ -322,7 +380,9 @@ function showForm(type) {
 }
 
 
-/* BACK */
+/* =========================================
+   GO BACK
+========================================= */
 
 function goBack() {
 
@@ -332,47 +392,12 @@ function goBack() {
   document.getElementById("technicianForm").style.display = "none";
   document.getElementById("parlorForm").style.display = "none";
   document.getElementById("shopForm").style.display = "none";
-
-  document.getElementById("message").innerHTML = "";
 }
 
 
-/* SUPABASE SAVE */
-
-async function saveToSupabase(table, data) {
-
-  const response = await fetch(
-    SUPABASE_URL + "/rest/v1/" + table,
-    {
-      method: "POST",
-
-      headers: {
-        "apikey": SUPABASE_KEY,
-        "Authorization": "Bearer " + SUPABASE_KEY,
-        "Content-Type": "application/json",
-        "Prefer": "return=representation"
-      },
-
-      body: JSON.stringify(data)
-    }
-  );
-
-  const result = await response.json();
-
-  if (!response.ok) {
-    throw new Error(
-      result.message ||
-      result.error_description ||
-      result.hint ||
-      "Registration failed."
-    );
-  }
-
-  return result;
-}
-
-
-/* CLIENT */
+/* =========================================
+   CLIENT REGISTRATION
+========================================= */
 
 async function registerClient() {
 
@@ -385,38 +410,51 @@ async function registerClient() {
   const email =
     document.getElementById("clientEmail").value.trim();
 
+
   if (!name || !phone) {
+
     alert("Please enter your name and phone number.");
+
     return;
   }
 
-  try {
 
-    const result = await saveToSupabase(
-      "clients",
-      {
-        full_name: name,
-        phone: phone,
-        email: email || null
-      }
-    );
+  const button =
+    document.getElementById("clientButton");
+
+  button.disabled = true;
+
+  button.innerText = "Registering...";
+
+
+  const success = await saveToSupabase(
+    "clients",
+    {
+      full_name: name,
+      phone: phone,
+      email: email || null
+    }
+  );
+
+
+  if (success) {
 
     alert("Client registration successful!");
 
-    const id = result[0].id;
+    window.location.href = "client.html";
 
-    window.location.href =
-      "client.html?id=" + encodeURIComponent(id);
+  } else {
 
-  } catch (error) {
+    button.disabled = false;
 
-    alert("Registration failed: " + error.message);
-
+    button.innerText = "Register as Client";
   }
 }
 
 
-/* TECHNICIAN */
+/* =========================================
+   TECHNICIAN REGISTRATION
+========================================= */
 
 async function registerTechnician() {
 
@@ -429,38 +467,51 @@ async function registerTechnician() {
   const location =
     document.getElementById("technicianLocation").value.trim();
 
+
   if (!name || !phone || !location) {
+
     alert("Please complete all fields.");
+
     return;
   }
 
-  try {
 
-    const result = await saveToSupabase(
-      "technicians",
-      {
-        full_name: name,
-        phone: phone,
-        location: location
-      }
-    );
+  const button =
+    document.getElementById("technicianButton");
+
+  button.disabled = true;
+
+  button.innerText = "Registering...";
+
+
+  const success = await saveToSupabase(
+    "technicians",
+    {
+      full_name: name,
+      phone: phone,
+      location: location
+    }
+  );
+
+
+  if (success) {
 
     alert("Technician registration successful!");
 
-    const id = result[0].id;
+    window.location.href = "technician.html";
 
-    window.location.href =
-      "technician.html?id=" + encodeURIComponent(id);
+  } else {
 
-  } catch (error) {
+    button.disabled = false;
 
-    alert("Registration failed: " + error.message);
-
+    button.innerText = "Register as Technician";
   }
 }
 
 
-/* PARLOR */
+/* =========================================
+   PARLOR REGISTRATION
+========================================= */
 
 async function registerParlor() {
 
@@ -473,38 +524,51 @@ async function registerParlor() {
   const location =
     document.getElementById("parlorLocation").value.trim();
 
+
   if (!name || !phone || !location) {
+
     alert("Please complete all fields.");
+
     return;
   }
 
-  try {
 
-    const result = await saveToSupabase(
-      "parlors",
-      {
-        parlor_name: name,
-        phone: phone,
-        location: location
-      }
-    );
+  const button =
+    document.getElementById("parlorButton");
+
+  button.disabled = true;
+
+  button.innerText = "Registering...";
+
+
+  const success = await saveToSupabase(
+    "parlors",
+    {
+      name: name,
+      phone: phone,
+      location: location
+    }
+  );
+
+
+  if (success) {
 
     alert("Nail parlor registration successful!");
 
-    const id = result[0].id;
+    window.location.href = "parlor.html";
 
-    window.location.href =
-      "parlor.html?id=" + encodeURIComponent(id);
+  } else {
 
-  } catch (error) {
+    button.disabled = false;
 
-    alert("Registration failed: " + error.message);
-
+    button.innerText = "Register Nail Parlor";
   }
 }
 
 
-/* NAIL SHOP */
+/* =========================================
+   NAIL SHOP REGISTRATION
+========================================= */
 
 async function registerShop() {
 
@@ -520,36 +584,47 @@ async function registerShop() {
   const about =
     document.getElementById("shopAbout").value.trim();
 
+
   if (!name || !phone || !location) {
+
     alert(
       "Please enter the shop name, phone number and location."
     );
+
     return;
   }
 
-  try {
 
-    const result = await saveToSupabase(
-      "shops",
-      {
-        shop_name: name,
-        phone: phone,
-        location: location,
-        about: about || null
-      }
-    );
+  const button =
+    document.getElementById("shopButton");
+
+  button.disabled = true;
+
+  button.innerText = "Registering...";
+
+
+  const success = await saveToSupabase(
+    "shops",
+    {
+      name: name,
+      phone: phone,
+      location: location,
+      about: about || null
+    }
+  );
+
+
+  if (success) {
 
     alert("Nail Shop registered successfully!");
 
-    const id = result[0].id;
+    window.location.href = "shop.html";
 
-    window.location.href =
-      "shop.html?id=" + encodeURIComponent(id);
+  } else {
 
-  } catch (error) {
+    button.disabled = false;
 
-    alert("Registration failed: " + error.message);
-
+    button.innerText = "Register Nail Shop";
   }
 }
 
