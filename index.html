@@ -478,52 +478,63 @@ async function registerParlor() {
    ============================== */
 
 async function registerShop() {
-
-  const name =
-    document.getElementById("shopName").value.trim();
-
-  const phone =
-    document.getElementById("shopPhone").value.trim();
-
-  const location =
-    document.getElementById("shopLocation").value.trim();
-
-  const about =
-    document.getElementById("shopAbout").value.trim();
+  const name = document.getElementById("shopName").value.trim();
+  const phone = document.getElementById("shopPhone").value.trim();
+  const location = document.getElementById("shopLocation").value.trim();
+  const about = document.getElementById("shopAbout").value.trim();
 
   if (!name || !phone || !location) {
-    alert("Please enter the shop name, phone number and location.");
+    alert("Please complete all required fields.");
     return;
   }
 
-  const button =
-    document.querySelector("#shopForm .button");
-
-  button.disabled = true;
-  button.innerText = "Registering...";
-
-  const { error } = await supabaseClient
-    .from("shops")
-    .insert([
+  try {
+    const response = await fetch(
+      "https://czkstsubdkcieelqwbai.supabase.co/rest/v1/shops",
       {
-        shop_name: name,
-        phone: phone,
-        location: location,
-        about: about || null
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "apikey": "sb_publishable_ZgzazaqGSzgfXMrBSHY77A_KPJYjtVA",
+          "Authorization": "Bearer sb_publishable_ZgzazaqGSzgfXMrBSHY77A_KPJYjtVA",
+          "Prefer": "return=representation"
+        },
+        body: JSON.stringify({
+          shop_name: name,
+          phone: phone,
+          location: location,
+          about: about
+        })
       }
-    ]);
+    );
 
-  button.disabled = false;
-  button.innerText = "Register Nail Shop";
+    if (!response.ok) {
+      const error = await response.text();
+      throw new Error(error);
+    }
 
-  if (error) {
+    const result = await response.json();
+    const shop = result[0];
+
+    localStorage.setItem(
+      "nailUppShop",
+      JSON.stringify({
+        id: shop.id,
+        name: shop.shop_name,
+        phone: shop.phone,
+        location: shop.location,
+        about: shop.about
+      })
+    );
+
+    alert("Nail shop registration successful!");
+
+    window.location.href = "shop.html";
+
+  } catch (error) {
+    console.error(error);
     alert("Registration failed: " + error.message);
-    return;
   }
-
-  alert("Nail Shop registration successful!");
-
-  window.location.href = "shop.html";
 }
 
 </script>
