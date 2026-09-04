@@ -332,102 +332,14 @@ function openOrders() {
 /* ADD PRODUCT */
 
 function openAddProduct() {
-    <div id="addProductForm" style="
-  display:none;
-  background:white;
-  padding:20px;
-  border-radius:20px;
-  margin-top:18px;
-  box-shadow:0 4px 15px rgba(0,0,0,0.08);
-">
 
-  <h2 style="color:#c91b5b;">
-    ➕ Add New Product
-  </h2>
+  document.getElementById("addProductForm").style.display = "block";
 
-  <input
-    id="productName"
-    type="text"
-    placeholder="Product name"
-    style="width:100%;padding:13px;margin-top:15px;border:1px solid #ddd;border-radius:10px;"
-  >
-
-  <input
-    id="productPrice"
-    type="number"
-    placeholder="Price in UGX"
-    style="width:100%;padding:13px;margin-top:12px;border:1px solid #ddd;border-radius:10px;"
-  >
-
-  <textarea
-    id="productDescription"
-    placeholder="Product description"
-    style="width:100%;padding:13px;margin-top:12px;border:1px solid #ddd;border-radius:10px;min-height:100px;"
-  ></textarea>
-
-  <label style="
-    display:block;
-    margin-top:15px;
-    font-weight:bold;
-    color:#555;
-  ">
-    📷 Product Picture
-  </label>
-
-  <input
-    id="productImage"
-    type="file"
-    accept="image/*"
-    style="width:100%;margin-top:10px;"
-  >
-
-  <img
-    id="productPreview"
-    style="
-      display:none;
-      width:100%;
-      max-height:250px;
-      object-fit:contain;
-      margin-top:15px;
-      border-radius:15px;
-    "
-  >
-
-  <button
-    onclick="saveProduct()"
-    style="
-      width:100%;
-      border:none;
-      border-radius:25px;
-      padding:13px;
-      margin-top:15px;
-      background:#d9165b;
-      color:white;
-      font-size:15px;
-      font-weight:bold;
-    "
-  >
-    💾 Save Product
-  </button>
-
-  <button
-    onclick="closeAddProduct()"
-    style="
-      width:100%;
-      border:none;
-      border-radius:25px;
-      padding:13px;
-      margin-top:10px;
-      background:#555;
-      color:white;
-      font-size:15px;
-      font-weight:bold;
-    "
-  >
-    Cancel
-  </button>
-
-</div>
+  window.scrollTo({
+    top: document.getElementById("addProductForm").offsetTop,
+    behavior: "smooth"
+  });
+}
 
 
 /* LOAD PRODUCTS */
