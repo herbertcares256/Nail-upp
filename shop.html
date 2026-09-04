@@ -332,10 +332,39 @@ function openOrders() {
 /* ADD PRODUCT */
 
 function openAddProduct() {
+    const productName = prompt("Enter product name:");
+    if (!productName) return;
 
-  window.location.href =
-    "shop.html";
+    const price = prompt("Enter product price:");
+    if (!price) return;
 
+    const description = prompt("Enter product description:");
+
+    const saved = localStorage.getItem("nailUppProducts");
+
+    const products = saved ? JSON.parse(saved) : [];
+
+    const currentShop =
+        JSON.parse(localStorage.getItem("nailUppShop"));
+
+    products.push({
+        id: Date.now(),
+        shop_id: currentShop ? currentShop.id : null,
+        shop_name: currentShop ? currentShop.name : "",
+        name: productName,
+        price: price,
+        description: description || "",
+        created_at: new Date().toISOString()
+    });
+
+    localStorage.setItem(
+        "nailUppProducts",
+        JSON.stringify(products)
+    );
+
+    alert("Product added successfully!");
+
+    location.reload();
 }
 
 
